@@ -1,10 +1,10 @@
-/* ================================================
-   MANUAL OPERACIONAL CRV — Scripts
-   Polícia Penal de Santa Catarina
+// ================================================
+// MANUAL OPERACIONAL CRV — Scripts
+// Polícia Penal de Santa Catarina
+// ================================================
 
 // ================================================
-// CADASTRO COMPLETO DAS UNIDADES PRISIONAIS
-// Fonte: DPP/SEJURI — dados conforme seção "Unidades"
+// CADASTRO DAS UNIDADES PRISIONAIS
 // ================================================
 const UNIDADES = [
   // SR01 — Grande Florianópolis
@@ -72,137 +72,19 @@ const UNIDADES = [
   { nome: 'Presídio Regional de Porto União',            cidade: 'Porto União',    sr: 'SR08', diretor: 'Josmar Mattos e Santos',               email: 'pr39@pp.sc.gov.br', tel: '(47) 3627‑4340' },
 ];
 
-// Preenche os selects de origem e destino ao abrir o modal
-function popularSelectsUnidades() {
-  const selOri = document.getElementById('sel-origem');
-  const selDes = document.getElementById('sel-destino');
-  if (!selOri || !selDes) return;
-  if (selOri.options.length > 1) return; // já populado
 
-  // Agrupa por SR para optgroup
-  const grupos = {};
-  UNIDADES.forEach(u => {
-    if (!grupos[u.sr]) grupos[u.sr] = [];
-    grupos[u.sr].push(u);
-  });
+// Nomes das Superintendências Regionais e seus Superintendentes
+const SR_INFO = {
+  SR01: { nome: 'Superintendência Regional da Grande Florianópolis', superintendente: 'Kelvyn Diehl',                          email: 'sr01@pp.sc.gov.br', tel: '(48) 3665‑9131' },
+  SR02: { nome: 'Superintendência Regional Sul',                      superintendente: 'Hélio Damian Filho',                    email: 'sr02@pp.sc.gov.br', tel: '(48) 3403‑1501' },
+  SR03: { nome: 'Superintendência Regional do Norte Catarinense',     superintendente: 'Efraym Ben José Falcão',                email: 'sr03@pp.sc.gov.br', tel: '(47) 3481‑3993' },
+  SR04: { nome: 'Superintendência Regional do Vale do Itajaí',        superintendente: 'Anderson Luiz Teodoro',                 email: 'sr04@pp.sc.gov.br', tel: '(47) 3398‑6704' },
+  SR05: { nome: 'Superintendência Regional Serrana',                   superintendente: 'André Isidoro de Oliveira Martarello',  email: 'sr05@pp.sc.gov.br', tel: '(49) 3412‑3300' },
+  SR06: { nome: 'Superintendência Regional Oeste',                     superintendente: 'Guimorvan Boita',                      email: 'sr06@pp.sc.gov.br', tel: '(49) 2049‑9768' },
+  SR07: { nome: 'Superintendência Regional do Médio Vale do Itajaí',  superintendente: 'Ricardo da Silva Morlo',               email: 'sr07@pp.sc.gov.br', tel: '(47) 3378‑8594' },
+  SR08: { nome: 'Superintendência Regional do Planalto Norte',        superintendente: 'Edenilson Schelbauer',                  email: 'sr08@pp.sc.gov.br', tel: '(47) 3647‑0229' },
+};
 
-  const srNomes = {
-    SR01: 'SR01 — Grande Florianópolis',
-    SR02: 'SR02 — Sul',
-    SR03: 'SR03 — Norte Catarinense',
-    SR04: 'SR04 — Vale do Itajaí',
-    SR05: 'SR05 — Serrana',
-    SR06: 'SR06 — Oeste',
-    SR07: 'SR07 — Médio Vale do Itajaí',
-    SR08: 'SR08 — Planalto Norte',
-  };
-
-  [selOri, selDes].forEach(sel => {
-    Object.keys(grupos).sort().forEach(sr => {
-      const grp = document.createElement('optgroup');
-      grp.label = srNomes[sr] || sr;
-      grupos[sr].forEach((u, idx) => {
-        const opt = document.createElement('option');
-        // Value = index in UNIDADES array
-        opt.value = UNIDADES.indexOf(u);
-        opt.textContent = u.nome;
-        grp.appendChild(opt);
-      });
-      sel.appendChild(grp);
-    });
-  });
-}
-
-// Estado das unidades selecionadas
-let unidadeOrigemSel = null;
-let unidadeDestinoSel = null;
-
-function selecionarUnidadeOrigem() {
-  const idx = document.getElementById('sel-origem').value;
-  if (!idx && idx !== 0) { unidadeOrigemSel = null; atualizarInfoUnidade('origem', null); atualizarDocumentoComUnidades(); return; }
-  unidadeOrigemSel = UNIDADES[parseInt(idx)];
-  atualizarInfoUnidade('origem', unidadeOrigemSel);
-  atualizarDocumentoComUnidades();
-}
-
-function selecionarUnidadeDestino() {
-  const idx = document.getElementById('sel-destino').value;
-  if (!idx && idx !== 0) { unidadeDestinoSel = null; atualizarInfoUnidade('destino', null); atualizarDocumentoComUnidades(); return; }
-  unidadeDestinoSel = UNIDADES[parseInt(idx)];
-  atualizarInfoUnidade('destino', unidadeDestinoSel);
-  atualizarDocumentoComUnidades();
-}
-
-function atualizarInfoUnidade(tipo, u) {
-  const el = document.getElementById('info-' + tipo);
-  if (!el) return;
-  if (!u) { el.innerHTML = ''; el.classList.remove('preenchido'); return; }
-  el.innerHTML = `<strong>${u.nome}</strong>${u.cidade} · ${u.sr} · ${u.tel}`;
-  el.classList.add('preenchido');
-}
-
-function atualizarDocumentoComUnidades() {
-  const ori = unidadeOrigemSel;
-  const des = unidadeDestinoSel;
-
-  // Atualiza cidade na data
-  const cidadeEl = document.getElementById('ofc-cidade-txt');
-  if (cidadeEl) cidadeEl.textContent = ori ? ori.cidade : '[CIDADE]';
-
-  // Atualiza parágrafos com nomes das unidades
-  document.querySelectorAll('#ofc-paragrafos textarea').forEach(ta => {
-    let txt = ta.value;
-    if (ori) {
-      txt = txt.replace(/\[UNIDADE PRISIONAL DE ORIGEM\]/g, ori.nome);
-      txt = txt.replace(/\[CIDADE\]/g, ori.cidade);
-    }
-    if (des) txt = txt.replace(/\[UNIDADE PRISIONAL DE DESTINO\]/g, des.nome);
-    ta.value = txt;
-  });
-
-  // Atualiza assinaturas
-  const assEl = document.getElementById('ofc-assinaturas');
-  if (!assEl) return;
-
-  const m = modelosTexto[modeloAtual];
-  if (!m) return;
-
-  // Reconstrói assinaturas com dados das unidades
-  const assinaturas = construirAssinaturas(m, ori, des);
-  assEl.innerHTML = assinaturas.map(a =>
-    `<div class="oficio-assinatura-bloco">
-      <div class="ass-digital">(documento assinado digitalmente)</div>
-      <div class="ass-nome"><input class="campo-edit" value="${a.nome}" style="font-weight:bold;width:340px;max-width:100%;"/></div>
-      <div class="ass-cargo"><input class="campo-edit" value="${a.cargo}" style="width:340px;max-width:100%;"/></div>
-    </div>`
-  ).join('');
-}
-
-function construirAssinaturas(m, ori, des) {
-  // Usa dados reais se disponíveis, senão placeholder
-  const nomeOri   = ori ? ori.diretor : '[NOME DO DIRETOR — ORIGEM]';
-  const cargoOri  = ori ? `Diretor(a) — ${ori.nome}` : 'Diretor(a) — [UNIDADE DE ORIGEM]';
-  const nomeDes   = des ? des.diretor : '[NOME DO DIRETOR — DESTINO]';
-  const cargoDes  = des ? `Diretor(a) — ${des.nome}` : 'Diretor(a) — [UNIDADE DE DESTINO]';
-  const srOri     = ori ? `Superintendente — ${ori.sr}` : 'Superintendente — [SR DE ORIGEM]';
-  const srDes     = des ? `Superintendente — ${des.sr}` : 'Superintendente — [SR DE DESTINO]';
-
-  if (m.assinaturas.length === 2) {
-    // Modelo USM — só origem + SR origem
-    return [
-      { nome: nomeOri,  cargo: cargoOri },
-      { nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]', cargo: srOri },
-    ];
-  }
-  return [
-    { nome: nomeOri,  cargo: cargoOri },
-    { nome: nomeDes,  cargo: cargoDes },
-    { nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]', cargo: srOri },
-    { nome: '[NOME DO SUPERINTENDENTE REGIONAL — DESTINO — SE FOR O CASO]', cargo: srDes },
-  ];
-}
-
-   ================================================ */
 
 // ================================================
 // NAVEGAÇÃO ENTRE PÁGINAS
@@ -223,7 +105,6 @@ function navegarPara(paginaId) {
   history.pushState(null, null, '#' + paginaId);
 }
 
-// Atalho rápido → abre modelos com modelo pré-selecionado
 function abrirModeloDireto(modeloId) {
   navegarPara('modelos');
   setTimeout(() => abrirModalOficio(modeloId), 80);
@@ -233,21 +114,21 @@ function abrirModeloDireto(modeloId) {
 // BREADCRUMB
 // ================================================
 const nomesPagina = {
-  'inicio': 'Início',
-  'hipoteses': 'Hipóteses de Transferência',
-  'fluxo': 'Fluxo Operacional',
-  'documentos': 'Documentos Necessários',
-  'modelos': 'Modelos de Ofícios',
-  'prazos': 'Prazos',
-  'vedacoes': 'Vedações',
-  'legislacao': 'Legislação',
-  'unidades': 'Unidades Prisionais',
-  'emergencial': 'Segurança / Emergência',
-  'pedido-preso': 'Pedido do Preso ou Família',
-  'equalizacao': 'Adequação da Capacidade de Ocupação',
+  'inicio':          'Início',
+  'hipoteses':       'Hipóteses de Transferência',
+  'fluxo':           'Fluxo Operacional',
+  'documentos':      'Documentos Necessários',
+  'modelos':         'Modelos de Ofícios',
+  'prazos':          'Prazos',
+  'vedacoes':        'Vedações',
+  'legislacao':      'Legislação',
+  'unidades':        'Unidades Prisionais',
+  'emergencial':     'Segurança / Emergência',
+  'pedido-preso':    'Pedido do Preso ou Família',
+  'equalizacao':     'Adequação da Capacidade de Ocupação',
   'mandado-comarca': 'Mandado de Prisão de Comarca Diversa',
-  'pernoite': 'Pernoite',
-  'seguranca-maxima': 'Segurança Máxima / RDD'
+  'pernoite':        'Pernoite',
+  'seguranca-maxima':'Segurança Máxima / RDD',
 };
 
 function atualizarBreadcrumb(paginaId) {
@@ -281,12 +162,12 @@ function toggleAccordion(header) {
 }
 
 // ================================================
-// UNIDADES — Toggle SR e Unidade
+// UNIDADES — Toggle SR e UP
 // ================================================
 function toggleSR(header) {
-  const bloco   = header.closest('.sr-bloco');
-  const painel  = bloco.querySelector('.sr-unidades');
-  const aberto  = header.classList.contains('aberto');
+  const bloco  = header.closest('.sr-bloco');
+  const painel = bloco.querySelector('.sr-unidades');
+  const aberto = header.classList.contains('aberto');
   header.classList.toggle('aberto', !aberto);
   painel.style.display = aberto ? 'none' : 'block';
 }
@@ -311,31 +192,26 @@ function filtrarUnidades() {
     let algum = false;
     bloco.querySelectorAll('.up-card').forEach(card => {
       if (card.textContent.toLowerCase().includes(busca)) {
-        card.classList.remove('oculto');
-        algum = true;
+        card.classList.remove('oculto'); algum = true;
         card.querySelector('.up-header')?.classList.add('aberto');
         const det = card.querySelector('.up-detalhe');
         if (det) det.style.display = 'flex';
-      } else {
-        card.classList.add('oculto');
-      }
+      } else { card.classList.add('oculto'); }
     });
     if (algum) {
       bloco.querySelector('.sr-header')?.classList.add('aberto');
       const su = bloco.querySelector('.sr-unidades');
       if (su) su.style.display = 'block';
-    } else if (!srFilt) {
-      bloco.classList.add('oculto');
-    }
+    } else if (!srFilt) { bloco.classList.add('oculto'); }
   });
 }
 
 // ================================================
-// BUSCA GLOBAL NO MANUAL
+// BUSCA GLOBAL
 // ================================================
 function buscarManual() {
-  const input   = document.getElementById('buscaManual');
-  const termo   = input.value.toLowerCase().trim();
+  const input     = document.getElementById('buscaManual');
+  const termo     = input.value.toLowerCase().trim();
   const resultado = document.getElementById('buscaResultado');
   const btnLimpar = document.getElementById('buscaLimpar');
   btnLimpar.style.display = termo.length > 0 ? 'flex' : 'none';
@@ -349,17 +225,17 @@ function buscarManual() {
     sec.style.display = 'none';
     const textoSec = sec.innerText.toLowerCase();
     if (textoSec.includes(termo)) {
-      const id = sec.id; const nome = nomesPagina[id] || id;
+      const id = sec.id, nome = nomesPagina[id] || id;
       const idx = textoSec.indexOf(termo);
-      const ini = Math.max(0, idx - 60); const fim = Math.min(textoSec.length, idx + termo.length + 100);
+      const ini = Math.max(0, idx - 60), fim = Math.min(textoSec.length, idx + termo.length + 100);
       let trecho = sec.innerText.substring(ini, fim).replace(/\n+/g, ' ').trim();
       if (ini > 0) trecho = '…' + trecho;
-      if (fim < textoSec.length) trecho = trecho + '…';
+      if (fim < textoSec.length) trecho += '…';
       const regex = new RegExp('(' + termo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
       hits.push({ id, nome, trecho: trecho.replace(regex, '<mark>$1</mark>') });
     }
   });
-  if (hits.length === 0) {
+  if (!hits.length) {
     resultado.innerHTML = '<p class="busca-sem-resultado">Nenhum resultado para <strong>"' + input.value + '"</strong>.</p>';
   } else {
     resultado.innerHTML =
@@ -370,8 +246,7 @@ function buscarManual() {
 }
 
 function limparBusca() {
-  const input = document.getElementById('buscaManual');
-  input.value = '';
+  document.getElementById('buscaManual').value = '';
   document.getElementById('buscaResultado').style.display = 'none';
   document.getElementById('buscaResultado').innerHTML = '';
   document.getElementById('buscaLimpar').style.display = 'none';
@@ -398,103 +273,354 @@ window.addEventListener('scroll', () => {
 });
 
 // ================================================
-// MODELOS DE OFÍCIOS — Conteúdo dos parágrafos
+// FLUXO OPERACIONAL — Toggle passo
+// ================================================
+function toggleFlowStep(body) {
+  body.classList.toggle('aberto');
+  const btn = body.querySelector('.flow-toggle-btn');
+  if (btn) btn.textContent = body.classList.contains('aberto') ? '▼ Ocultar detalhes' : '▶ Ver detalhes';
+}
+
+// ================================================
+// SELETORES DE UNIDADE NO MODAL DE OFÍCIO
+// ================================================
+
+// Popula os <select> de origem e destino com optgroups por SR
+function popularSelectsUnidades() {
+  ['sel-origem', 'sel-destino'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel || sel.options.length > 1) return; // já populado
+
+    const grupos = {};
+    UNIDADES.forEach((u, idx) => {
+      if (!grupos[u.sr]) grupos[u.sr] = [];
+      grupos[u.sr].push({ u, idx });
+    });
+
+    const srLabel = {
+      SR01: 'SR01 — Grande Florianópolis',
+      SR02: 'SR02 — Sul',
+      SR03: 'SR03 — Norte Catarinense',
+      SR04: 'SR04 — Vale do Itajaí',
+      SR05: 'SR05 — Serrana',
+      SR06: 'SR06 — Oeste',
+      SR07: 'SR07 — Médio Vale do Itajaí',
+      SR08: 'SR08 — Planalto Norte',
+    };
+
+    Object.keys(srLabel).forEach(sr => {
+      if (!grupos[sr]) return;
+      const grp = document.createElement('optgroup');
+      grp.label = srLabel[sr];
+      grupos[sr].forEach(({ u, idx }) => {
+        const opt = document.createElement('option');
+        opt.value  = idx;
+        opt.textContent = u.nome;
+        grp.appendChild(opt);
+      });
+      sel.appendChild(grp);
+    });
+  });
+}
+
+// Estado global das unidades selecionadas
+let unidadeOrigemSel  = null;
+let unidadeDestinoSel = null;
+
+function selecionarUnidadeOrigem() {
+  const idx = document.getElementById('sel-origem').value;
+  unidadeOrigemSel = (idx !== '') ? UNIDADES[parseInt(idx)] : null;
+  atualizarInfoUnidade('origem', unidadeOrigemSel);
+  atualizarOficioComUnidades();
+}
+
+function selecionarUnidadeDestino() {
+  const idx = document.getElementById('sel-destino').value;
+  unidadeDestinoSel = (idx !== '') ? UNIDADES[parseInt(idx)] : null;
+  atualizarInfoUnidade('destino', unidadeDestinoSel);
+  atualizarOficioComUnidades();
+}
+
+function atualizarInfoUnidade(tipo, u) {
+  const el = document.getElementById('info-' + tipo);
+  if (!el) return;
+  if (!u) { el.innerHTML = ''; el.classList.remove('preenchido'); return; }
+  const sr = SR_INFO[u.sr] || {};
+  el.innerHTML = `<strong>${u.nome}</strong>${u.cidade} · ${u.sr} · Dir.: ${u.diretor} · ${u.tel}`;
+  el.classList.add('preenchido');
+}
+
+// Atualiza cidade, parágrafos e assinaturas quando muda a seleção
+function atualizarOficioComUnidades() {
+  const ori = unidadeOrigemSel;
+  const des = unidadeDestinoSel;
+
+  // Cidade na linha de data
+  const cidEl = document.getElementById('ofc-cidade-txt');
+  if (cidEl) cidEl.textContent = ori ? ori.cidade : '[CIDADE]';
+
+  // Parágrafos — substitui placeholders
+  document.querySelectorAll('#ofc-paragrafos textarea').forEach(ta => {
+    let txt = ta.dataset.original || ta.value;
+    ta.dataset.original = txt; // guarda original para re-substituição
+    if (ori) txt = txt.replace(/\[UNIDADE PRISIONAL DE ORIGEM\]/g, ori.nome)
+                      .replace(/\[CIDADE\]/g, ori.cidade);
+    if (des) txt = txt.replace(/\[UNIDADE PRISIONAL DE DESTINO\]/g, des.nome);
+    ta.value = txt;
+  });
+
+  // Reconstrói assinaturas
+  renderizarAssinaturas(ori, des);
+}
+
+// ================================================
+// LÓGICA DE ASSINATURAS
+// Regra:
+//   1. Diretor da Unidade de Origem         (sempre)
+//   2. Diretor da Unidade de Destino        (sempre, exceto USM)
+//   3. Superintendente da SR de Origem      (sempre)
+//   4. Superintendente da SR de Destino     (só se SR destino ≠ SR origem)
+// ================================================
+function construirListaAssinaturas(ori, des, isUSM) {
+  const assinaturas = [];
+
+  // 1. Diretor origem
+  assinaturas.push({
+    nome:  ori ? ori.diretor             : '[NOME DO DIRETOR — ORIGEM]',
+    cargo: ori ? `Diretor(a)
+${ori.nome}` : 'Diretor(a) — [UNIDADE DE ORIGEM]',
+  });
+
+  // 2. Diretor destino (não aparece no modelo USM)
+  if (!isUSM) {
+    assinaturas.push({
+      nome:  des ? des.diretor             : '[NOME DO DIRETOR — DESTINO]',
+      cargo: des ? `Diretor(a)
+${des.nome}` : 'Diretor(a) — [UNIDADE DE DESTINO]',
+    });
+  }
+
+  // 3. Superintendente da SR de Origem (sempre)
+  const srOriInfo = ori ? SR_INFO[ori.sr] : null;
+  assinaturas.push({
+    nome:  srOriInfo ? srOriInfo.superintendente : '[NOME DO SUPERINTENDENTE — ORIGEM]',
+    cargo: srOriInfo ? `Superintendente
+${srOriInfo.nome}` : 'Superintendente — [SR DE ORIGEM]',
+  });
+
+  // 4. Superintendente da SR de Destino (só se SR diferente)
+  if (!isUSM && des) {
+    const srDesInfo = SR_INFO[des.sr];
+    const srOriId   = ori ? ori.sr : null;
+    if (des.sr !== srOriId) {
+      assinaturas.push({
+        nome:  srDesInfo ? srDesInfo.superintendente : '[NOME DO SUPERINTENDENTE — DESTINO]',
+        cargo: srDesInfo ? `Superintendente
+${srDesInfo.nome}` : 'Superintendente — [SR DE DESTINO]',
+      });
+    }
+  }
+
+  return assinaturas;
+}
+
+function renderizarAssinaturas(ori, des) {
+  const assEl = document.getElementById('ofc-assinaturas');
+  if (!assEl) return;
+
+  const isUSM  = modeloAtual === 'umax';
+  const lista  = construirListaAssinaturas(ori, des, isUSM);
+
+  assEl.innerHTML = lista.map((a) => {
+    // Cargo pode ter \n para separar cargo da unidade
+    const cargoLinhas = a.cargo.split('\n');
+    return `<div class="oficio-assinatura-bloco">
+      <div class="ass-digital">(documento assinado digitalmente)</div>
+      <div class="ass-nome"><input class="campo-edit" value="${a.nome}" style="font-weight:bold;width:360px;max-width:100%;"/></div>
+      ${cargoLinhas.map(l => `<div class="ass-cargo"><input class="campo-edit" value="${l}" style="width:360px;max-width:100%;"/></div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ================================================
+// MODAL DO OFÍCIO
+// ================================================
+function abrirModalOficio(modeloId) {
+  const modal = document.getElementById('modalOficio');
+  if (!modal) return;
+
+  // Reset seleções anteriores
+  unidadeOrigemSel  = null;
+  unidadeDestinoSel = null;
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Popula os selects (só na primeira abertura)
+  popularSelectsUnidades();
+
+  // Zera selects
+  const sOri = document.getElementById('sel-origem');
+  const sDes = document.getElementById('sel-destino');
+  if (sOri) sOri.value = '';
+  if (sDes) sDes.value = '';
+  atualizarInfoUnidade('origem', null);
+  atualizarInfoUnidade('destino', null);
+
+  // Data automática
+  const hoje   = new Date();
+  const meses  = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const dataFmt = `${hoje.getDate()} de ${meses[hoje.getMonth()]} de ${hoje.getFullYear()}`;
+  const dataEl  = document.getElementById('ofc-data-txt');
+  if (dataEl) { dataEl.textContent = dataFmt; dataEl.contentEditable = 'true'; }
+
+  // Cidade editável
+  const cidEl = document.getElementById('ofc-cidade-txt');
+  if (cidEl) { cidEl.textContent = '[CIDADE]'; cidEl.contentEditable = 'true'; }
+
+  selecionarModelo(modeloId);
+}
+
+function fecharModalOficio() {
+  const modal = document.getElementById('modalOficio');
+  if (!modal) return;
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function fecharModalOficioFora(event) {
+  if (event.target === document.getElementById('modalOficio')) fecharModalOficio();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModalOficio(); });
+
+// ================================================
+// MODELOS DE OFÍCIOS
 // ================================================
 const modelosTexto = {
+
+  /* ── EMERGENCIAL ────────────────────────────────── */
   emergencial: {
     titulo: '🚨 Modelo 005/2026 — Segurança / Emergência',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
-      'Encaminho para análise urgente dessa Central de Regulação de Vagas pedido de transferência excepcional do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação de crise/emergência identificada pelas equipes deste estabelecimento penal, conforme passo a detalhar.',
-      'A solicitação fundamenta-se na existência de [DESCREVER DETALHADAMENTE A SITUAÇÃO: risco iminente à integridade física, ameaça de morte, envolvimento em crise interna, motim, rebelião ou outro fator de segurança], que torna inviável a manutenção do(a) reeducando(a) nesta unidade prisional sem prejuízo à sua integridade física ou à ordem e segurança do estabelecimento, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.',
-      'Diante da urgência da situação, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia em segurança.',
-      'Destaca-se que a transferência em análise não deve ser considerada como sanção disciplinar de 30 (trinta) dias, uma vez que não constitui efetivamente eventual sanção a ser aplicada, cabível somente após a regular tramitação do PAD, nos termos do art. 57 e 58 da Lei de Execução Penal e art. 73 da Lei Complementar 529/11.',
-      'Deste modo, os direitos inerentes à pessoa presa deverão ser preservados, não se excluindo a possibilidade de isolamento preventivo, instituto diverso da sanção disciplinar, cuja disciplina encontra-se no art. 60 da Lei nº 7.210/1984 (LEP), o qual estabelece: "Art. 60. A autoridade administrativa poderá decretar o isolamento preventivo do faltoso pelo prazo de até dez dias."',
-      'Para subsidiar a análise, encaminho, anexos, o Boletim Penal Informativo da pessoa presa devidamente atualizado no sistema i-PEN, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor. Encaminho ainda: boletim de ocorrência interno, relatório da equipe de segurança e demais documentos que subsidiam a presente solicitação.',
-      'Uma vez efetivada a remoção, caso aprovada, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja em até 24 horas.',
-      'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, quais sejam, o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem o presente expediente.',
-      'Diante do exposto, solicita-se análise e célere deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa.'
+      'Encaminho para análise urgente dessa Central pedido de transferência do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação de risco identificada pelas equipes desta unidade prisional.',
+      'A solicitação fundamenta-se na existência de [DESCREVER BREVEMENTE A SITUAÇÃO: risco iminente à integridade física, ameaça de morte, envolvimento em crise interna, motim, rebelião ou outro fator de segurança], que torna inviável a manutenção do reeducando nesta unidade sem prejuízo à sua integridade ou à ordem e segurança do estabelecimento, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.',
+      'Diante da urgência da situação, solicita-se a transferência do referido reeducando para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia em segurança.',
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor. Encaminho ainda [OUTROS DOCUMENTOS: boletim de ocorrência interno, relatório da equipe de segurança, etc.], que subsidiam a presente solicitação.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Informo, por fim, que foram realizados contatos prévios com os entes envolvidos, quais sejam, o Diretor da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem ou anuem ao presente expediente.',
+      'Diante do exposto, solicita-se análise e deliberação célere da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa do referido reeducando.',
     ],
-    assinaturas: [
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE ORIGEM]', nome: '[NOME DO DIRETOR DA UNIDADE DE ORIGEM]' },
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE DESTINO]', nome: '[NOME DO DIRETOR DA UNIDADE DE DESTINO]' },
-      { cargo: 'Superintendente do(a) [SR DE ORIGEM]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]' },
-      { cargo: 'Superintendente do(a) [SR DE DESTINO — SE FOR O CASO]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — DESTINO]' }
-    ]
   },
+
+  /* ── PEDIDO DO PRESO ─────────────────────────────── */
+  pedido_preso: {
+    titulo: '👤 Modelo 1 — Pedido do Preso',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
+    paragrafos: [
+      'Encaminho para análise dessa Central pedido de transferência do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado no(a) [UNIDADE PRISIONAL DE ORIGEM], para o(a) [UNIDADE PRISIONAL DE DESTINO], formulado pelo próprio reeducando por meio de memorando datado de [DATA DO MEMORANDO].',
+      'A solicitação tem por fundamento [MOTIVO ALEGADO PELO REEDUCANDO: mudança de domicílio familiar, necessidade de aproximação da família, outro motivo relevante], nos termos do art. 21, inciso II, da Resolução Conjunta Interinstitucional n. 01/2026.',
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor, e memorando original do reeducando.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Informo, por fim, que foram realizados contatos prévios com os entes envolvidos, quais sejam, o Diretor da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem ou anuem ao presente expediente.',
+      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa do referido reeducando.',
+    ],
+  },
+
+  /* ── PEDIDO POR FAMILIAR ─────────────────────────── */
+  pedido_familiar: {
+    titulo: '👨‍👩‍👧 Modelo 2 — Pedido por Familiar',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
+    paragrafos: [
+      'Encaminho para análise dessa Central pedido de transferência do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado no(a) [UNIDADE PRISIONAL DE ORIGEM], para o(a) [UNIDADE PRISIONAL DE DESTINO], formulado por seu(ua) familiar [NOME DO FAMILIAR], [GRAU DE PARENTESCO], por meio de [carta / e-mail / petição física / petição judicial] datado(a) de [DATA].',
+      'A solicitação tem por fundamento [MOTIVO ALEGADO PELO FAMILIAR: mudança de domicílio, necessidade de aproximação do núcleo familiar, dificuldade de deslocamento para visitas, outro motivo relevante], nos termos do art. 21, inciso II, da Resolução Conjunta Interinstitucional n. 01/2026.',
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor, e [carta / e-mail / petição física] original do familiar.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Informo, por fim, que foram realizados contatos prévios com os entes envolvidos, quais sejam, o Diretor da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem ou anuem ao presente expediente.',
+      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa do referido reeducando.',
+    ],
+  },
+
+  /* ── PEDIDO POR ADVOGADO ─────────────────────────── */
+  pedido_advogado: {
+    titulo: '⚖️ Modelo 3 — Pedido por Advogado',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
+    paragrafos: [
+      'Encaminho para análise dessa Central pedido de transferência do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado no(a) [UNIDADE PRISIONAL DE ORIGEM], para o(a) [UNIDADE PRISIONAL DE DESTINO], formulado pelo advogado constituído [NOME DO ADVOGADO], OAB/[UF] n.º [NÚMERO], por meio de petição datada de [DATA].',
+      'A solicitação tem por fundamento [MOTIVO ALEGADO PELO ADVOGADO: mudança de domicílio, aproximação familiar, outro motivo relevante devidamente fundamentado], nos termos do art. 21, inciso II, da Resolução Conjunta Interinstitucional n. 01/2026.',
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor, e petição original do advogado, com comprovação de mandato.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Informo, por fim, que foram realizados contatos prévios com os entes envolvidos, quais sejam, o Diretor da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem ou anuem ao presente expediente.',
+      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa do referido reeducando.',
+    ],
+  },
+
+  /* ── EQUALIZAÇÃO DE VAGAS ───────────────────────── */
   equalizacao: {
     titulo: '⚖️ Modelo — Adequação da Capacidade de Ocupação (Art. 21, III)',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
-      'Considerando a necessidade de gestão e equalização da ocupação carcerária no âmbito do(a) [UNIDADE PRISIONAL DE ORIGEM], bem como a adequada distribuição das pessoas privadas de liberdade entre as diferentes estruturas de estabelecimentos penais, encaminho para análise dessa Central de Regulação de Vagas pedido de transferência do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) nesta unidade prisional, para o(a) [UNIDADE PRISIONAL DE DESTINO].',
-      'A solicitação fundamenta-se na necessidade de adequação da capacidade de ocupação entre as unidades do sistema prisional catarinense, em conformidade com as diretrizes estabelecidas para a gestão de vagas e movimentações prisionais previstas na Resolução Conjunta Interinstitucional n. 01/2026, especialmente em seu art. 21, inciso III.',
-      'Para subsidiar a análise, informo a devida atualização no sistema i-PEN do Boletim Penal Informativo, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como anexo o Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor.',
-      'Uma vez efetivada a remoção, caso aprovada, o r. Juízo competente será devidamente comunicado no prazo legal de até 24 horas.',
-      'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, quais sejam, o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que anuem ao presente expediente.',
-      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa.'
+      'Considerando a necessidade de gestão e equalização da ocupação carcerária no âmbito do(a) [UNIDADE PRISIONAL DE ORIGEM], bem como a adequada distribuição das pessoas privadas de liberdade entre as unidades prisionais, encaminho para análise dessa Central pedido de transferência do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado nesta unidade prisional, para o(a) [UNIDADE PRISIONAL DE DESTINO].',
+      'A solicitação fundamenta-se na necessidade de equalização da lotação entre as unidades do sistema prisional, em conformidade com as diretrizes estabelecidas para a gestão de vagas e movimentações prisionais previstas na Resolução Conjunta Interinstitucional n. 01/2026, especialmente em seu art. 21, inciso III.',
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Informo, por fim, que foram realizados contatos prévios com os entes envolvidos, quais sejam, o Diretor da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem ou anuem ao presente expediente.',
+      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa do referido reeducando.',
     ],
-    assinaturas: [
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE ORIGEM]', nome: '[NOME DO DIRETOR DA UNIDADE DE ORIGEM]' },
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE DESTINO]', nome: '[NOME DO DIRETOR DA UNIDADE DE DESTINO]' },
-      { cargo: 'Superintendente do(a) [SR DE ORIGEM]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]' },
-      { cargo: 'Superintendente do(a) [SR DE DESTINO — SE FOR O CASO]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — DESTINO]' }
-    ]
   },
+
+  /* ── MANDADO DE COMARCA DIVERSA ─────────────────── */
   mandado: {
     titulo: '🏛️ Modelo — Mandado de Prisão de Comarca Diversa',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
-      'Encaminho para análise pedido de transferência do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], para o(a) [UNIDADE PRISIONAL DE DESTINO], em razão do cumprimento de Mandado de Prisão expedido pelo(a) [JUÍZO EXPEDIDOR — Ex.: Vara Regional de Execuções Penais da Comarca de XXXXX / 2ª Vara Criminal da Comarca de XXX].',
-      'Considerando que o(a) referido(a) custodiado(a) foi preso(a) em comarca diversa daquela que expediu a ordem de prisão, bem como que o(a) [UNIDADE PRISIONAL DE DESTINO] é a unidade responsável pela circunscrição da autoridade judiciária expedidora, a transferência mostra-se adequada, em conformidade com as diretrizes estabelecidas para a gestão de vagas e movimentações prisionais previstas na Resolução Conjunta Interinstitucional n. 01/2026, especialmente em seu art. 21, inciso III, bem como em cumprimento ao Art. 24 da Portaria Normativa nº 2.189/2025 do Departamento de Polícia Penal.',
-      'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, quais sejam, o(a) Diretor(a) da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que anuem ao presente expediente.',
-      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa.'
+      'Encaminho para análise pedido de transferência do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado no(a) [UNIDADE PRISIONAL DE ORIGEM], para o(a) [UNIDADE PRISIONAL DE DESTINO], em razão do cumprimento de Mandado de Prisão expedido pelo(a) [JUÍZO EXPEDIDOR — Ex.: Vara Regional de Execuções Penais da Comarca de XXXXX / 2ª Vara Criminal da Comarca de XXX].',
+      'Considerando que o referido custodiado foi preso em comarca diversa daquela que expediu a ordem de prisão, bem como que o(a) [UNIDADE PRISIONAL DE DESTINO] é a unidade responsável pela circunscrição da autoridade judiciária expedidora, a transferência mostra-se adequada, em conformidade com as diretrizes estabelecidas para a gestão de vagas e movimentações prisionais previstas na Resolução Conjunta Interinstitucional n. 01/2026, especialmente em seu art. 21, inciso III.',
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor, e cópia do Mandado de Prisão.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Informo, por fim, que foram realizados contatos prévios com os entes envolvidos, quais sejam, o Diretor da Unidade Prisional de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem ou anuem ao presente expediente.',
+      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa do referido reeducando.',
     ],
-    assinaturas: [
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE ORIGEM]', nome: '[NOME DO DIRETOR DA UNIDADE DE ORIGEM]' },
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE DESTINO]', nome: '[NOME DO DIRETOR DA UNIDADE DE DESTINO]' },
-      { cargo: 'Superintendente do(a) [SR DE ORIGEM]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]' },
-      { cargo: 'Superintendente do(a) [SR DE DESTINO — SE FOR O CASO]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — DESTINO]' }
-    ]
   },
+
+  /* ── PERNOITE ────────────────────────────────────── */
   pernoite: {
     titulo: '🌙 Modelo — Pernoite',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
-      'Encaminho para análise pedido de PERNOITE do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], no estabelecimento penal [UNIDADE PRISIONAL DE DESTINO], em razão de [FUNDAMENTAR A RAZÃO].',
-      'Informo, por fim, que fora realizado contato prévio com a gestão da unidade de destino, que subscreve também o presente expediente, bem como com o(s) respectivo(s) Superintendente(s) Regional(is).',
-      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade do pleito administrativo.'
+      'Encaminho para análise pedido de PERNOITE do reeducando [NOME COMPLETO], IPEN [Nº], atualmente custodiado no(a) [UNIDADE PRISIONAL DE ORIGEM], no estabelecimento penal [UNIDADE PRISIONAL DE DESTINO], em razão de [FUNDAMENTAR A RAZÃO].',
+      'Informo que foram realizados contatos prévios com a gestão da unidade de destino, que subscreve o presente expediente, bem como com o(s) respectivo(s) Superintendente(s) Regional(is).',
+      'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade do pleito administrativo.',
     ],
-    assinaturas: [
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE ORIGEM]', nome: '[NOME DO DIRETOR DA UNIDADE DE ORIGEM]' },
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE DESTINO]', nome: '[NOME DO DIRETOR DA UNIDADE DE DESTINO]' },
-      { cargo: 'Superintendente do(a) [SR DE ORIGEM]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]' },
-      { cargo: 'Superintendente do(a) [SR DE DESTINO — SE FOR O CASO]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — DESTINO]' }
-    ]
   },
+
+  /* ── SEGURANÇA MÁXIMA / RDD ──────────────────────── */
   umax: {
     titulo: '🔒 Modelo — Inclusão na Unidade de Segurança Máxima (após RDD deferido)',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
+    destinatarioExtra: true,
     paragrafos: [
       'Encaminho para análise e deliberação dessa Comissão Deliberativa para inclusão de presos na Unidade de Segurança Máxima do Estado e Central de Regulação de Vagas quanto à inclusão do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM].',
       'A presente solicitação fundamenta-se nos documentos e informações que seguem anexos, os quais demonstram a necessidade da medida, especialmente diante das circunstâncias que envolvem o referido custodiado e os riscos à ordem, à disciplina e à segurança do estabelecimento prisional.',
       'Para subsidiar a análise dessa Comissão e CRV, encaminham-se os seguintes documentos: (i) Ofício de solicitação de inclusão em Regime Disciplinar Diferenciado (RDD) encaminhado ao r. Juízo competente; (ii) Decisão judicial que determina a inclusão do apenado em RDD; (iii) Boletim de Ocorrência, PAD, Relatórios e/ou demais informações pertinentes à avaliação da medida.',
-      'Para subsidiar a análise, informo a devida atualização no sistema i-PEN do Boletim Penal Informativo, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como anexo o Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor.',
-      'Uma vez efetivada a remoção, caso aprovada, o r. Juízo competente será devidamente comunicado no prazo legal de até 24 horas.',
-      'Diante do exposto, solicita-se a urgente apreciação do presente pedido, com vistas à deliberação acerca da inclusão do apenado na Unidade de Segurança Máxima do Estado.'
+      'Para subsidiar a análise, encaminho em anexo Boletim Penal Informativo devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor.',
+      'Uma vez efetivada a remoção — caso aprovada —, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja, em até 24 horas.',
+      'Diante do exposto, solicita-se a urgente apreciação do presente pedido, com vistas à deliberação acerca da inclusão do apenado na Unidade de Segurança Máxima do Estado.',
     ],
-    assinaturas: [
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE ORIGEM]', nome: '[NOME DO DIRETOR DA UNIDADE DE ORIGEM]' },
-      { cargo: 'Superintendente do(a) [SR DE ORIGEM]', nome: '[NOME DO SUPERINTENDENTE REGIONAL — ORIGEM]' }
-    ],
-    destinatarioExtra: true
   },
+
+  /* ── COMUNICAÇÃO AO JUÍZO ───────────────────────── */
   comunicacao: {
     titulo: '🏛️ Modelo — Comunicação de Transferência ao Juízo de Execução',
+    saudacaoInicial: 'Senhor(a) Juiz(a),',
+    destinatarioJuizo: true,
     paragrafos: [
       'Comunicamos que o(a) custodiado(a) [NOME COMPLETO], IPEN nº [NÚMERO], foi transferido(a) para [NOME DA UNIDADE DE DESTINO] — [CIDADE]/SC, em [DATA], às [HORA]h, em razão de [MOTIVO: segurança/emergência / adequação de capacidade / mandado de comarca diversa].',
-      'A transferência foi autorizada pela Central de Regulação de Vagas — CRV/DPP/SEJURI, mediante despacho nº [Nº DO DESPACHO], de [DATA].'
+      'A transferência foi autorizada pela Central de Regulação de Vagas — CRV/DPP/SEJURI, mediante despacho nº [Nº DO DESPACHO], de [DATA].',
     ],
-    assinaturas: [
-      { cargo: 'Diretor(a) do(a) [UNIDADE DE ORIGEM]', nome: '[NOME DO DIRETOR(A)]' }
-    ],
-    saudacaoInicial: 'Senhor(a) Juiz(a),',
-    destinatarioJuizo: true
-  }
+  },
+
 };
 
 let modeloAtual = 'emergencial';
@@ -509,330 +635,200 @@ function selecionarModelo(id) {
 
   // Destaca botão ativo
   document.querySelectorAll('[id^="tab-"]').forEach(b => {
-    b.style.background = '';
-    b.style.color = '';
-    b.style.borderColor = '';
+    b.style.background = ''; b.style.color = ''; b.style.borderColor = '';
   });
   const tabBtn = document.getElementById('tab-' + id);
   if (tabBtn) {
     tabBtn.style.background = 'var(--azul-2)';
-    tabBtn.style.color = '#fff';
+    tabBtn.style.color      = '#fff';
     tabBtn.style.borderColor = 'var(--azul-2)';
   }
 
   // Saudação padrão
   const sel = document.getElementById('ofc-saudacao');
-  if (m.saudacaoInicial === 'Senhor(a) Juiz(a),') {
-    sel.value = 'Senhor(a) Juiz(a),';
-  } else {
-    sel.value = 'Senhor(a) Coordenador(a),';
-  }
+  if (sel) sel.value = m.saudacaoInicial === 'Senhor(a) Juiz(a),'
+    ? 'Senhor(a) Juiz(a),'
+    : 'Senhor(a) Coordenador(a),';
 
-  // Parágrafos
+  // Parágrafos editáveis
   const cont = document.getElementById('ofc-paragrafos');
   cont.innerHTML = m.paragrafos.map(p =>
-    '<div class="oficio-paragrafo"><textarea class="oficio-paragrafo-area" rows="' +
-    Math.max(2, Math.ceil(p.length / 90)) + '">' + p + '</textarea></div>'
-  ).join('');
-
-  // Assinaturas — usa dados reais das unidades selecionadas se disponíveis
-  const assEl = document.getElementById('ofc-assinaturas');
-  const assigs = construirAssinaturas(m, unidadeOrigemSel, unidadeDestinoSel);
-  assEl.innerHTML = assigs.map(a =>
-    '<div class="oficio-assinatura-bloco">' +
-    '<div class="ass-digital">(documento assinado digitalmente)</div>' +
-    '<div class="ass-nome"><input class="campo-edit" value="' + a.nome + '" style="font-weight:bold;width:340px;max-width:100%;"/></div>' +
-    '<div class="ass-cargo"><input class="campo-edit" value="' + a.cargo + '" style="width:340px;max-width:100%;"/></div>' +
-    '</div>'
+    `<div class="oficio-paragrafo"><textarea class="oficio-paragrafo-area" rows="${Math.max(2, Math.ceil(p.length / 90))}" data-original="${p.replace(/"/g,'&quot;')}">${p}</textarea></div>`
   ).join('');
 
   // Destinatário
   const destEl = document.getElementById('ofc-destinatario');
   if (m.destinatarioJuizo) {
-    destEl.innerHTML =
-      '<p>A</p>' +
-      '<p><strong>[VARA DE EXECUÇÕES PENAIS — COMARCA DE [COMARCA]]</strong></p>' +
-      '<p>[CIDADE]/SC</p>';
+    destEl.innerHTML = '<p>A</p><p><strong>[VARA DE EXECUÇÕES PENAIS — COMARCA DE [COMARCA]]</strong></p><p>[CIDADE]/SC</p>';
   } else if (m.destinatarioExtra) {
     destEl.innerHTML =
-      '<p>À</p>' +
-      '<p><strong>COMISSÃO DELIBERATIVA — UNIDADE DE SEGURANÇA MÁXIMA</strong></p>' +
+      '<p>À</p><p><strong>COMISSÃO DELIBERATIVA — UNIDADE DE SEGURANÇA MÁXIMA</strong></p>' +
       '<p>Departamento de Polícia Penal — DPP</p>' +
       '<p>Secretaria de Estado de Justiça e Reintegração Social — SEJURI</p>' +
-      '<p>Florianópolis/SC</p>' +
-      '<br>' +
-      '<p>À</p>' +
-      '<p><strong>CENTRAL DE REGULAÇÃO DE VAGAS — CRV</strong></p>' +
+      '<p>Florianópolis/SC</p><br>' +
+      '<p>À</p><p><strong>CENTRAL DE REGULAÇÃO DE VAGAS — CRV</strong></p>' +
       '<p>Departamento de Polícia Penal — DPP</p>' +
       '<p>Secretaria de Estado de Justiça e Reintegração Social — SEJURI</p>' +
       '<p>Florianópolis/SC</p>';
   } else {
     destEl.innerHTML =
-      '<p>À</p>' +
-      '<p><strong>CENTRAL DE REGULAÇÃO DE VAGAS — CRV</strong></p>' +
+      '<p>À</p><p><strong>CENTRAL DE REGULAÇÃO DE VAGAS — CRV</strong></p>' +
       '<p>Departamento de Polícia Penal — DPP</p>' +
       '<p>Secretaria de Estado de Justiça e Reintegração Social — SEJURI</p>' +
       '<p>Florianópolis/SC</p>';
   }
+
+  // Renderiza assinaturas com unidades já selecionadas (ou placeholders)
+  renderizarAssinaturas(unidadeOrigemSel, unidadeDestinoSel);
 }
 
-// Saudação personalizada
 function atualizarSaudacao() {
   const sel    = document.getElementById('ofc-saudacao');
   const custom = document.getElementById('ofc-saudacao-custom');
-  custom.style.display = sel.value === 'outro' ? 'inline-block' : 'none';
+  if (custom) custom.style.display = sel.value === 'outro' ? 'inline-block' : 'none';
 }
 
 // ================================================
-// EXPORTAÇÃO — Texto puro do ofício
+// EXPORTAR — Coleta texto do ofício
 // ================================================
 function coletarTextoOficio() {
   const cidade   = document.getElementById('ofc-cidade-txt')?.textContent || '';
-  const data     = document.getElementById('ofc-data-txt')?.textContent || '';
+  const data     = document.getElementById('ofc-data-txt')?.textContent   || '';
   const saudSel  = document.getElementById('ofc-saudacao');
-  const saudCustom = document.getElementById('ofc-saudacao-custom');
-  const saudacao = saudSel?.value === 'outro'
-    ? (saudCustom?.value || '')
-    : (saudSel?.value || 'Senhor(a) Coordenador(a),');
+  const custom   = document.getElementById('ofc-saudacao-custom');
+  const saudacao = saudSel?.value === 'outro' ? (custom?.value || '') : (saudSel?.value || '');
   const despedida = document.getElementById('ofc-despedida')?.value || 'Atenciosamente,';
-
-  const paras = [...document.querySelectorAll('#ofc-paragrafos textarea')]
-    .map(t => t.value.trim()).filter(Boolean);
-
-  const asss = [...document.querySelectorAll('#ofc-assinaturas .oficio-assinatura-bloco')].map(b => {
-    const nome  = b.querySelector('.ass-nome input')?.value || '';
-    const cargo = b.querySelector('.ass-cargo input')?.value || '';
-    return { nome, cargo };
+  const paras    = [...document.querySelectorAll('#ofc-paragrafos textarea')].map(t => t.value.trim()).filter(Boolean);
+  const asss     = [...document.querySelectorAll('#ofc-assinaturas .oficio-assinatura-bloco')].map(b => {
+    const nome   = b.querySelector('.ass-nome input')?.value || '';
+    const cargos = [...b.querySelectorAll('.ass-cargo input')].map(i => i.value).filter(Boolean);
+    return { nome, cargo: cargos.join('\n') };
   });
-
   const destHTML = document.getElementById('ofc-destinatario')?.innerText || '';
-
   return { cidade, data, saudacao, paras, despedida, asss, destHTML };
 }
 
-// ------------------------------------------------
-// COPIAR TEXTO
-// ------------------------------------------------
 function copiarOficio() {
   const { cidade, data, saudacao, paras, despedida, asss, destHTML } = coletarTextoOficio();
-  const indent = '   '; // ~1,5cm em texto
+  const NL     = '\n';
   const bigGap = '\n\n\n\n';
   const midGap = '\n\n\n\n\n';
   const assGap = '\n\n';
-
-  let txt = cidade + ', ' + data + '.\n';
-  txt += bigGap;
-  txt += indent + saudacao + '\n';
-  txt += bigGap;
-  paras.forEach((p, i) => { txt += indent + p + '\n'; if (i < paras.length - 1) txt += '\n'; });
-  txt += bigGap;
-  const rightPad = '                                '; // ~8cm
-  txt += rightPad + despedida + '\n';
-  txt += midGap;
+  const indent = '   ';
+  const pad8   = '                                ';
+  let txt = cidade + ', ' + data + '.' + bigGap + indent + saudacao + NL + bigGap;
+  paras.forEach((p, i) => {
+    txt += indent + p + NL;
+    if (i < paras.length - 1) txt += NL;
+  });
+  txt += bigGap + pad8 + despedida + NL + midGap;
   asss.forEach(a => {
-    txt += rightPad + '(documento assinado digitalmente)\n';
-    txt += rightPad + a.nome + '\n';
-    txt += rightPad + a.cargo + '\n';
+    txt += pad8 + '(documento assinado digitalmente)' + NL;
+    txt += pad8 + a.nome + NL;
+    a.cargo.split('\n').forEach(l => { txt += pad8 + l + NL; });
     txt += assGap;
   });
-  txt += bigGap;
-  txt += destHTML;
-
-  navigator.clipboard.writeText(txt).then(() => {
-    showToast('✅ Ofício copiado!');
-  }).catch(() => {
+  txt += bigGap + destHTML;
+  navigator.clipboard.writeText(txt).then(() => showToast('✅ Ofício copiado!')).catch(() => {
     const ta = document.createElement('textarea');
-    ta.value = txt; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
+    ta.value = txt;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
     showToast('✅ Ofício copiado!');
   });
 }
 
-// ------------------------------------------------
-// GERAR PDF
-// ------------------------------------------------
 function gerarPDF() {
   const { cidade, data, saudacao, paras, despedida, asss } = coletarTextoOficio();
-  const m = modelosTexto[modeloAtual];
   const destEl = document.getElementById('ofc-destinatario');
-
-  const html = `
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/>
-<title>Ofício CRV</title>
-<style>
-  @page { size: A4; margin: 3cm 2.5cm 2.5cm 3cm; }
-  body { font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #000; }
-  .data { text-align: right; margin-bottom: 4em; }
-  .saudacao { text-indent: 1.5cm; margin-bottom: 4em; }
-  .paragrafo { text-indent: 1.5cm; text-align: justify; margin-bottom: 1em; }
-  .despedida { margin-top: 4em; margin-left: 8cm; }
-  .assinaturas { margin-top: 5em; margin-left: 8cm; }
-  .ass-bloco { margin-bottom: 2em; }
-  .ass-digital { font-size: 9pt; color: #555; font-style: italic; }
-  .ass-nome { font-weight: bold; }
-  .destinatario { margin-top: 4em; }
-  .dest-crv { font-weight: bold; text-transform: uppercase; }
-</style></head><body>
-<div class="data">${cidade}, ${data}.</div>
-<div class="saudacao">${saudacao}</div>
-${paras.map(p => `<div class="paragrafo">${p}</div>`).join('')}
-<div class="despedida">${despedida}</div>
-<div class="assinaturas">
-${asss.map(a => `<div class="ass-bloco"><div class="ass-digital">(documento assinado digitalmente)</div><div class="ass-nome">${a.nome}</div><div>${a.cargo}</div></div>`).join('')}
-</div>
-<div class="destinatario">${destEl ? destEl.innerHTML : ''}</div>
-</body></html>`;
-
+  const html = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/><title>Ofício CRV</title>'
+    + '<style>@page{size:A4;margin:3cm 2.5cm 2.5cm 3cm;}body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.5;color:#000;}'
+    + '.data{text-align:right;margin-bottom:4em;}.saud{text-indent:1.5cm;margin-bottom:4em;}'
+    + '.par{text-indent:1.5cm;text-align:justify;margin-bottom:1em;}'
+    + '.desp{margin-top:4em;margin-left:8cm;}.asss{margin-top:5em;margin-left:8cm;}'
+    + '.ab{margin-bottom:2em;}.dig{font-size:9pt;color:#555;font-style:italic;}.nom{font-weight:bold;}'
+    + '.dest{margin-top:4em;}strong{font-weight:bold;text-transform:uppercase;}</style></head><body>'
+    + '<div class="data">' + cidade + ', ' + data + '.</div>'
+    + '<div class="saud">' + saudacao + '</div>'
+    + paras.map(p => '<div class="par">' + p + '</div>').join('')
+    + '<div class="desp">' + despedida + '</div>'
+    + '<div class="asss">' + asss.map(a =>
+        '<div class="ab"><div class="dig">(documento assinado digitalmente)</div>'
+        + '<div class="nom">' + a.nome + '</div>'
+        + a.cargo.split('\n').map(l => '<div>' + l + '</div>').join('')
+        + '</div>').join('') + '</div>'
+    + '<div class="dest">' + (destEl ? destEl.innerHTML : '') + '</div>'
+    + '</body></html>';
   const w = window.open('', '_blank');
   w.document.write(html);
   w.document.close();
-  setTimeout(() => { w.print(); }, 600);
+  setTimeout(() => w.print(), 600);
 }
 
-// ------------------------------------------------
-// GERAR WORD (.docx via HTML blob)
-// ------------------------------------------------
 function gerarWord() {
   const { cidade, data, saudacao, paras, despedida, asss } = coletarTextoOficio();
   const destEl = document.getElementById('ofc-destinatario');
-
-  const msoDoc = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
-    xmlns:w="urn:schemas-microsoft-com:office:word"
-    xmlns="http://www.w3.org/TR/REC-html40">
-<head>
-<meta charset="UTF-8"/>
-<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml>
-<style>
-  @page { mso-page-orientation: portrait; margin: 3cm 2.5cm 2.5cm 3cm; }
-  body { font-family: Arial; font-size: 11pt; line-height: 1.5; }
-  p { margin: 0; }
-  .data { text-align: right; margin-bottom: 0; }
-  .gap4 { margin-bottom: 4em; }
-  .gap5 { margin-bottom: 5em; }
-  .gap2 { margin-bottom: 2em; }
-  .indent15 { margin-left: 1.5cm; }
-  .indent8  { margin-left: 8cm; }
-  .justify  { text-align: justify; }
-  .bold     { font-weight: bold; }
-  .italic   { font-style: italic; font-size: 9pt; color: #555; }
-  .upper    { text-transform: uppercase; }
-</style>
-</head><body>
-<p class="data">${cidade}, ${data}.</p>
-<p class="gap4">&nbsp;</p>
-<p class="indent15 gap4">${saudacao}</p>
-${paras.map(p => `<p class="indent15 justify gap1">${p}</p><p>&nbsp;</p>`).join('')}
-<p class="indent8 gap4">${despedida}</p>
-<p class="gap5">&nbsp;</p>
-${asss.map(a => `<p class="indent8 italic">(documento assinado digitalmente)</p><p class="indent8 bold">${a.nome}</p><p class="indent8">${a.cargo}</p><p class="gap2">&nbsp;</p>`).join('')}
-<p class="gap4">&nbsp;</p>
-${destEl ? destEl.innerHTML.replace(/<strong>/g,'<span class="bold upper">').replace(/<\/strong>/g,'</span>') : ''}
-</body></html>`;
-
-  const blob = new Blob(['\ufeff', msoDoc], { type: 'application/msword' });
+  const mso = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
+    + '<head><meta charset="UTF-8"/>'
+    + '<style>@page{mso-page-orientation:portrait;margin:3cm 2.5cm 2.5cm 3cm;}'
+    + 'body{font-family:Arial;font-size:11pt;line-height:1.5;}'
+    + '.data{text-align:right;}.gap4{margin-bottom:4em;}.gap5{margin-bottom:5em;}.gap2{margin-bottom:2em;}'
+    + '.i15{margin-left:1.5cm;text-align:justify;}.i8{margin-left:8cm;}'
+    + 'b{font-weight:bold;}.dig{font-size:9pt;color:#555;font-style:italic;}'
+    + '</style></head><body>'
+    + '<p class="data">' + cidade + ', ' + data + '.</p>'
+    + '<p class="gap4">&nbsp;</p>'
+    + '<p class="i15 gap4">' + saudacao + '</p>'
+    + paras.map(p => '<p class="i15">' + p + '</p><p>&nbsp;</p>').join('')
+    + '<p class="i8 gap4">' + despedida + '</p>'
+    + '<p class="gap5">&nbsp;</p>'
+    + asss.map(a =>
+        '<p class="i8 dig">(documento assinado digitalmente)</p>'
+        + '<p class="i8"><b>' + a.nome + '</b></p>'
+        + a.cargo.split('\n').map(l => '<p class="i8">' + l + '</p>').join('')
+        + '<p class="gap2">&nbsp;</p>').join('')
+    + '<p class="gap4">&nbsp;</p>'
+    + (destEl ? destEl.innerHTML : '')
+    + '</body></html>';
+  const blob = new Blob(['\ufeff', mso], { type: 'application/msword' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  a.href = url;
-  a.download = 'oficio-crv.doc';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  a.href = url; a.download = 'oficio-crv.doc';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
   showToast('📘 Download Word iniciado!');
 }
 
 // ================================================
-// TOAST de notificação
+// TOAST
 // ================================================
 function showToast(msg) {
   let t = document.getElementById('crvToast');
   if (!t) {
-    t = document.createElement('div');
-    t.id = 'crvToast';
+    t = document.createElement('div'); t.id = 'crvToast';
     t.style.cssText = 'position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:var(--azul-2);color:#fff;padding:.6rem 1.5rem;border-radius:100px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:opacity .3s;pointer-events:none;';
     document.body.appendChild(t);
   }
-  t.textContent = msg;
-  t.style.opacity = '1';
+  t.textContent = msg; t.style.opacity = '1';
   clearTimeout(t._timer);
   t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2500);
 }
-
-
-// ================================================
-// FLUXO OPERACIONAL — Toggle passo
-// ================================================
-function toggleFlowStep(body) {
-  body.classList.toggle('aberto');
-  const btn = body.querySelector('.flow-toggle-btn');
-  if (btn) btn.textContent = body.classList.contains('aberto')
-    ? '▼ Ocultar detalhes'
-    : '▶ Ver detalhes';
-}
-
-// ================================================
-// MODAL DE OFÍCIO
-// ================================================
-function abrirModalOficio(modeloId) {
-  const modal = document.getElementById('modalOficio');
-  if (!modal) return;
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  popularSelectsUnidades();
-  // Data automática
-  const hoje = new Date();
-  const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-  const dataFmt = `${hoje.getDate()} de ${meses[hoje.getMonth()]} de ${hoje.getFullYear()}`;
-  const dataEl = document.getElementById('ofc-data-txt');
-  if (dataEl) { dataEl.textContent = dataFmt; dataEl.contentEditable = 'true'; }
-  // Torna cidade editável
-  const cidEl = document.getElementById('ofc-cidade-txt');
-  if (cidEl) cidEl.contentEditable = 'true';
-  // Reset seleções
-  unidadeOrigemSel = null; unidadeDestinoSel = null;
-  const sOri = document.getElementById('sel-origem');
-  const sDes = document.getElementById('sel-destino');
-  if (sOri) sOri.value = '';
-  if (sDes) sDes.value = '';
-  atualizarInfoUnidade('origem', null);
-  atualizarInfoUnidade('destino', null);
-  selecionarModelo(modeloId);
-}
-
-function fecharModalOficio() {
-  const modal = document.getElementById('modalOficio');
-  if (!modal) return;
-  modal.style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-function fecharModalOficioFora(event) {
-  if (event.target === document.getElementById('modalOficio')) {
-    fecharModalOficio();
-  }
-}
-
-// Fechar modal com ESC
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') fecharModalOficio();
-});
 
 // ================================================
 // INICIALIZAÇÃO
 // ================================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Restaurar dark mode salvo
+  // Restaurar dark mode
   if (localStorage.getItem('darkMode') === '1') {
     document.body.classList.add('dark-mode');
     const btn = document.getElementById('btnDarkMode');
     if (btn) btn.innerHTML = '☀️ Modo Claro';
   }
 
-  // Inicializa modelo padrão
-  selecionarModelo('emergencial');
+  // Inicializa modelo padrão (sem abrir modal)
+  // selecionarModelo('emergencial'); // só quando o modal abrir
 
   // Abre página correta pelo hash
-  const hash = window.location.hash.replace('#', '').trim();
+  const hash   = window.location.hash.replace('#','').trim();
   const validos = Object.keys(nomesPagina);
   if (hash && validos.includes(hash)) {
     navegarPara(hash);
@@ -840,9 +836,9 @@ document.addEventListener('DOMContentLoaded', () => {
     navegarPara('inicio');
   }
 
-  // Botão voltar/avançar do navegador
+  // Botão voltar/avançar
   window.addEventListener('popstate', () => {
-    const h = window.location.hash.replace('#', '').trim();
+    const h = window.location.hash.replace('#','').trim();
     if (h && validos.includes(h)) {
       document.querySelectorAll('.page-section').forEach(s => s.classList.remove('ativo'));
       const alvo = document.getElementById(h);
