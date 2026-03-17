@@ -2376,3 +2376,248 @@ body.dark-mode .oficio-sel-info   { color: #94a3b8; }
   color: #fbbf24;
 }
 
+
+
+/* ================================================
+   CRV — BLOCO SOBRE (3 COLUNAS)
+   ================================================ */
+
+.crv-sobre-bloco {
+  margin-bottom: 2rem;
+}
+
+.crv-sobre-inner {
+  background: var(--branco);
+  border: 1px solid var(--cinza-border, #e2e8f0);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+
+.crv-sobre-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--azul-4);
+}
+
+.crv-sobre-icone {
+  font-size: 2rem;
+  flex-shrink: 0;
+  margin-top: .1rem;
+}
+
+.crv-sobre-titulo {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--azul-1);
+  margin: 0 0 .2rem;
+  letter-spacing: .01em;
+}
+
+.crv-sobre-subtitulo {
+  font-size: .82rem;
+  color: var(--cinza-3);
+  font-weight: 500;
+}
+
+.crv-sobre-corpo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.crv-sobre-col p {
+  font-size: .84rem;
+  line-height: 1.75;
+  color: var(--cinza-2);
+  margin-bottom: .75rem;
+}
+
+.crv-sobre-col p:last-child { margin-bottom: 0; }
+
+.crv-sobre-col-titulo {
+  font-size: .82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--azul-4);
+  margin: 0 0 .75rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid rgba(37,99,235,.15);
+}
+
+@media (max-width: 900px) {
+  .crv-sobre-corpo { grid-template-columns: 1fr; }
+}
+
+.dark-mode .crv-sobre-inner {
+  background: #1e293b;
+  border-color: #334155;
+}
+.dark-mode .crv-sobre-titulo { color: #93c5fd; }
+.dark-mode .crv-sobre-col p { color: #cbd5e1; }
+
+/* ================================================
+   PEDIDO DE TRANSFERÊNCIA — BLOCO LARGO
+   ================================================ */
+
+.pedido-transferencia-bloco {
+  margin-top: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+.pedido-transferencia-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, var(--azul-1), var(--azul-2));
+  border-radius: 14px;
+  padding: 1.25rem 1.75rem;
+  flex-wrap: wrap;
+}
+
+.pedido-transferencia-texto {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+.pedido-transferencia-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.pedido-transferencia-titulo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 .35rem;
+}
+
+.pedido-transferencia-desc {
+  font-size: .82rem;
+  color: rgba(255,255,255,.8);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pedido-transferencia-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--ouro-3);
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: .88rem;
+  padding: .7rem 1.4rem;
+  border-radius: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .2s, transform .15s;
+  flex-shrink: 0;
+}
+
+.pedido-transferencia-btn:hover {
+  background: #e6a800;
+  transform: translateY(-2px);
+}
+
+/* ================================================
+   ATALHOS GRID — 6 EM UMA LINHA
+   ================================================ */
+
+.atalhos-grid-6 {
+  grid-template-columns: repeat(6, 1fr) !important;
+}
+
+@media (max-width: 1100px) {
+  .atalhos-grid-6 { grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+@media (max-width: 700px) {
+  .atalhos-grid-6 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ================================================
+   SELETOR SAÍDA / ENTRADA NO MODAL DE OFÍCIO
+   ================================================ */
+
+.ofc-tipo-seletor {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1rem;
+  padding: .75rem 1rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.tipo-btn {
+  flex: 1;
+  padding: .55rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  background: #fff;
+  color: var(--cinza-2);
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+
+.tipo-btn:hover {
+  border-color: var(--azul-4);
+  color: var(--azul-4);
+}
+
+.tipo-btn.ativo {
+  background: var(--azul-4);
+  border-color: var(--azul-4);
+  color: #fff;
+}
+
+/* ================================================
+   DESTINATÁRIO EDITÁVEL (COMUNICAÇÃO/MANDADO)
+   ================================================ */
+
+.campo-dest-inline {
+  display: inline-block;
+  background: #fef9c3;
+  border: 2px solid #f0b429;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: .9rem;
+  font-family: inherit;
+  font-weight: 700;
+  color: #78350f;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  max-width: 100%;
+}
+
+.campo-dest-inline:focus {
+  border-color: var(--azul-4);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+  background: #fff;
+  color: var(--cinza-1);
+}
+
+.campo-dest-inline::placeholder {
+  color: #b45309;
+  font-style: italic;
+}
+
+/* ================================================
+   CAMPO INLINE NEGRITO
+   ================================================ */
+
+.campo-inline-negrito {
+  font-weight: 800 !important;
+}
+
