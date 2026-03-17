@@ -663,8 +663,8 @@ function selecionarModelo(id) {
   // Saudação padrão
   const sel = document.getElementById('ofc-saudacao');
   if (sel) sel.value = m.saudacaoInicial === 'Senhor(a) Juiz(a),'
-    ? 'Prezado(a) Juiz(a),'
-    : 'Prezado(a) Coordenador(a),';
+    ? 'Senhor(a) Juiz(a),'
+    : 'Senhor(a) Coordenador(a),';
 
   // Parágrafos — suporte a formato antigo (string) e novo (objeto com editavel)
   const cont = document.getElementById('ofc-paragrafos');
