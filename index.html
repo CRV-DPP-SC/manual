@@ -68,18 +68,14 @@
         <h2>Central de Regulação<br><span>de Vagas — CRV</span></h2>
         <p>Normativa operacional para Policiais Penais das unidades prisionais de Santa Catarina. Procedimentos, fluxos e modelos de ofícios conforme a Resolução Conjunta Interinstitucional nº 1/2026.</p>
       </div>
-      <div class="hero-stats">
-        <div class="stat-card"><span class="num">06</span><span class="label">Hipóteses</span></div>
-        <div class="stat-card"><span class="num">Res.<br>1/2026</span><span class="label">Base Legal</span></div>
-        <div class="stat-card"><span class="num">SC</span><span class="label">Estado</span></div>
-      </div>
+
     </div>
   </div>
 
   <div class="busca-bar">
     <div class="busca-inner">
       <span class="busca-icone">🔍</span>
-      <input type="text" id="busca" placeholder="Buscar... (ex: transferência, prazo, documentos, vedação)" onkeyup="buscar()" autocomplete="off" />
+      <input type="text" id="buscaManual" placeholder="Buscar... (ex: transferência, prazo, documentos, vedação)" onkeyup="buscarManual()" autocomplete="off" />
       <button class="busca-limpar" id="buscaLimpar" onclick="limparBusca()" title="Limpar" style="display:none;">✕</button>
     </div>
     <div id="buscaResultado" class="busca-resultado" style="display:none;"></div>
@@ -98,7 +94,7 @@
     <h2 class="section-titulo fade-up fade-up-delay-2">⚡ Atalhos Rápidos</h2>
     <p class="section-subtitulo">Acesse o procedimento necessário conforme a situação da unidade prisional.</p>
 
-    <div class="atalhos-grid">
+    <div class="atalhos-grid atalhos-grid-6">
       <a class="atalho-btn atalho-emergencial fade-up fade-up-delay-1" href="#" onclick="abrirModeloDireto('emergencial');return false;">
         <div class="icone">🚨</div>
         <span class="titulo">Segurança / Emergência</span>
@@ -137,7 +133,48 @@
       </a>
     </div>
 
-    <!-- COMECE POR AQUI — Fast Track -->
+    
+    <!-- O QUE É A CRV — Bloco acima dos atalhos -->
+    <div class="crv-sobre-bloco fade-up fade-up-delay-2">
+      <div class="crv-sobre-inner">
+        <div class="crv-sobre-header">
+          <span class="crv-sobre-icone">🏛️</span>
+          <div>
+            <h2 class="crv-sobre-titulo">Central de Regulação de Vagas — CRV</h2>
+            <p class="crv-sobre-subtitulo">Órgão de coordenação interinstitucional do sistema prisional catarinense</p>
+          </div>
+        </div>
+        <div class="crv-sobre-corpo">
+          <div class="crv-sobre-col">
+            <h3 class="crv-sobre-col-titulo">O que é a CRV</h3>
+            <p>A <strong>Central de Regulação de Vagas (CRV)</strong> é o órgão subordinado diretamente ao <strong>Diretor Geral do Departamento de Polícia Penal — DPP</strong>, responsável por analisar, coordenar e autorizar todas as transferências de pessoas privadas de liberdade no sistema prisional de Santa Catarina.</p>
+            <p>Sua criação decorre do <strong>Programa Pena Justa</strong> — iniciativa interinstitucional do Estado de Santa Catarina que tem como objetivo humanizar e racionalizar o sistema de execução penal, promovendo a adequação das condições de custódia aos ditames legais, a redução da superlotação e o fortalecimento dos direitos fundamentais dos custodiados. A CRV é o instrumento operacional central desse Programa.</p>
+            <p>A atuação da CRV garante a <strong>distribuição equilibrada</strong> da população carcerária entre as unidades do Estado, o respeito à capacidade operacional de cada estabelecimento, a segurança institucional e o cumprimento das decisões judiciais.</p>
+          </div>
+          <div class="crv-sobre-col">
+            <h3 class="crv-sobre-col-titulo">Base Normativa e Interinstitucionalidade</h3>
+            <p>Os procedimentos da CRV são regidos pela <strong>Resolução Conjunta Interinstitucional nº 1/2026</strong>, editada em conjunto pelo <strong>Tribunal de Justiça de Santa Catarina (TJSC)</strong> e pela <strong>Secretaria de Estado de Justiça e Reintegração Social (SEJURI)</strong>.</p>
+            <p>Essa natureza <strong>interinstitucional</strong> reflete a necessária articulação entre o <strong>Poder Judiciário</strong> — responsável pela execução penal e pelo controle jurisdicional das transferências — e o <strong>Poder Executivo</strong> — responsável pela administração do sistema prisional. A CRV opera exatamente nessa interface, assegurando que as movimentações de custodiados respeitem tanto as determinações judiciais quanto as possibilidades operacionais das unidades prisionais.</p>
+            <p>A eficiência do sistema depende da atuação articulada entre os <strong>Diretores das Unidades Prisionais</strong>, os <strong>Superintendentes Regionais</strong> e a <strong>CRV</strong>. Cada transferência bem instruída e encaminhada corretamente agiliza a deliberação e reduz retrabalho para todos os envolvidos.</p>
+          </div>
+          <div class="crv-sobre-col">
+            <h3 class="crv-sobre-col-titulo">Princípios Fundamentais</h3>
+            <p>A atuação da CRV é orientada pelo princípio constitucional da <strong>Dignidade da Pessoa Humana</strong> (art. 1º, III, CF/88), que impõe ao Estado o dever de assegurar condições dignas de custódia, vedando tratamento degradante ou desumano, independentemente do crime praticado.</p>
+            <p>Nesse sentido, a distribuição racional de vagas não é apenas uma medida administrativa — é uma <strong>obrigação constitucional e convencional</strong>, alinhada aos parâmetros da Lei de Execução Penal (Lei nº 7.210/1984), das Regras Mínimas da ONU para o Tratamento de Reclusos (Regras de Mandela) e da jurisprudência do Supremo Tribunal Federal sobre o estado de coisas inconstitucional do sistema prisional brasileiro.</p>
+            <p>Ao regular as transferências com critérios técnicos e transparentes, a CRV contribui diretamente para a <strong>reintegração social</strong> do custodiado, o fortalecimento da segurança pública e a racionalização dos recursos do Estado.</p>
+          </div>
+        </div>
+        <div class="crv-badge-norma" style="margin-top:1.25rem;">
+          <span>📌</span>
+          <div>
+            <strong>Res. Conj. Interinst. nº 1/2026 — TJSC + SEJURI</strong><br>
+            <span style="font-size:.73rem;opacity:.8;">Em vigor desde 04/02/2026 · DJ nº 4.661 · Programa Pena Justa · DPP/SEJURI/SC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- COMECE POR AQUI — Fast Track -->
     <div class="comece-por-aqui-bloco fade-up fade-up-delay-3">
       <div class="comece-titulo">🚀 Comece por Aqui — Fluxo Rápido</div>
       <div class="comece-steps">
@@ -165,8 +202,16 @@
           </div>
         </a>
         <div class="comece-seta">→</div>
-        <a class="comece-step" href="#" onclick="navegarPara('fluxo');return false;">
+        <a class="comece-step" href="#" onclick="navegarPara('modelos');return false;">
           <div class="comece-step-num">4</div>
+          <div class="comece-step-texto">
+            <strong>Obtenha as assinaturas</strong>
+            <span>Diretor origem, Diretor destino e SR(s)</span>
+          </div>
+        </a>
+        <div class="comece-seta">→</div>
+        <a class="comece-step" href="#" onclick="navegarPara('fluxo');return false;">
+          <div class="comece-step-num">5</div>
           <div class="comece-step-texto">
             <strong>Cadastre no i-PEN</strong>
             <span>Registro da movimentação</span>
@@ -174,18 +219,18 @@
         </a>
         <div class="comece-seta">→</div>
         <a class="comece-step" href="#" onclick="navegarPara('modelos');return false;">
-          <div class="comece-step-num">5</div>
+          <div class="comece-step-num">6</div>
           <div class="comece-step-texto">
-            <strong>Obtenha as assinaturas</strong>
-            <span>Diretor origem, Diretor destino e SR(s)</span>
+            <strong>Solicite análise e deliberação da CRV</strong>
+            <span>Após materialização e assinaturas</span>
           </div>
         </a>
         <div class="comece-seta">→</div>
-        <a class="comece-step" href="#" onclick="navegarPara('modelos');return false;">
-          <div class="comece-step-num">6</div>
+        <a class="comece-step" href="#" onclick="navegarPara('fluxo');return false;">
+          <div class="comece-step-num">7</div>
           <div class="comece-step-texto">
-            <strong>Envie à CRV</strong>
-            <span>Após materialização e assinaturas</span>
+            <strong>Execução</strong>
+            <span>Efetivação após autorização da CRV</span>
           </div>
         </a>
       </div>
@@ -266,39 +311,7 @@
             </div>
           </div>
         </div>
-        <div class="sidebar-card sidebar-card-destaque">
-          <div class="sidebar-card-header" style="background:var(--azul-3);color:#fff;">📨 Pedido de Transferência</div>
-          <div class="sidebar-card-body">
-            <p class="text-sm mb-2" style="line-height:1.6;">Preso, familiar, advogado ou defensor podem solicitar transferência diretamente pelo portal, sem ir presencialmente à unidade.</p>
-            <a href="https://ppsc.com.br" target="_blank" rel="noopener" class="btn-sidebar-portal">
-              🌐 Acessar Portal PPSC ↗
-            </a>
-            <p class="text-sm text-muted mt-2" style="font-size:.78rem;">ppsc.com.br → Serviços → Pedido de Transferência</p>
-          </div>
-        </div>
-        <div class="sidebar-card sidebar-card-crv-destaque">
-          <div class="sidebar-card-header" style="background:linear-gradient(135deg,var(--azul-1),var(--azul-2));color:#fff;border-radius:10px 10px 0 0;">
-            🏛️ O que é a CRV?
-          </div>
-          <div class="sidebar-card-body">
-            <p class="text-sm" style="line-height:1.7;margin-bottom:.75rem;">
-              A <strong>Central de Regulação de Vagas (CRV)</strong> é o órgão subordinado diretamente ao <strong>Diretor Geral do DPP</strong>, responsável por analisar, coordenar e autorizar todas as transferências de pessoas privadas de liberdade no sistema prisional catarinense.
-            </p>
-            <p class="text-sm" style="line-height:1.7;margin-bottom:.75rem;">
-              Sua atuação garante a <strong>distribuição equilibrada</strong> da população carcerária, o respeito à capacidade das unidades, a segurança institucional e o cumprimento das decisões judiciais — com base na <strong>Resolução Conjunta Interinstitucional nº 1/2026</strong>.
-            </p>
-            <p class="text-sm" style="line-height:1.7;margin-bottom:.85rem;">
-              A eficiência do sistema depende da atuação articulada entre os <strong>Diretores das Unidades Prisionais</strong>, os <strong>Superintendentes Regionais</strong> e a <strong>CRV</strong>. Cada transferência bem instruída e encaminhada corretamente agiliza a deliberação e reduz retrabalho para todos os envolvidos.
-            </p>
-            <div class="crv-badge-norma">
-              <span>📌</span>
-              <div>
-                <strong>Res. Conj. Interinst. nº 1/2026</strong><br>
-                <span style="font-size:.73rem;opacity:.8;">Em vigor desde 04/02/2026 · DJ nº 4.661</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <div class="sidebar-card">
           <div class="sidebar-card-header">🗒️ Fiscalização — GMF/TJSC</div>
           <div class="sidebar-card-body">
@@ -307,6 +320,23 @@
         </div>
       </aside>
     </div>
+
+    <!-- PEDIDO DE TRANSFERÊNCIA — Bloco largo abaixo do Quadro Resumo -->
+    <div class="pedido-transferencia-bloco">
+      <div class="pedido-transferencia-inner">
+        <div class="pedido-transferencia-texto">
+          <div class="pedido-transferencia-icon">📨</div>
+          <div>
+            <h3 class="pedido-transferencia-titulo">Pedido de Transferência — Portal Online</h3>
+            <p class="pedido-transferencia-desc">Preso, familiar, advogado ou defensor público podem solicitar transferência diretamente pelo <strong>Portal da Polícia Penal SC</strong>, sem necessidade de comparecimento presencial à unidade. As solicitações são analisadas pela CRV e vinculadas ao Programa de Permutas.</p>
+          </div>
+        </div>
+        <a href="https://ppsc.com.br" target="_blank" rel="noopener" class="pedido-transferencia-btn">
+          🌐 Acessar Portal PPSC ↗
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -692,7 +722,7 @@
             <div style="margin-top:1rem;">
               <p style="font-size:.82rem;color:var(--cinza-3);margin-bottom:.5rem;">Modelos de Ofício de Comunicação:</p>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-                <button class="btn-oficio btn-oficio-copiar" onclick="event.stopPropagation();abrirModeloDireto('comunicacao')">📄 Comunicação ao Juízo → ver modelo completo</button>
+                <button class="btn-oficio btn-oficio-copiar" onclick="event.stopPropagation();abrirModeloDireto('comunicacao')">📄 Comunicação ao Juízo de Execução — Saída e Entrada → ver modelo completo</button>
               </div>
             </div>
           </div>
@@ -867,7 +897,7 @@
 
       <div class="modelo-tile atalho-comunicacao" onclick="abrirModalOficio('comunicacao')">
         <div class="modelo-tile-icone">📨</div>
-        <div class="modelo-tile-titulo">Comunicação ao Juízo de Execução</div>
+        <div class="modelo-tile-titulo">Comunicação ao Juízo de Execução — Saída e Entrada de Execução — Saída e Entrada</div>
         <div class="modelo-tile-sub">Prazo: até 24h após a transferência</div>
         <span class="modelo-tile-btn">Abrir modelo →</span>
       </div>
@@ -937,7 +967,12 @@
         </select>
       </div>
 
-      <div class="oficio-campos-hint">
+      <!-- Seletor Saída/Entrada (só aparece no modelo comunicacao) -->
+        <div id="ofc-tipo-seletor" class="ofc-tipo-seletor" style="display:none;">
+          <button class="tipo-btn ativo" data-tipo="saida" onclick="selecionarTipoComunicacao('saida')">📤 Saída</button>
+          <button class="tipo-btn" data-tipo="entrada" onclick="selecionarTipoComunicacao('entrada')">📥 Entrada</button>
+        </div>
+        <div class="oficio-campos-hint">
           ✏️ <strong>Campos em amarelo</strong> são editáveis — clique para preencher. O restante do texto é fixo.
         </div>
         <div id="ofc-paragrafos"></div>
@@ -980,7 +1015,7 @@
         <div class="tabela-wrapper">
           <table>
             <thead>
-              <tr><th>Hipótese</th><th>Análise CRV</th><th>Execução</th><th>Comunicação ao Juízo</th></tr>
+              <tr><th>Hipótese</th><th>Análise CRV</th><th>Execução</th><th>Comunicação ao Juízo de Execução — Saída e Entrada</th></tr>
             </thead>
             <tbody>
               <tr><td><strong>Segurança / Emergência</strong></td><td><span class="badge badge-vermelho">Imediato / até 2h</span></td><td>Até <strong>24 horas</strong></td><td>Até <strong>24h</strong> após a transferência</td></tr>
@@ -1618,10 +1653,9 @@
 
         <!-- Portal do Advogado -->
         <div class="card">
-          <div class="card-header"><span>⚖️</span><h3>Pedido por Advogado — Portal Online</h3></div>
+          <div class="card-header"><span>⚖️</span><h3>Portal Online</h3></div>
           <div class="card-body">
-            <p class="text-sm mb-2">Interessados (reeducando, familiares, advogados, defensores públicos, etc.) podem solicitar transferências diretamente pelo <strong>Portal da Polícia Penal de Santa Catarina</strong>, sem necessidade de comparecimento presencial ou envio físico de documentos à Unidade Prisional.</p>
-            <p class="text-sm mb-2">O portal centraliza os requerimentos e permite o acompanhamento do status do pedido. Para utilizar, acesse:</p>
+            <p class="text-sm mb-2">Interessados (reeducando, familiares, advogados, defensores públicos, etc.) podem solicitar transferências diretamente pelo <strong>Portal da Polícia Penal de Santa Catarina</strong>, sem necessidade de comparecimento presencial ou envio físico de documentos à Unidade Prisional. Para utilizar, acesse:</p>
 
             <a href="https://ppsc.com.br" target="_blank" rel="noopener" class="portal-link-btn">
               <span class="portal-link-icone">🌐</span>
@@ -2033,7 +2067,7 @@
       <span class="footer-label">Contato CRV</span>
       <a href="tel:+554836657330" class="footer-valor">(48) 3665-7330</a>
       <span class="footer-label" style="margin-top:.5rem;">Plantão 24h · E-mail</span>
-      <a href="mailto:crv@pp.sc.gov.br" class="footer-valor">crv@pp.sc.gov.br</a>
+      <a href="/cdn-cgi/l/email-protection#a8cbdadee8d8d886dbcb86cfc7de86cada" class="footer-valor"><span class="__cf_email__" data-cfemail="224150546252520c51410c454d540c4050">[email&#160;protected]</span></a>
       <a href="https://crv.ppsc.com.br" target="_blank" rel="noopener" class="footer-valor" style="margin-top:.3rem;">crv.ppsc.com.br ↗</a>
     </div>
     <div class="footer-divisor"></div>
