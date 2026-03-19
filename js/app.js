@@ -571,20 +571,40 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModalO
 // ================================================
 const modelosTexto = {
 
-  /* ── EMERGENCIAL ────────────────────────────────── */
-  emergencial: {
-    titulo: '🚨 Modelo 005/2026 — Segurança / Emergência',
+  /* ── EMERGENCIAL — HIPÓTESE I (ATO DE INDISCIPLINA) ─── */
+  emergencial_i: {
+    titulo: '🔴 Modelo 005-A/2026 — Emergencial · Hipótese I — Ato de Indisciplina',
     saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
-      { texto: 'Encaminho para análise urgente dessa Central de Regulação de Vagas pedido de transferência excepcional do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação de crise/emergência identificada pelas equipes deste estabelecimento penal, conforme passo a detalhar.', editavel: false },
-      { texto: 'A solicitação fundamenta-se na existência de [DESCREVER DETALHADAMENTE A SITUAÇÃO: risco iminente à integridade física, ameaça de morte, envolvimento em crise interna, motim, rebelião ou outro fator de segurança], que torna inviável a manutenção do(a) reeducando(a) nesta unidade prisional sem prejuízo à sua integridade física ou à ordem e segurança do estabelecimento, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: true, label: 'Fundamentação' },
-      { texto: 'Diante da urgência da situação, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia em segurança.', editavel: false },
-      { texto: 'Destaca-se que a transferência em análise não deve ser considerada como sanção disciplinar de 30 (trinta) dias, uma vez que não constitui efetivamente eventual sanção a ser aplicada, cabível somente após a regular tramitação do PAD, nos termos do art. 57 e 58 da Lei de Execução Penal e art. 73 da Lei Complementar 529/11.', editavel: false },
-      { texto: 'Deste modo, os direitos inerentes à pessoa presa deverão ser preservados, não se excluindo a possibilidade de isolamento preventivo, instituto diverso da sanção disciplinar, cuja disciplina encontra-se no art. 60 da Lei nº 7.210/1984 (Lei de Execução Penal).', editavel: false },
-      { texto: 'Para subsidiar a análise, encaminho, anexos, o Boletim Penal Informativo da pessoa presa devidamente atualizado, assinado pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor. Encaminho ainda [OUTROS DOCUMENTOS: boletim de ocorrência interno, relatório da equipe de segurança, etc.], que subsidiam a presente solicitação.', editavel: false },
-      { texto: 'Uma vez efetivada a remoção, caso aprovada, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja em até 24 horas.', editavel: false },
-      { texto: 'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, quais sejam, o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem o presente expediente.', editavel: false },
-      { texto: 'Diante do exposto, solicita-se análise e célere deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa.', editavel: false },
+      { texto: 'Encaminho para análise urgente dessa Central de Regulação de Vagas pedido de transferência excepcional do(a) reeducando(a) [NOME COMPLETO], IPEN nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação emergencial identificada pelas equipes deste estabelecimento penal, conforme segue.', editavel: false },
+      { texto: 'A presente solicitação enquadra-se na hipótese de transferência por ato de indisciplina (em tese), tendo em vista que o(a) reeducando(a) praticou conduta que, em análise preliminar, configura falta disciplinar de natureza grave, comprometendo a disciplina, a segurança ou o regular funcionamento da unidade prisional, nos termos do art. 50 e do caput do art. 52 da Lei nº 7.210/1984 (LEP) e do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: false },
+      { texto: 'A situação concreta consiste em [DESCREVER DETALHADAMENTE A CONDUTA E SEUS REFLEXOS NA SEGURANÇA/ORDEM], demonstrando risco atual, concreto e relevante à segurança institucional, o que torna inviável a permanência do(a) reeducando(a) nesta unidade prisional.', editavel: true, label: 'Descrição da conduta e do risco' },
+      { texto: 'Diante da urgência, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia.', editavel: false },
+      { texto: 'Informa-se que foi instaurado (ou será imediatamente instaurado) o competente Procedimento Administrativo Disciplinar (PAD), nos termos da legislação vigente.', editavel: false },
+      { texto: 'Esclarece-se que a presente medida não possui natureza de sanção disciplinar, tratando-se de providência administrativa de caráter cautelar, sem prejuízo da apuração regular dos fatos no âmbito do PAD.', editavel: false },
+      { texto: 'Ressalta-se que eventual isolamento preventivo observará rigorosamente os limites legais, especialmente quanto ao prazo máximo (até 10 dias, prorrogável por mais 20 se o PAD for concluído com decisão procedente dentro desse período, nos termos do art. 60 da LEP) e à vedação de punição antecipada, com preservação integral dos direitos da pessoa privada de liberdade.', editavel: false },
+      { texto: 'Para subsidiar a análise, encaminham-se, anexos, o Boletim Penal Informativo devidamente atualizado, o Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde ou pelo Diretor, a portaria de instauração do PAD e [OUTROS DOCUMENTOS: boletim de ocorrência interno, relatório da equipe de segurança, entre outros].', editavel: false },
+      { texto: 'Uma vez efetivada a remoção, caso aprovada, o Juízo competente será devidamente comunicado no prazo legal de até 24 horas.', editavel: false },
+      { texto: 'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, incluindo o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem o presente expediente.', editavel: false },
+      { texto: 'Diante do exposto, solicita-se análise e célere deliberação quanto à viabilidade da transferência.', editavel: false },
+    ],
+  },
+
+  /* ── EMERGENCIAL — HIPÓTESE II (MANUTENÇÃO DA ORDEM) ── */
+  emergencial_ii: {
+    titulo: '🔵 Modelo 005-B/2026 — Emergencial · Hipótese II — Manutenção da Ordem / Integridade Física',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
+    paragrafos: [
+      { texto: 'Encaminho para análise urgente dessa Central de Regulação de Vagas pedido de transferência excepcional do(a) reeducando(a) [NOME COMPLETO], IPEN nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação emergencial identificada pelas equipes deste estabelecimento penal, conforme segue.', editavel: false },
+      { texto: 'A presente solicitação enquadra-se na hipótese de transferência para manutenção da ordem ou da integridade física, diante da existência de risco atual, concreto e relevante à segurança do(a) reeducando(a), de terceiros ou à estabilidade da unidade prisional, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: false },
+      { texto: 'A situação concreta consiste em [DESCREVER DETALHADAMENTE A SITUAÇÃO: ameaças, conflitos interpessoais ou coletivos, risco à integridade física, tensões internas, entre outros], circunstância que inviabiliza a permanência do(a) reeducando(a) nesta unidade sem comprometimento da segurança institucional.', editavel: true, label: 'Descrição da situação de risco' },
+      { texto: 'Diante da urgência, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia em segurança.', editavel: false },
+      { texto: 'Esclarece-se que a presente medida não possui natureza disciplinar, tratando-se exclusivamente de providência administrativa destinada à preservação da integridade física e da ordem no ambiente prisional.', editavel: false },
+      { texto: 'Ressalta-se que o(a) reeducando(a) permanecerá em cela de convívio, com a integral preservação de seus direitos, sendo vedada sua submissão a isolamento, por não se tratar de hipótese disciplinar.', editavel: false },
+      { texto: 'Para subsidiar a análise, encaminham-se, anexos, o Boletim Penal Informativo devidamente atualizado, o Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde ou pelo Diretor, e [OUTROS DOCUMENTOS: boletim de ocorrência interno, relatório da equipe de segurança, entre outros].', editavel: false },
+      { texto: 'Uma vez efetivada a remoção, caso aprovada, o Juízo competente será devidamente comunicado no prazo legal de até 24 horas.', editavel: false },
+      { texto: 'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, incluindo o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que subscrevem o presente expediente.', editavel: false },
+      { texto: 'Diante do exposto, solicita-se análise e célere deliberação quanto à viabilidade da transferência.', editavel: false },
     ],
   },
 
@@ -717,7 +737,7 @@ const modelosTexto = {
 
 };
 
-let modeloAtual = 'emergencial';
+let modeloAtual = 'emergencial_i';
 
 function selecionarModelo(id) {
   modeloAtual = id;
