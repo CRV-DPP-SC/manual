@@ -574,13 +574,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModalO
 // ================================================
 const modelosTexto = {
 
-  /* ── EMERGENCIAL — HIPÓTESE I (ATO DE INDISCIPLINA) ─── */
+  /* ── EMERGENCIAL — HIPÓTESE I (GERENCIAMENTO DE CRISE) ─── */
   emergencial_i: {
-    titulo: '🔴 Modelo 005-A/2026 — Emergencial · Hipótese I — Ato de Indisciplina',
+    titulo: '🔴 Modelo 005-A/2026 — Emergencial · Hipótese I — Gerenciamento de Crise',
     saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
       { texto: 'Encaminho para análise urgente dessa Central de Regulação de Vagas pedido de transferência excepcional do(a) reeducando(a) [NOME COMPLETO], IPEN nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação emergencial identificada pelas equipes deste estabelecimento penal, conforme segue.', editavel: false },
-      { texto: 'A presente solicitação enquadra-se na hipótese de transferência por ato de indisciplina (em tese), tendo em vista que o(a) reeducando(a) praticou conduta que, em análise preliminar, configura falta disciplinar de natureza grave, comprometendo a disciplina, a segurança ou o regular funcionamento da unidade prisional, nos termos do art. 50 e do caput do art. 52 da Lei nº 7.210/1984 (LEP) e do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: false },
+      { texto: 'A presente solicitação enquadra-se na Hipótese I — Gerenciamento de Crise, em razão de situação de instabilidade interna, conflito ou risco à ordem da unidade, que exige a retirada imediata do(a) reeducando(a). A medida possui natureza administrativa e não punitiva, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: false },
       { texto: 'A situação concreta consiste em [DESCREVER DETALHADAMENTE A CONDUTA E SEUS REFLEXOS NA SEGURANÇA/ORDEM], demonstrando risco atual, concreto e relevante à segurança institucional, o que torna inviável a permanência do(a) reeducando(a) nesta unidade prisional.', editavel: true, label: 'Descrição da conduta e do risco' },
       { texto: 'Diante da urgência, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia.', editavel: false },
       { texto: 'Informa-se que foi instaurado (ou será imediatamente instaurado) o competente Procedimento Administrativo Disciplinar (PAD), nos termos da legislação vigente.', editavel: false },
@@ -595,14 +595,14 @@ const modelosTexto = {
 
   /* ── EMERGENCIAL — HIPÓTESE II (MANUTENÇÃO DA ORDEM) ── */
   emergencial_ii: {
-    titulo: '🔵 Modelo 005-B/2026 — Emergencial · Hipótese II — Manutenção da Ordem / Integridade Física',
+    titulo: '🔵 Modelo 005-B/2026 — Emergencial · Hipótese II — Medida de Segurança',
     saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
       { texto: 'Encaminho para análise urgente dessa Central de Regulação de Vagas pedido de transferência excepcional do(a) reeducando(a) [NOME COMPLETO], IPEN nº [NÚMERO], atualmente custodiado(a) no(a) [UNIDADE PRISIONAL DE ORIGEM], em razão de situação emergencial identificada pelas equipes deste estabelecimento penal, conforme segue.', editavel: false },
-      { texto: 'A presente solicitação enquadra-se na hipótese de transferência para manutenção da ordem ou da integridade física, diante da existência de risco atual, concreto e relevante à segurança do(a) reeducando(a), de terceiros ou à estabilidade da unidade prisional, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: false },
+      { texto: 'A presente solicitação enquadra-se na Hipótese II — Medida de Segurança, diante de situação de risco à integridade física do(a) reeducando(a), de terceiros, ou à estabilidade da unidade prisional — envolvendo ameaças, conflitos ou risco coletivo — nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026. A medida possui natureza administrativa e não punitiva.', editavel: false },
       { texto: 'A situação concreta consiste em [DESCREVER DETALHADAMENTE A SITUAÇÃO: ameaças, conflitos interpessoais ou coletivos, risco à integridade física, tensões internas, entre outros], circunstância que inviabiliza a permanência do(a) reeducando(a) nesta unidade sem comprometimento da segurança institucional.', editavel: true, label: 'Descrição da situação de risco' },
       { texto: 'Diante da urgência, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia em segurança.', editavel: false },
-      { texto: 'Esclarece-se que a presente medida não possui natureza disciplinar, tratando-se exclusivamente de providência administrativa destinada à preservação da integridade física e da ordem no ambiente prisional.', editavel: false },
+      { texto: 'Esclarece-se que a presente medida não possui natureza disciplinar, tratando-se exclusivamente de providência administrativa destinada à preservação da segurança do reeducando e de terceiros.', editavel: false },
       { texto: 'Ressalta-se que o(a) reeducando(a) permanecerá em cela de convívio, com a integral preservação de seus direitos, sendo vedada sua submissão a isolamento, por não se tratar de hipótese disciplinar.', editavel: false },
       { texto: 'Para subsidiar a análise, encaminham-se, anexos, o Boletim Penal Informativo devidamente atualizado, o Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde ou pelo Diretor, e [OUTROS DOCUMENTOS: boletim de ocorrência interno, relatório da equipe de segurança, entre outros].', editavel: false },
       { texto: 'Uma vez efetivada a remoção, caso aprovada, o Juízo competente será devidamente comunicado no prazo legal de até 24 horas.', editavel: false },
