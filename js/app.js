@@ -290,9 +290,31 @@ function _aplicarVarianteComunicacao(tipo) {
   const cont = document.getElementById('ofc-paragrafos');
   cont.innerHTML = variante.paragrafos.map((p, pIdx) => {
     const texto = typeof p === 'object' ? p.texto : p;
-    const sf = typeof p === 'object' ? p.selectField : null;
+    const sf    = typeof p === 'object' ? p.selectField      : null;
+    const lista = typeof p === 'object' ? p.listaReeducandos : false;
 
-    // Se o parágrafo tem selectField, substitui o placeholder pelo <select>
+    // Lista dinâmica de reeducandos (modelo coletivo)
+    if (lista) {
+      return `<div class="oficio-paragrafo oficio-paragrafo-inline lista-reeducandos-wrap" data-texto-original="[LISTA_REEDUCANDOS]">
+        <div id="lista-reeducandos">
+          <div class="lista-reeducando-item" data-idx="1">
+            <span style="font-weight:700;margin-right:6px;">1.</span>
+            <input type="text" class="campo-inline-editavel" placeholder="Nome completo" data-field="nome" style="width:280px;" />
+            <span style="margin:0 6px;">— IPEN Nº</span>
+            <input type="text" class="campo-inline-editavel" placeholder="Número IPEN" data-field="ipen" style="width:130px;" />
+          </div>
+          <div class="lista-reeducando-item" data-idx="2">
+            <span style="font-weight:700;margin-right:6px;">2.</span>
+            <input type="text" class="campo-inline-editavel" placeholder="Nome completo" data-field="nome" style="width:280px;" />
+            <span style="margin:0 6px;">— IPEN Nº</span>
+            <input type="text" class="campo-inline-editavel" placeholder="Número IPEN" data-field="ipen" style="width:130px;" />
+          </div>
+        </div>
+        <button onclick="adicionarReeducando()" type="button" style="margin-top:8px;padding:4px 12px;font-size:.82rem;background:#e0f2fe;border:1px solid #7dd3fc;border-radius:6px;cursor:pointer;color:#0369a1;">+ Adicionar reeducando</button>
+      </div>`;
+    }
+
+    // Select inline
     let htmlTexto;
     if (sf) {
       htmlTexto = texto.replace(/\[([^\]]+)\]/g, (match, fieldName) => {
@@ -322,6 +344,23 @@ function selecionarTipoComunicacao(tipo) {
     });
   }
   _aplicarVarianteComunicacao(tipo);
+}
+
+function adicionarReeducando() {
+  const lista = document.getElementById('lista-reeducandos');
+  if (!lista) return;
+  const idx = lista.querySelectorAll('.lista-reeducando-item').length + 1;
+  const div = document.createElement('div');
+  div.className = 'lista-reeducando-item';
+  div.dataset.idx = idx;
+  div.style.marginTop = '4px';
+  div.innerHTML = `
+    <span style="font-weight:700;margin-right:6px;">${idx}.</span>
+    <input type="text" class="campo-inline-editavel" placeholder="Nome completo" data-field="nome" style="width:280px;" />
+    <span style="margin:0 6px;">— IPEN Nº</span>
+    <input type="text" class="campo-inline-editavel" placeholder="Número IPEN" data-field="ipen" style="width:130px;" />
+  `;
+  lista.appendChild(div);
 }
 
 function toggleDarkMode() {
@@ -616,7 +655,7 @@ const modelosTexto = {
       { texto: 'A presente solicitação enquadra-se na Hipótese I — Gerenciamento de Crise, em razão de situação de instabilidade interna, conflito ou risco à ordem da unidade, que exige a retirada imediata do(a) reeducando(a). A medida possui natureza administrativa e não punitiva, nos termos do art. 21, inciso I, da Resolução Conjunta Interinstitucional n. 01/2026.', editavel: false },
       { texto: 'A situação concreta consiste em [DESCREVER DETALHADAMENTE A CONDUTA E SEUS REFLEXOS NA SEGURANÇA/ORDEM], demonstrando risco atual, concreto e relevante à segurança institucional, o que torna inviável a permanência do(a) reeducando(a) nesta unidade prisional.', editavel: true, label: 'Descrição da conduta e do risco' },
       { texto: 'Diante da urgência, solicita-se a transferência do(a) reeducando(a) para o(a) [UNIDADE PRISIONAL DE DESTINO], onde há condições adequadas para sua custódia.', editavel: false },
-      { texto: 'Informa-se que [FOI INSTAURADO / SERÁ IMEDIATAMENTE INSTAURADO] o competente Procedimento Administrativo Disciplinar (PAD), nos termos da legislação vigente.', editavel: false, selectField: { placeholder: 'FOI INSTAURADO / SERÁ IMEDIATAMENTE INSTAURADO', opcoes: ['foi instaurado', 'será imediatamente instaurado'] } },
+      { texto: 'Informa-se que [SELECIONE] o competente Procedimento Administrativo Disciplinar (PAD), nos termos da legislação vigente.', editavel: false, selectField: { placeholder: 'SELECIONE', opcoes: ['FOI INSTAURADO', 'SERÁ INSTAURADO'] } },
       { texto: 'Esclarece-se que a presente medida não possui natureza de sanção disciplinar, tratando-se de providência administrativa de caráter cautelar, sem prejuízo da apuração regular dos fatos no âmbito do PAD.', editavel: false },
       { texto: 'Ressalta-se que eventual isolamento preventivo observará rigorosamente os limites legais, especialmente quanto ao prazo máximo (até 10 dias, prorrogável por mais 20 se o PAD for concluído com decisão procedente dentro desse período, nos termos do art. 60 da LEP) e à vedação de punição antecipada, com preservação integral dos direitos da pessoa privada de liberdade.', editavel: false },
       { texto: 'Para subsidiar a análise, encaminham-se, anexos, o Boletim Penal Informativo devidamente atualizado, o Relatório de Saúde, assinado pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde ou pelo Diretor, a portaria de instauração do PAD e [OUTROS DOCUMENTOS: boletim de ocorrência interno, relatório da equipe de segurança, entre outros].', editavel: false },
@@ -687,8 +726,9 @@ const modelosTexto = {
   },
 
   /* ── EQUALIZAÇÃO DE VAGAS ───────────────────────── */
+  /* ── ADEQUAÇÃO — INDIVIDUAL ─────────────────────── */
   equalizacao: {
-    titulo: '⚖️ Modelo — Adequação da Capacidade de Ocupação (Art. 21, III)',
+    titulo: '⚖️ Adequação da Capacidade de Ocupação — Individual (Art. 21, III)',
     saudacaoInicial: 'Senhor(a) Coordenador(a),',
     paragrafos: [
       { texto: 'Considerando a necessidade de gestão e equalização da ocupação carcerária no âmbito do(a) [UNIDADE PRISIONAL DE ORIGEM], bem como a adequada distribuição das pessoas privadas de liberdade entre as diferentes estruturas de estabelecimentos penais, encaminho para análise dessa Central de Regulação de Vagas pedido de transferência do(a) reeducando(a) [NOME COMPLETO], IPEN Nº [NÚMERO], atualmente custodiado(a) nesta unidade prisional, para o(a) [UNIDADE PRISIONAL DE DESTINO].', editavel: false },
@@ -697,6 +737,21 @@ const modelosTexto = {
       { texto: 'Uma vez efetivada a remoção, caso aprovada, o r. Juízo competente será devidamente comunicado, no prazo legal estabelecido, qual seja em até 24 horas.', editavel: false },
       { texto: 'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, quais sejam, o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que anuem ao presente expediente.', editavel: false },
       { texto: 'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência administrativa.', editavel: false },
+    ],
+  },
+
+  /* ── ADEQUAÇÃO — COLETIVA ───────────────────────── */
+  equalizacao_coletiva: {
+    titulo: '⚖️ Adequação da Capacidade de Ocupação — Coletiva (Art. 21, III)',
+    saudacaoInicial: 'Senhor(a) Coordenador(a),',
+    paragrafos: [
+      { texto: 'Considerando a necessidade de gestão e equalização da ocupação carcerária no âmbito do(a) [UNIDADE PRISIONAL DE ORIGEM], bem como a adequada distribuição das pessoas privadas de liberdade entre as diferentes estruturas de estabelecimentos penais, encaminho para análise dessa Central de Regulação de Vagas pedido de transferência dos(as) reeducandos(as) abaixo relacionados(as), atualmente custodiados(as) nesta unidade prisional, para o(a) [UNIDADE PRISIONAL DE DESTINO].', editavel: false },
+      { texto: '[LISTA_REEDUCANDOS]', editavel: false, listaReeducandos: true },
+      { texto: 'A solicitação fundamenta-se na necessidade de equalização da lotação entre as unidades do sistema prisional catarinense, em conformidade com as diretrizes estabelecidas para a gestão de vagas e movimentações prisionais previstas na Resolução Conjunta Interinstitucional n. 01/2026, especialmente em seu art. 21, inciso III.', editavel: false },
+      { texto: 'Para subsidiar a análise, informo a devida atualização no sistema i-PEN dos Boletins Penais Informativos, assinados pelo Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional), bem como anexo os Relatórios de Saúde, assinados pelo Responsável Técnico (Médico, Enfermeiro, Técnico de Enfermagem, etc.), pelo Coordenador de Saúde, ou pelo Diretor.', editavel: false },
+      { texto: 'Uma vez efetivadas as remoções, caso aprovadas, os respectivos Juízos competentes serão devidamente comunicados, no prazo legal estabelecido, qual seja em até 24 horas.', editavel: false },
+      { texto: 'Informo, por fim, que foram realizados contatos prévios com as autoridades pertinentes, quais sejam, o Diretor do estabelecimento penal de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que anuem ao presente expediente.', editavel: false },
+      { texto: 'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade das transferências administrativas.', editavel: false },
     ],
   },
 
@@ -884,6 +939,17 @@ function coletarTextoOficio() {
   // Coleta parágrafos com campos inline preenchidos
   const paras = [...document.querySelectorAll('#ofc-paragrafos .oficio-paragrafo-inline')].map(div => {
     let texto = div.dataset.textoOriginal || '';
+
+    // Bloco de lista de reeducandos (modelo coletivo)
+    if (texto === '[LISTA_REEDUCANDOS]') {
+      const itens = [...div.querySelectorAll('.lista-reeducando-item')].map((item, i) => {
+        const nome = item.querySelector('[data-field="nome"]')?.value.trim() || '(nome não informado)';
+        const ipen = item.querySelector('[data-field="ipen"]')?.value.trim() || '(IPEN não informado)';
+        return `${i + 1}. ${nome} — IPEN Nº ${ipen}`;
+      });
+      return itens.join('\n');
+    }
+
     div.querySelectorAll('.campo-inline-editavel').forEach(input => {
       const original = input.dataset.original || input.placeholder;
       const valor = input.value.trim() || input.placeholder;
