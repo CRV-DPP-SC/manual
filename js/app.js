@@ -593,7 +593,7 @@ const modelosTexto = {
     ],
   },
 
-  /* ── EMERGENCIAL — HIPÓTESE II (MANUTENÇÃO DA ORDEM) ── */
+  /* ── EMERGENCIAL — HIPÓTESE II (MEDIDA DE SEGURANÇA) ── */
   emergencial_ii: {
     titulo: '🔵 Modelo 005-B/2026 — Emergencial · Hipótese II — Medida de Segurança',
     saudacaoInicial: 'Senhor(a) Coordenador(a),',
