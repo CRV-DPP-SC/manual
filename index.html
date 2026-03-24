@@ -856,38 +856,17 @@
     <!-- Grade de cartões de modelos -->
     <div class="modelos-grade">
 
-      <div class="modelo-tile atalho-emergencial" onclick="abrirModalOficio('emergencial_i')">
+     <div class="modelo-tile atalho-emergencial" onclick="abrirModalOficio('emergencial')">
         <div class="modelo-tile-icone">🔴</div>
-        <div class="modelo-tile-titulo">Emergencial — Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese)</div>
-        <div class="modelo-tile-sub">Gerenciamento de Crise · Art. 21, I — Modelo 005-A/2026</div>
+        <div class="modelo-tile-titulo">Transferência Emergencial</div>
+        <div class="modelo-tile-sub">Hipótese I · Hipótese II</div>
         <span class="modelo-tile-btn">Abrir modelo →</span>
       </div>
 
-      <div class="modelo-tile atalho-emergencial" onclick="abrirModalOficio('emergencial_ii')" style="--cor-destaque:#1d4ed8;--bg-icone:#dbeafe;">
-        <div class="modelo-tile-icone">🔵</div>
-        <div class="modelo-tile-titulo">Emergencial — Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</div>
-        <div class="modelo-tile-sub">Medida de Segurança · Art. 21, I — Modelo 005-B/2026</div>
-        <span class="modelo-tile-btn">Abrir modelo →</span>
-      </div>
-
-      <div class="modelo-tile atalho-pedido" onclick="abrirModalOficio('pedido_preso')">
+      <div class="modelo-tile atalho-pedido" onclick="abrirModalOficio('pedidos_voluntarios')">
         <div class="modelo-tile-icone">👤</div>
-        <div class="modelo-tile-titulo">Pedido do Preso</div>
-        <div class="modelo-tile-sub">Art. 21, II — Memorando do reeducando</div>
-        <span class="modelo-tile-btn">Abrir modelo →</span>
-      </div>
-
-      <div class="modelo-tile atalho-pedido" onclick="abrirModalOficio('pedido_familiar')" style="--cor-destaque:#0891b2;--bg-icone:#e0f2fe;">
-        <div class="modelo-tile-icone">👨‍👩‍👧</div>
-        <div class="modelo-tile-titulo">Pedido por Familiar</div>
-        <div class="modelo-tile-sub">Art. 21, II — Solicitação de familiar</div>
-        <span class="modelo-tile-btn">Abrir modelo →</span>
-      </div>
-
-      <div class="modelo-tile atalho-pedido" onclick="abrirModalOficio('pedido_advogado')" style="--cor-destaque:#7c3aed;--bg-icone:#ede9fe;">
-        <div class="modelo-tile-icone">⚖️</div>
-        <div class="modelo-tile-titulo">Pedido por Advogado</div>
-        <div class="modelo-tile-sub">Art. 21, II — Petição com mandato</div>
+        <div class="modelo-tile-titulo">Pedidos Voluntários</div>
+        <div class="modelo-tile-sub">Preso · Familiar · Advogado</div>
         <span class="modelo-tile-btn">Abrir modelo →</span>
       </div>
 
@@ -1015,6 +994,10 @@
         <div id="ofc-tipo-seletor" class="ofc-tipo-seletor" style="display:none;">
           <button class="tipo-btn ativo" data-tipo="saida" onclick="selecionarTipoComunicacao('saida')">📤 Saída</button>
           <button class="tipo-btn" data-tipo="entrada" onclick="selecionarTipoComunicacao('entrada')">📥 Entrada</button>
+        </div>
+        <div id="ofc-hipotese-seletor" style="display:none;gap:8px;margin-bottom:10px;">
+          <button onclick="selecionarHipoteseEmergencial('hipotese_i')">Hipótese I</button>
+          <button onclick="selecionarHipoteseEmergencial('hipotese_ii')">Hipótese II</button>
         </div>
         <div class="oficio-campos-hint">
           ✏️ <strong>Campos em amarelo</strong> são editáveis — clique para preencher. O restante do texto é fixo.
