@@ -683,7 +683,6 @@ const modelosTexto = {
       { texto: 'Diante do exposto, solicita-se análise e célere deliberação quanto à viabilidade da transferência.', editavel: false },
       ],
   },
-  paragrafos: []
 },
 
  /* ── PEDIDO DO PRESO ─────────────────────────────── */
