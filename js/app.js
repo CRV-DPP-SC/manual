@@ -683,7 +683,8 @@ const modelosTexto = {
       { texto: 'Diante do exposto, solicita-se análise e célere deliberação quanto à viabilidade da transferência.', editavel: false },
       ],
   },
-},
+  },   // fecha: variantes
+},     // fecha: emergencial
 
  /* ── PEDIDO DO PRESO ─────────────────────────────── */
   pedido_preso: {
@@ -811,7 +812,7 @@ const modelosTexto = {
   { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa.', editavel: false },
   { texto: 'Nada mais havendo a comunicar, ficamos à disposição de Vossa Excelência para quaisquer esclarecimentos que se façam necessários.', editavel: false }
 ]
-},
+},  // fecha: comunicacao
 };
 
 let modeloAtual = 'emergencial';
