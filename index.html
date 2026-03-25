@@ -227,7 +227,7 @@
         <span class="desc">Preso capturado em comarca diferente da que expediu a ordem de prisão.</span>
         <span class="atalho-arrow">→ ver modelo</span>
       </a>
-      <a class="atalho-btn atalho-pernoite fade-up fade-up-delay-4" href="#" onclick="abrirModeloDireto('pernoite');return false;">
+      <a class="atalho-btn atalho-pernoite fade-up fade-up-delay-4" href="#" onclick="navegarPara('pernoite');return false;">
         <div class="icone">🌙</div>
         <span class="titulo">Pernoite</span>
         <span class="desc">Custodiado que necessita permanecer temporariamente em unidade diversa da sua.</span>
@@ -256,7 +256,7 @@
                   <tr><th>Hipótese</th><th>Quem solicita</th><th>Prazo execução</th><th>Comunicação Juízo</th><th>Tipo</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td><strong>Seg./Emergência — Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese)</strong></td><td>Direção da Unidade</td><td>Até <strong>24h</strong></td><td>Até <strong>24h</strong> após</td><td><span class="badge badge-vermelho">Urgente</span></td></tr>
+                  <tr><td><strong>Seg./Emergência — Hipótese I (Gerenciamento de Crise)</strong></td><td>Direção da Unidade</td><td>Até <strong>24h</strong></td><td>Até <strong>24h</strong> após</td><td><span class="badge badge-vermelho">Urgente</span></td></tr>
                   <tr><td><strong>Seg./Emergência — Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</strong></td><td>Direção da Unidade</td><td>Até <strong>24h</strong></td><td>Até <strong>24h</strong> após</td><td><span class="badge badge-vermelho">Urgente</span></td></tr>
                   <tr><td><strong>Vagas SC</strong></td><td>Preso, familiar, advogado, defensor</td><td colspan="2">Ver Vagas SC</td><td><span class="badge badge-azul">Permuta</span></td></tr>
                   <tr><td><strong>Adequação de Capacidade</strong></td><td>CRV / DPP / SR / Direção</td><td>Conf. cronograma</td><td>Até 24h após</td><td><span class="badge badge-verde">Administrativo</span></td></tr>
@@ -364,10 +364,10 @@
           <p>Todo pedido emergencial deve, obrigatoriamente, ser enquadrado em <strong>uma das duas hipóteses abaixo</strong>. Essa classificação é etapa prévia à análise da urgência. Além disso, a mera alegação genérica de urgência não será suficiente para concessão/autorização da transferência, devendo a Unidade Prisional solicitante fundamentar o pedido de forma consistente e robusta. Pedidos genéricos serão indeferidos de plano.</p>
           <br>
           <div style="border-left:4px solid var(--vermelho);padding:.5rem 1rem;margin-bottom:1rem;background:rgba(220,38,38,.06);border-radius:0 4px 4px 0;">
-            <p style="margin:0 0 .4rem;"><strong>Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese)</strong></p>
+            <p style="margin:0 0 .4rem;"><strong>Hipótese I (Gerenciamento de Crise)</strong></p>
             <p style="font-size:.87rem;margin:0 0 .5rem;">Situações de <strong>instabilidade interna, conflitos ou risco à ordem da unidade</strong>, exigindo a retirada do reeducando.</p>
             <p style="font-size:.87rem;margin:0 0 .3rem;">✔ Motivo: <strong>controle da crise</strong> — ❗ Não é punição</p>
-            <p style="font-size:.87rem;margin:.5rem 0 0;">Havendo falta disciplinar, a instauração de <strong>PAD é obrigatória</strong>. Isolamento preventivo de <strong>até 10 dias</strong>, prorrogável por mais 20 se o PAD for concluído com decisão procedente. Se não julgado em 10 dias, o isolamento cessa imediatamente e o reeducando vai para cela de convívio.</p>
+            <p style="font-size:.87rem;margin:.5rem 0 0;">Em ambas as hipóteses pode ou não haver PAD. <strong>Se houver PAD</strong>, o preso poderá ficar em isolamento preventivo por até <strong>10 (dez) dias</strong>, prorrogável por mais 20 (vinte) dias se o PAD for concluído durante esse período. <strong>Se não houver PAD</strong> ou se não for concluído no prazo, o preso deverá ser colocado em cela de convívio normal, com todos os direitos preservados. O PAD nunca é obrigatório.</p>
           </div>
           <div style="border-left:4px solid var(--azul-4);padding:.5rem 1rem;margin-bottom:1rem;background:rgba(37,99,235,.06);border-radius:0 4px 4px 0;">
             <p style="margin:0 0 .4rem;"><strong>Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</strong></p>
@@ -454,7 +454,7 @@
             <li>Não é exigida anuência dos Superintendentes Regionais nem do SGPe.</li>
           </ul>
           <br>
-          <p><a href="#" onclick="navegarPara('pernoite');return false;" style="color:var(--azul-4);font-weight:700;">→ Ver modelo de ofício</a></p>
+
         </div>
       </div>
 
@@ -514,10 +514,9 @@
           <span class="flow-toggle-btn">▶ Ver detalhes</span>
           <div class="flow-details">
             <ul>
-              <li>Identificar claramente a hipótese: transferência emergencial, pedido voluntário apresentado pelo reeducando, familiar ou advogado, necessidade de equalização/regulação de vagas, ou cumprimento de mandado de prisão de comarca diversa</li>
+              <li>Identificar claramente a hipótese: transferência emergencial, necessidade de equalização/regulação de vagas, ou cumprimento de mandado de prisão de comarca diversa</li>
               <li>Elaborar ofício com justificativa detalhada conforme modelo correspondente</li>
             </ul>
-            <div class="flow-alert flow-alert-info">ℹ️ &nbsp;A análise do perfil do preso é determinante para garantir que a transferência seja segura, justa e adequada à unidade de destino.</div>
           </div>
         </div>
       </div>
@@ -531,7 +530,7 @@
         <div class="flow-step-body" onclick="toggleFlowStep(this)">
           <div class="flow-actor">Unidade Prisional de Origem</div>
           <div class="flow-title">No SGPe — Processo único e permanente</div>
-          <div class="flow-desc">Cada Unidade Prisional deverá possuir um <strong>Processo SGPe único e permanente</strong>, destinado exclusivamente à tramitação de pedidos de transferência. Nesse processo serão inseridos todos os pedidos formulados pela unidade ao longo do tempo.</div>
+          <div class="flow-desc">Cada Unidade Prisional deverá possuir um <strong>Processo SGPe único e permanente</strong>, destinado exclusivamente à coleta de assinaturas nos pedidos de transferência. Nesse processo serão inseridos todos os pedidos formulados pela unidade ao longo do tempo.</div>
           <span class="flow-toggle-btn">▶ Ver detalhes</span>
           <div class="flow-details">
             <div class="flow-alert flow-alert-info">ℹ️ &nbsp;<strong>O processo SGPe é único por unidade prisional e permanente</strong>, acumulando todos os pedidos de transferência ao longo do tempo.</div>
@@ -564,13 +563,12 @@
           <span class="flow-toggle-btn">▶ Ver detalhes</span>
           <div class="flow-details">
             <ul>
-              <li>Assinatura do Diretor da Unidade de Origem: <strong>obrigatória em todos os casos</strong></li>
-              <li>Assinatura do Diretor da Unidade de Destino: <strong>obrigatória em todos os casos</strong></li>
-              <li>Ambas as assinaturas devem constar no mesmo documento antes do encaminhamento à SR</li>
-              <li>O <strong>BPI</strong> deverá ser assinado pelo <strong>Coordenador de Execução Penal (ou pelo Diretor da Unidade Prisional)</strong>, atestando a veracidade do documento</li>
-              <li>O <strong>Formulário de Saúde</strong> deverá ser assinado pelo <strong>Responsável Técnico</strong> (médico ou enfermeiro) ou pelo <strong>Coordenador de Saúde</strong>. Em assinatura física: nome, matrícula e cargo/função obrigatórios</li>
+              <li>O <strong>ofício de solicitação</strong> deve conter, obrigatoriamente, as assinaturas do <strong>Diretor da Unidade de Origem</strong>, do <strong>Diretor da Unidade de Destino</strong> e do(s) <strong>Superintendente(s) Regional(is)</strong></li>
+              <li>O <strong>BPI atualizado</strong> deve ser assinado pelo <strong>Coordenador de Execução Penal</strong> (ou pelo Diretor)</li>
+              <li>O <strong>Formulário de Saúde</strong> deverá ser assinado pelo <strong>Responsável Técnico</strong> (médico ou enfermeiro), pelo <strong>Coordenador de Saúde</strong> ou pelo Diretor. Em assinatura física: nome, matrícula e cargo/função legíveis são obrigatórios</li>
             </ul>
-            <div class="flow-alert flow-alert-warn">⚠️ &nbsp;Ofício sem as duas assinaturas não deve ser encaminhado à Superintendência Regional.</div>
+            <div class="flow-alert flow-alert-warn">⚠️ &nbsp;Ofício sem as assinaturas de todas as partes não deve ser encaminhado à Superintendência Regional. <strong>A ausência de qualquer assinatura ensejará a reprovação do pedido.</strong></div>
+            <div class="flow-alert flow-alert-info" style="margin-top:.5rem;">ℹ️ &nbsp;<strong>Selecionar as peças na seguinte ordem:</strong> Ofício → BPI → Formulário de Saúde → Demais Documentos</div>
           </div>
         </div>
       </div>
@@ -635,8 +633,7 @@
               <li>O cadastro no i-PEN deve ser realizado após a conclusão da materialização no SGPe</li>
               <li>Na fundamentação do pedido no i-PEN, mencionar: <strong>"Conforme documentos em Anexo"</strong></li>
               <li>Anexar o arquivo PDF materializado ao pedido de transferência correspondente no i-PEN</li>
-              <li>O "Nome" do documento deverá ser o <strong>Nome do Reeducando</strong> e a Descrição: <strong>"Documentos para Transferência"</strong></li>
-              <li>Verificar se os dados do reeducando e da unidade de destino estão corretos antes de finalizar</li>
+              <li>Na <strong>descrição do pedido</strong>, mencionar: o <strong>motivo da transferência</strong> (Art. 21, I, II ou III da Res. nº 1/2026) e <strong>citar que há anuência dos gestores e dos SR(s)</strong> envolvidos</li>
             </ul>
             <div class="flow-alert flow-alert-warn">⚠️ &nbsp;O cadastro no i-PEN é etapa obrigatória antes do encaminhamento à CRV — sem ele, o pedido não será processado.</div>
           </div>
@@ -664,7 +661,7 @@
             <div class="flow-decisoes">
               <div class="flow-decisao flow-dec-ok">
                 <div class="flow-dec-label">✅ APROVADO</div>
-                <div class="flow-dec-desc">O pedido atende todos os requisitos. A transferência é autorizada e segue para execução pela SEJURI/DPP.</div>
+                <div class="flow-dec-desc">O pedido atende todos os requisitos. A transferência é autorizada e segue para execução pela Polícia Penal, através de seus operadores.</div>
               </div>
               <div class="flow-decisao flow-dec-neg">
                 <div class="flow-dec-label">❌ NEGADO</div>
@@ -688,7 +685,7 @@
         <div class="flow-step-body" onclick="toggleFlowStep(this)">
           <div class="flow-actor">SEJURI / Departamento de Polícia Penal</div>
           <div class="flow-title">Execução da transferência</div>
-          <div class="flow-desc">Autorizada pela CRV, o DPP, através de seus operadores (Policiais Penais), executam a movimentação. A unidade de destino recebe o preso e confirma o ingresso no sistema.</div>
+          <div class="flow-desc">Autorizada pela CRV, a Polícia Penal, através de seus operadores (Policiais Penais), executa a movimentação. A unidade de destino recebe o preso e confirma o ingresso no sistema.</div>
           <span class="flow-toggle-btn">▶ Ver detalhes</span>
           <div class="flow-details">
             <ul>
@@ -697,6 +694,7 @@
               <li>Transferências não podem ser usadas como punição, represália ou discriminação</li>
               <li>Não é permitida transferência em condições que causem sofrimento físico ou mental</li>
             </ul>
+            <div class="flow-alert flow-alert-warn">⚠️ &nbsp;<strong>A transferência somente poderá ocorrer após a aprovação no i-PEN pela CRV.</strong> Nenhuma movimentação deve ser executada sem a respectiva autorização registrada no sistema.</div>
           </div>
         </div>
       </div>
@@ -752,9 +750,9 @@
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">🚨 Segurança / Emergência — Checklist<span class="accordion-seta">▼</span></div>
         <div class="accordion-body">
-          <p style="font-size:.83rem;font-weight:700;margin-bottom:.5rem;color:var(--vermelho);">  Hipótese I — Gerenciamento de Crise <span style="font-weight:400;font-size:0.9em;">(Ato de Indisciplina — Em tese)</span></p>
+          <p style="font-size:.83rem;font-weight:700;margin-bottom:.5rem;color:var(--vermelho);">  Hipótese I — Gerenciamento de Crise <span style="font-weight:400;font-size:0.9em;"></span></p>
           <ul style="list-style:none;font-size:.875rem;line-height:2.3;margin-bottom:1rem;">
-            <li>☐ <strong>Ofício (Modelo 005/2026)</strong> — identifica expressamente a Hipótese I, descreve o gerenciamento de crise e fundamenta no Art. 21, I da Res. nº 1/2026</li>
+            <li>☐ <strong>Ofício — Hipótese I (Gerenciamento de Crise)</strong> — identifica expressamente a Hipótese I, descreve o gerenciamento de crise e fundamenta no Art. 21, I da Res. nº 1/2026</li>
             <li>☐ <strong>Relatório da equipe de segurança</strong></li>
             <li>☐ <strong>BPI atualizado no i-PEN</strong> — assinado pelo CEP ou Diretor</li>
             <li>☐ <strong>Relatório de Saúde</strong> — assinado pelo responsável técnico</li>
@@ -762,7 +760,7 @@
           </ul>
           <p style="font-size:.83rem;font-weight:700;margin-bottom:.5rem;color:var(--azul-4);">Hipótese II — Manutenção da Ordem/Integridade Física <span style="font-weight:400;font-size:0.9em;">(Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</span></p>
           <ul style="list-style:none;font-size:.875rem;line-height:2.3;">
-            <li>☐ <strong>Ofício (Modelo 005/2026)</strong> — identifica expressamente a Hipótese II, descreve o risco concreto e fundamenta no Art. 21, I da Res. nº 1/2026</li>
+            <li>☐ <strong>Ofício — Hipótese II (Medida de Segurança)</strong> — identifica expressamente a Hipótese II, descreve o risco concreto e fundamenta no Art. 21, I da Res. nº 1/2026</li>
             <li>☐ <strong>Relatório da equipe de segurança</strong></li>
             <li>☐ <strong>BPI atualizado no i-PEN</strong> — assinado pelo CEP ou Diretor</li>
             <li>☐ <strong>Relatório de Saúde</strong> — assinado pelo responsável técnico</li>
@@ -857,7 +855,7 @@
         <div class="modelo-tile-icone">🔴</div>
         <div class="modelo-tile-titulo">Transferência Emergencial</div>
         <div class="modelo-tile-sub" style="text-align:left;line-height:1.5;">
-          <span style="display:block;">🔴 <strong>Hipótese I</strong> — Gerenciamento de Crise (Ato de Indisciplina, em tese)</span>
+          <span style="display:block;">🔴 <strong>Hipótese I</strong> — Gerenciamento de Crise</span>
           <span style="display:block;margin-top:4px;">🔵 <strong>Hipótese II</strong> — Manutenção da Ordem/Integridade Física (Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</span>
         </div>
         <span class="modelo-tile-btn">Abrir modelo →</span>
@@ -891,17 +889,21 @@
         <span class="modelo-tile-btn">Abrir modelo →</span>
       </div>
 
-      <div class="modelo-tile atalho-pernoite" onclick="abrirModalOficio('pernoite')">
+      <div class="modelo-tile atalho-pernoite" style="cursor:default;">
         <div class="modelo-tile-icone">🌙</div>
         <div class="modelo-tile-titulo">Pernoite</div>
-        <div class="modelo-tile-sub">Permanência temporária em unidade diversa</div>
-        <span class="modelo-tile-btn">Abrir modelo →</span>
+        <div class="modelo-tile-sub" style="text-align:left;line-height:1.6;font-size:.8rem;">
+          As transferências para pernoite deverão ser cadastradas diretamente no i-PEN, devendo constar no campo de observação que a Unidade Prisional de destino está ciente e autorizou o pernoite do apenado — expondo o motivo do pernoite.
+        </div>
       </div>
 
       <div class="modelo-tile atalho-segmax" onclick="abrirModalOficio('umax')">
         <div class="modelo-tile-icone">🔒</div>
         <div class="modelo-tile-titulo">Segurança Máxima / RDD</div>
-        <div class="modelo-tile-sub">Após RDD deferido pelo Juízo</div>
+        <div class="modelo-tile-sub" style="text-align:left;line-height:1.6;font-size:.8rem;">
+          Após RDD deferido pelo Juízo<br>
+          <span style="color:#dc2626;font-weight:700;">⚠️ ATENÇÃO: É obrigatório o contato prévio com o Diretor Geral do Departamento de Polícia Penal antes de peticionar em Juízo.</span>
+        </div>
         <span class="modelo-tile-btn">Abrir modelo →</span>
       </div>
 
@@ -1052,7 +1054,7 @@
               <tr><th>Hipótese</th><th>Análise CRV</th><th>Isolamento preventivo</th><th>Execução</th><th>Comunicação ao Juízo</th></tr>
             </thead>
             <tbody>
-              <tr><td><strong>Seg./Emergência — Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese)</strong></td><td><span class="badge badge-vermelho">Imediato / até 2h</span></td><td>Até <strong>10 dias</strong> (prorrogável por mais 20 se PAD concluído)</td><td>Até <strong>24h</strong></td><td>Até <strong>24h</strong> após a transferência</td></tr>
+              <tr><td><strong>Seg./Emergência — Hipótese I (Gerenciamento de Crise)</strong></td><td><span class="badge badge-vermelho">Imediato / até 2h</span></td><td>Até <strong>10 dias</strong> (prorrogável por mais 20 se PAD concluído)</td><td>Até <strong>24h</strong></td><td>Até <strong>24h</strong> após a transferência</td></tr>
               <tr><td><strong>Seg./Emergência — Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</strong></td><td><span class="badge badge-vermelho">Imediato / até 2h</span></td><td><span style="color:var(--vermelho);font-weight:700;">Vedado</span></td><td>Até <strong>24h</strong></td><td>Até <strong>24h</strong> após a transferência</td></tr>
               <tr><td><strong>Adequação de Capacidade</strong></td><td>Conf. cronograma</td><td>—</td><td>Conf. cronograma CRV / SR / DPP</td><td>Até <strong>24h</strong> após execução</td></tr>
               <tr><td><strong>Mandado de Comarca Diversa</strong></td><td>Até 3 dias úteis</td><td>—</td><td>Conforme prazo do mandado</td><td>Imediato ao cumprimento</td></tr>
@@ -1094,7 +1096,7 @@
       <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">3. Incompatibilidade de regime, gênero ou perfil<span class="accordion-seta">▼</span></div><div class="accordion-body">Preso em regime fechado não pode ser enviado a unidade semiaberta ou aberta, e vice-versa. Presos de alta periculosidade não serão transferidos para unidades de perfil comum sem autorização específica da CRV e do DPP.</div></div>
       <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">4. Solicitação de inclusão em USM sem autorização prévia do DPP<span class="accordion-seta">▼</span></div><div class="accordion-body">A gestão local não pode solicitar RDD ao Judiciário sem autorização expressa prévia do DPP via Comissão Deliberativa. Pedidos enviados diretamente ao Judiciário sem essa autorização serão considerados indevidos e o processo será arquivado na CRV.</div></div>
       <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">5. Preso em RDD transferido para unidade comum<span class="accordion-seta">▼</span></div><div class="accordion-body">Durante o cumprimento de RDD, a transferência para unidade comum somente ocorrerá mediante autorização judicial expressa.</div></div>
-      <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">6. Pedido emergencial sem enquadramento em hipótese (I ou II)<span class="accordion-seta">▼</span></div><div class="accordion-body">Todo pedido emergencial deve ser classificado expressamente como Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese) ou Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.) antes da análise da urgência. A mera alegação genérica de urgência não é suficiente. Pedidos sem enquadramento serão indeferidos de plano.</div></div>
+      <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">6. Pedido emergencial sem enquadramento em hipótese (I ou II)<span class="accordion-seta">▼</span></div><div class="accordion-body">Todo pedido emergencial deve ser classificado expressamente como Hipótese I (Gerenciamento de Crise) ou Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.) antes da análise da urgência. A mera alegação genérica de urgência não é suficiente. Pedidos sem enquadramento serão indeferidos de plano.</div></div>
       <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">7. Isolamento preventivo em pedido enquadrado na Hipótese II<span class="accordion-seta">▼</span></div><div class="accordion-body">Na Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.), o isolamento do reeducando é expressamente vedado. O reeducando deve permanecer em cela de convívio, com todos os seus direitos preservados. O uso indevido do isolamento nessa hipótese pode caracterizar abuso de autoridade.</div></div>
     </div>
 </section>
@@ -1627,11 +1629,6 @@
     </div>
   </div>
   <div class="main-wrapper">
-    <div class="alerta alerta-urgente mb-3">
-      <span class="alerta-icone">📞</span>
-      <div><strong class="alerta-titulo">1º Passo — Ligue agora</strong>Plantão 24h: <a href="tel:+554836657330" style="color:var(--vermelho);font-weight:800;">(48) 3665-7330</a> — Anote o número do protocolo verbal. O ofício deve chegar em até 2h.</div>
-    </div>
-
     <div class="alerta alerta-atencao mb-3">
       <span class="alerta-icone">⚠️</span>
       <div><strong class="alerta-titulo">Enquadramento obrigatório</strong>Todo pedido emergencial deve ser classificado em uma das duas hipóteses abaixo <em>antes</em> da análise da urgência. Pedido sem enquadramento será indeferido de plano.</div>
@@ -1642,34 +1639,22 @@
       <div>A transferência possui natureza <strong>administrativa e não punitiva</strong>, sendo utilizada para <strong>retirar o reeducando de situação de crise, risco ou ameaça</strong>. Somente será admitida quando houver <strong>risco atual, concreto e relevante</strong>, devidamente demonstrado pela unidade solicitante.</div>
     </div>
 
-    <div class="conteudo-grid">
+    <div class="conteudo-grid conteudo-sem-sidebar" style="grid-template-columns:1fr;">
       <div>
         <!-- Hipótese I -->
         <div class="card mb-2">
-          <div class="card-header"><span>🔴</span><h3>Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese)</h3></div>
+          <div class="card-header"><span>🔴</span><h3>Hipótese I (Gerenciamento de Crise)</h3></div>
           <div class="card-body">
             <p class="text-sm mb-2">Situações de <strong>instabilidade interna, conflitos ou risco à ordem da unidade</strong>, exigindo a retirada do reeducando.</p>
             <p class="text-sm mb-2">✔ Motivo: <strong>controle da crise</strong> — ❗ Não é punição</p>
-            <ul style="margin:.5rem 0 .5rem 1.25rem;list-style:disc;font-size:.85rem;line-height:2;">
-              <li>Instauração de <strong>PAD é obrigatória</strong> havendo falta disciplinar.</li>
-              <li>Isolamento preventivo de <strong>até 10 dias</strong>.</li>
-              <li>Prorrogável por mais <strong>20 dias</strong> se o PAD for concluído com decisão procedente nesse período.</li>
-              <li>Se o PAD não for julgado nos 10 dias iniciais, o isolamento cessa imediatamente e o reeducando é alocado em cela de convívio.</li>
-              <li>Vedado uso do isolamento como punição antecipada.</li>
-            </ul>
           </div>
         </div>
         <!-- Hipótese II -->
         <div class="card mb-2">
-          <div class="card-header"><span>🔵</span><h3>Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</h3></div>
+          <div class="card-header"><span>🔵</span><h3>Hipótese II (Manutenção da Ordem/Integridade Física — Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.)</h3></div>
           <div class="card-body">
             <p class="text-sm mb-2">Situações de <strong>risco à integridade física</strong>, ameaças, motins ou rebeliões, <strong>independentemente de falta disciplinar</strong>.</p>
             <p class="text-sm mb-2">✔ Motivo: <strong>proteção do reeducando ou terceiros</strong> — ❗ Não é punição</p>
-            <ul style="margin:.5rem 0 .5rem 1.25rem;list-style:disc;font-size:.85rem;line-height:2;">
-              <li><strong>Vedado o isolamento</strong> do reeducando nessa hipótese.</li>
-              <li>Reeducando permanece em <strong>cela de convívio</strong>, com direitos integralmente preservados.</li>
-              <li>Medida de caráter exclusivamente protetivo — sem natureza disciplinar.</li>
-            </ul>
           </div>
         </div>
         <!-- Prazo de permanência -->
@@ -1678,28 +1663,33 @@
           <div><strong>Prazo de permanência na unidade de destino:</strong> Em regra, a permanência ocorre por cerca de <strong>30 (trinta) dias</strong>, podendo ser revista, reduzida ou prorrogada conforme o caso concreto e a evolução da situação.</div>
         </div>
 
-        <!-- Com PAD / Sem PAD -->
-        <div class="card mb-2">
+        <!-- PAD nas duas hipóteses -->
+        <div class="card mb-2" style="border-left:4px solid var(--azul-4);">
+          <div class="card-header" style="background:linear-gradient(90deg,#eff6ff,#dbeafe);">
+            <span>📋</span><h3 style="color:var(--azul-5);">PAD nas duas hipóteses — regras de isolamento</h3>
+          </div>
           <div class="card-body">
-            <p class="text-sm mb-2" style="font-weight:700;text-align:center;">⬇ Houve falta disciplinar (PAD)?</p>
-            <div style="display:flex;flex-wrap:wrap;gap:12px;">
-              <div style="flex:1;min-width:240px;border:1px solid #d1fae5;border-radius:8px;padding:12px;background:#f0fdf4;">
-                <p style="font-weight:700;color:#0f8a4b;margin:0 0 8px;">✔ SIM — Com PAD</p>
-                <ul style="font-size:.84rem;line-height:2;list-style:none;">
-                  <li>✔ Instauração de <strong>PAD obrigatória</strong></li>
-                  <li>🔒 Isolamento preventivo de <strong>até 10 dias</strong></li>
-                  <li>→ Se o PAD for concluído com decisão procedente: pode aplicar sanção, com limite total de <strong>30 dias de isolamento</strong> (10 já cumpridos + até 20 restantes)</li>
-                  <li>❗ Se o PAD não for concluído em 10 dias: isolamento cessa imediatamente e o reeducando vai para <strong>cela de convívio, com direitos preservados</strong></li>
+            <p class="text-sm mb-3" style="font-style:italic;color:#555;">Em ambas as hipóteses (I e II), pode ou não haver instauração de PAD. A existência de PAD define a possibilidade de isolamento preventivo.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:14px;">
+              <div style="flex:1;min-width:240px;border:2px solid #16a34a;border-radius:10px;padding:14px;background:#f0fdf4;">
+                <p style="font-weight:700;color:#15803d;margin:0 0 10px;font-size:.95rem;">✅ SE HOUVER PAD</p>
+                <ul style="font-size:.85rem;line-height:2.1;list-style:none;padding:0;margin:0;">
+                  <li>🔒 O preso <strong>poderá</strong> permanecer em <strong>isolamento preventivo por até 10 (dez) dias</strong></li>
+                  <li>📅 Este prazo poderá ser <strong>prorrogado por mais 20 (vinte) dias</strong>, <em>desde que</em> o PAD seja concluído <strong>durante</strong> os 10 dias iniciais</li>
+                  <li>⚠️ Se o PAD <strong>não for concluído</strong> no período dos 10 dias: o preso <strong>deverá ser colocado em cela de convívio normal</strong>, com todos os direitos preservados</li>
                 </ul>
               </div>
-              <div style="flex:1;min-width:240px;border:1px solid #fee2e2;border-radius:8px;padding:12px;background:#fff5f5;">
-                <p style="font-weight:700;color:#c53030;margin:0 0 8px;">✔ NÃO — Sem PAD</p>
-                <ul style="font-size:.84rem;line-height:2;list-style:none;">
-                  <li>✔ Não há PAD</li>
-                  <li>✔ Não há isolamento disciplinar</li>
-                  <li>➡ Reeducando permanece na unidade de destino em <strong>cela de convívio</strong>, com <strong>direitos integralmente preservados</strong></li>
+              <div style="flex:1;min-width:240px;border:2px solid #dc2626;border-radius:10px;padding:14px;background:#fff5f5;">
+                <p style="font-weight:700;color:#b91c1c;margin:0 0 10px;font-size:.95rem;">🚫 SE NÃO HOUVER PAD</p>
+                <ul style="font-size:.85rem;line-height:2.1;list-style:none;padding:0;margin:0;">
+                  <li>✅ <strong>Não há isolamento</strong> — em nenhuma hipótese</li>
+                  <li>🏠 O preso <strong>deverá permanecer em cela de convívio normal</strong></li>
+                  <li>⚖️ Todos os direitos do preso ficam <strong>integralmente preservados</strong></li>
                 </ul>
               </div>
+            </div>
+            <div style="margin-top:12px;padding:10px 14px;background:#fefce8;border:1px solid #fbbf24;border-radius:8px;font-size:.84rem;color:#78350f;">
+              ⚠️ <strong>Atenção:</strong> A instauração de PAD <strong>nunca é obrigatória</strong> — trata-se de faculdade da administração. Em nenhuma hipótese o isolamento poderá ser utilizado como punição antecipada.
             </div>
           </div>
         </div>
@@ -1708,12 +1698,52 @@
         <div class="card">
           <div class="card-body">
             <div class="fluxo-lista">
-              <div class="fluxo-item"><div class="fluxo-num">01</div><div class="fluxo-conteudo"><h4>Diretor identifica o risco imediato e classifica a hipótese</h4><p>Determina se a situação se enquadra em Hipótese I (Gerenciamento de Crise - Ato de Indisciplina, em tese) ou Hipótese II (Manutenção da Ordem/Integridade Física - Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.). Essa classificação é obrigatória e precede qualquer outra etapa.</p></div></div>
-              <div class="fluxo-item"><div class="fluxo-num">02</div><div class="fluxo-conteudo"><h4>Necessidade de extrema urgência, ligar para a CRV — (48) 3665-7330</p></div></div>
-              <div class="fluxo-item"><div class="fluxo-num">03</div><div class="fluxo-conteudo"><h4>Contato com Diretor de destino e SR(s)</h4><p>Obter anuência e assinatura do Diretor da unidade de destino e do(s) Superintendente(s) Regional(is) envolvidos.</p></div></div>
-              <div class="fluxo-item"><div class="fluxo-num">04</div><div class="fluxo-conteudo"><h4>Enviar ofício modelo 005/2026 + documentos — até 2h</h4><p>Ofício subscrito por: Diretor de origem + Diretor de destino + SR(s). Documentação exigida conforme hipótese (ver sidebar).</p></div></div>
-              <div class="fluxo-item"><div class="fluxo-num">05</div><div class="fluxo-conteudo"><h4>CRV defere e expede a GR — até 24h</h4><p>Transferência executada. Unidade de destino confirma no sistema i-PEN.</p></div></div>
-              <div class="fluxo-item"><div class="fluxo-num">06</div><div class="fluxo-conteudo"><h4>Comunicar o Juízo de Execução — até 24h</h4><p>Ofício ao juízo competente com data, hora, IPEN, unidade de destino e nº do despacho CRV.</p></div></div>
+              <div class="fluxo-item"><div class="fluxo-num">01</div><div class="fluxo-conteudo"><h4>Diretor identifica o risco imediato e classifica a hipótese</h4><p>Determina se a situação se enquadra em Hipótese I (Gerenciamento de Crise) ou Hipótese II (Manutenção da Ordem/Integridade Física — Emergências como: riscos à integridade física — sua ou de outrem —, inclusive de morte, motins, rebeliões, etc.). Essa classificação é obrigatória e precede qualquer outra etapa.</p></div></div>
+              <div class="fluxo-item"><div class="fluxo-num">02</div><div class="fluxo-conteudo"><h4>Contato com Diretor de destino e SR(s)</h4><p>Obter anuência e assinatura do Diretor da unidade de destino e do(s) Superintendente(s) Regional(is) envolvidos, utilizando-se do SGPe.</p></div></div>
+              <div class="fluxo-item"><div class="fluxo-num">03</div><div class="fluxo-conteudo"><h4>Cadastrar o pedido no i-PEN — até 2h</h4><p>Anexar o ofício <strong>conforme os modelos</strong>, devidamente assinado pelos Diretores das unidades prisionais de origem e de destino e pelo(s) Superintendente(s), além dos documentos pertinentes — também assinados, se formalizados por alguma autoridade.</p></div></div>
+              <div class="fluxo-item"><div class="fluxo-num">04</div><div class="fluxo-conteudo"><h4>CRV analisa o pedido</h4><p>A transferência somente poderá ser executada após a aprovação no i-PEN.</p></div></div>
+              <div class="fluxo-item"><div class="fluxo-num">05</div><div class="fluxo-conteudo"><h4>Comunicar o Juízo de Execução — até 24h</h4><p>As unidades prisionais deverão comunicar as respectivas unidades judiciárias em até 24h após a transferência.</p></div></div>
+              <div class="fluxo-item" style="border-left:3px solid var(--vermelho);padding-left:8px;"><div class="fluxo-num" style="background:var(--vermelho);">📞</div><div class="fluxo-conteudo"><h4>Necessidade de extrema urgência — Ligar para a CRV</h4><p>Plantão 24h: <strong>(48) 3665-7330</strong> — Em caso de extrema urgência, acionar a CRV por telefone imediatamente. Anote o número do protocolo verbal.</p></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Documentos Necessários — Integrados -->
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px;">
+          <div style="flex:1;min-width:260px;border:1px solid #fca5a5;border-radius:10px;overflow:hidden;">
+            <div style="background:#fef2f2;padding:10px 14px;font-weight:700;font-size:.9rem;color:#991b1b;border-bottom:1px solid #fca5a5;">📂 Documentos — Hipótese I</div>
+            <div style="padding:12px 14px;">
+              <ul style="font-size:.85rem;line-height:2.1;list-style:none;padding:0;margin:0;">
+                <li>☐ <strong>Ofício</strong> assinado pelo Diretor de origem, Diretor de destino e SR(s)</li>
+                <li>☐ BOI</li>
+                <li>☐ Ofício do Chefe de Segurança e/ou do Setor de Inteligência, demonstrando, de forma pormenorizada, a necessidade urgente da transferência</li>
+                <li>☐ BPI atualizado no i-PEN</li>
+                <li>☐ Relatório de Saúde</li>
+                <li>☐ PAD (portaria de instauração, se houver)</li>
+              </ul>
+            </div>
+          </div>
+          <div style="flex:1;min-width:260px;border:1px solid #93c5fd;border-radius:10px;overflow:hidden;">
+            <div style="background:#eff6ff;padding:10px 14px;font-weight:700;font-size:.9rem;color:#1d4ed8;border-bottom:1px solid #93c5fd;">📂 Documentos — Hipótese II</div>
+            <div style="padding:12px 14px;">
+              <ul style="font-size:.85rem;line-height:2.1;list-style:none;padding:0;margin:0;">
+                <li>☐ <strong>Ofício</strong> assinado pelo Diretor de origem, Diretor de destino e SR(s)</li>
+                <li>☐ BOI</li>
+                <li>☐ Ofício do Chefe de Segurança e/ou do Setor de Inteligência, demonstrando, de forma pormenorizada, a necessidade urgente da transferência</li>
+                <li>☐ BPI atualizado no i-PEN</li>
+                <li>☐ Relatório de Saúde</li>
+                <li>☐ PAD (portaria de instauração, se houver)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Modelos de Ofício -->
+        <div class="card mb-2" style="border-left:4px solid var(--azul-4);">
+          <div class="card-body" style="padding:12px 16px;">
+            <p style="font-weight:700;font-size:.9rem;margin:0 0 8px;">📝 Modelos de Ofício</p>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;">
+              <a href="#" onclick="abrirModeloDireto('emergencial_i');return false;" style="font-size:.85rem;color:var(--azul-4);font-weight:600;">→ Hipótese I — Gerenciamento de Crise</a>
+              <span style="color:#ccc;">|</span>
+              <a href="#" onclick="abrirModeloDireto('emergencial_ii');return false;" style="font-size:.85rem;color:var(--azul-4);font-weight:600;">→ Hipótese II — Medida de Segurança</a>
             </div>
           </div>
         </div>
@@ -1722,35 +1752,7 @@
           <div><strong>Assinaturas obrigatórias:</strong> Diretor da unidade de origem + Diretor da unidade de destino + Superintendente(s) Regional(is).</div>
         </div>
       </div>
-      <aside class="sidebar">
-        <div class="sidebar-card">
-          <div class="sidebar-card-header">📂 Documentos — Hipótese I</div>
-          <div class="sidebar-card-body">
-            <ul style="font-size:.82rem;line-height:2.1;list-style:none;">
-              <li>☐ Ofício (Modelo 005/2026) assinado pelo Diretor de origem, Diretor de destino e SR(s)</li>
-              <li>☐ BOI</li>
-              <li>☐ Relatório de segurança com descrição do gerenciamento de crise</li>
-              <li>☐ BPI atualizado no i-PEN</li>
-              <li>☐ Relatório de Saúde</li>
-              <li>☐ PAD (portaria de instauração obrigatória)</li>
-            </ul>
-          </div>
-        </div>
-        <div class="sidebar-card">
-          <div class="sidebar-card-header">📂 Documentos — Hipótese II</div>
-          <div class="sidebar-card-body">
-            <ul style="font-size:.82rem;line-height:2.1;list-style:none;">
-              <li>☐ Ofício (Modelo 005/2026) assinado pelo Diretor de origem, Diretor de destino e SR(s)</li>
-              <li>☐ BOI</li>
-              <li>☐ Relatório de segurança com descrição do risco</li>
-              <li>☐ BPI atualizado no i-PEN</li>
-              <li>☐ Relatório de Saúde</li>
-            </ul>
-            <p style="font-size:.78rem;color:var(--cinza-5);margin-top:.5rem;">PAD não se aplica nesta hipótese.</p>
-          </div>
-        </div>
-        <div class="sidebar-card"><div class="sidebar-card-header">📝 Modelos de Ofício</div><div class="sidebar-card-body"><a href="#" onclick="abrirModeloDireto('emergencial_i');return false;" style="font-size:.82rem;color:var(--azul-4);display:block;margin-bottom:.4rem;">→ Modelo 005-A/2026 — Hipótese I (Gerenciamento de Crise)</a><a href="#" onclick="abrirModeloDireto('emergencial_ii');return false;" style="font-size:.82rem;color:var(--azul-4);">→ Modelo 005-B/2026 — Hipótese II (Medida de Segurança)</a></div></div>
-      </aside>
+
     </div>
   </div>
 </section>
@@ -1901,7 +1903,7 @@
         </div>
       </div>
       <aside class="sidebar">
-        <div class="sidebar-card"><div class="sidebar-card-header">📝 Modelo de Ofício</div><div class="sidebar-card-body"><a href="#" onclick="navegarPara('modelos');return false;" style="font-size:.82rem;color:var(--azul-4);">→ Modelo — Pernoite</a></div></div>
+        <div class="sidebar-card"><div class="sidebar-card-header">📋 Cadastro no i-PEN</div><div class="sidebar-card-body" style="font-size:.82rem;line-height:1.7;">As transferências para pernoite devem ser cadastradas diretamente no i-PEN. No campo de observação, informar que a Unidade de destino está ciente e autorizou o pernoite, expondo o motivo.</div></div>
       </aside>
     </div>
   </div>
@@ -1918,7 +1920,7 @@
   <div class="main-wrapper">
     <div class="alerta alerta-urgente mb-3">
       <span class="alerta-icone">⛔</span>
-      <div><strong class="alerta-titulo">Atenção — Autorização prévia do DPP é obrigatória</strong>A gestão local somente pode solicitar o RDD ao Judiciário <strong>após autorização expressa do Departamento de Polícia Penal</strong>, por meio da Comissão Deliberativa da USM. A Comissão deve ser tratada entre o Superintendente Regional e a DGPP.</div>
+      <div><strong class="alerta-titulo">⚠️ Atenção — Contato prévio com o Diretor Geral do DPP é obrigatório</strong>É <strong>imprescindível o contato prévio com o Diretor Geral do Departamento de Polícia Penal</strong> antes de qualquer peticionamento em Juízo. A gestão local somente pode solicitar o RDD ao Judiciário <strong>após autorização expressa do DPP</strong>, por meio da Comissão Deliberativa da USM. A Comissão deve ser tratada entre o Superintendente Regional e a DGPP.</div>
     </div>
     <div class="conteudo-grid">
       <div>
@@ -2029,7 +2031,7 @@
           Qual a diferença entre as Hipóteses I e II na transferência emergencial?<span class="accordion-seta">▼</span>
         </div>
         <div class="accordion-body">
-          A <strong>Hipótese I — Gerenciamento de Crise</strong> é motivada por situações de instabilidade interna, conflitos ou risco à ordem da unidade que exijam a retirada imediata do reeducando. Havendo falta disciplinar em tese, exige instauração obrigatória de PAD e admite isolamento preventivo de até 10 dias (prorrogável por mais 20 se o PAD for concluído com decisão procedente dentro desse período). A <strong>Hipótese II — Medida de Segurança</strong> visa preservar a integridade física do reeducando, de terceiros ou a estabilidade da unidade diante de ameaças, motins ou rebeliões, sem relação com falta disciplinar — o isolamento é <em>vedado</em> e o reeducando permanece em cela de convívio. Ambas as hipóteses possuem natureza administrativa e não punitiva.
+          A <strong>Hipótese I — Gerenciamento de Crise</strong> é motivada por situações de instabilidade interna, conflitos ou risco à ordem da unidade que exijam a retirada imediata do reeducando. Em ambas as hipóteses pode ou não haver PAD — a instauração nunca é obrigatória. Se houver PAD, admite-se isolamento preventivo de até 10 dias (prorrogável por mais 20 se o PAD for concluído com decisão procedente durante esse período). Sem PAD ou sem conclusão no prazo, o preso permanece em cela de convívio com direitos integralmente preservados. A <strong>Hipótese II — Medida de Segurança</strong> visa preservar a integridade física do reeducando, de terceiros ou a estabilidade da unidade diante de ameaças, motins ou rebeliões, sem relação com falta disciplinar. Ambas as hipóteses possuem natureza administrativa e não punitiva.
         </div>
       </div>
 
