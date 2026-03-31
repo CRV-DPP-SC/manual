@@ -407,6 +407,10 @@
             <li><strong>Pontual:</strong> Transferência individual por perfil específico (ex.: pessoa LGBT para unidade adequada).</li>
           </ul>
           <br>
+          <div style="background:#eff6ff;border-left:4px solid #3b82f6;padding:.7rem 1rem;border-radius:0 6px 6px 0;font-size:.86rem;line-height:1.7;">
+            📋 <strong>Mesmo Complexo Prisional:</strong> quando se tratar de transferência entre unidades do mesmo complexo prisional, <strong>não será necessário o envio de ofício via SGPe</strong>, sendo suficiente o cadastro no i-PEN. Consignar no campo <strong>"observações"</strong> que houve contato prévio com o Diretor ou Chefe de Segurança da unidade de destino, o qual anuiu ao pedido.
+          </div>
+          <br>
           <p><strong>Metas — Plano Pena Justa:</strong> 130% (1º ano) → 120% (2º ano) → 100% (3º ano).</p>
           <br>
           <p><a href="#" onclick="navegarPara('equalizacao');return false;" style="color:var(--azul-4);font-weight:700;">→ Ver fluxo, modelos de ofício e tabela de metas</a></p>
@@ -446,6 +450,10 @@
             <li>Assinatura do <strong>Diretor da unidade de origem</strong> e do <strong>Diretor da unidade de destino</strong>;</li>
             <li>Não é exigida anuência dos Superintendentes Regionais nem do SGPe.</li>
           </ul>
+          <br>
+          <div style="background:#eff6ff;border-left:4px solid #3b82f6;padding:.7rem 1rem;border-radius:0 6px 6px 0;font-size:.86rem;line-height:1.7;">
+            📋 <strong>Dispensa de ofício via SGPe:</strong> para o pernoite <strong>não será necessário o envio de ofício via SGPe</strong>, sendo suficiente o cadastro no i-PEN. Consignar no campo <strong>"observações"</strong> que houve contato prévio com o Diretor ou Chefe de Segurança da unidade de destino, o qual anuiu ao pedido.
+          </div>
           <br>
 
         </div>
@@ -2390,7 +2398,7 @@
         Entrar
       </button>
       <p style="text-align:center;margin-top:1rem;font-size:.78rem;color:#6b7280;">
-        Primeiro acesso? Use a senha temporária <strong>CRV@2026temp</strong><br>e você será redirecionado para criar a sua senha.
+        Primeiro acesso? Use a senha temporária enviada pelo administrador.<br>Você será redirecionado para criar a sua senha pessoal.
       </p>
     </div>
 
@@ -2565,8 +2573,21 @@
       const cred = await signInWithEmailAndPassword(auth, email, senha);
       usuarioAtual = cred.user;
 
-      // Verifica se é senha temporária → redireciona para troca
-      if (senha === SENHA_TEMPORARIA) {
+      // Verifica no Firestore se já configurou senha própria
+      let primeiroAcesso = false;
+      try {
+        const docRef = doc(db, 'usuarios', cred.user.uid);
+        const snap = await getDoc(docRef);
+        // Se não existe documento ou senhaConfigurada = false → primeiro acesso
+        if (!snap.exists() || snap.data().senhaConfigurada !== true) {
+          primeiroAcesso = true;
+        }
+      } catch (e) {
+        // Se não conseguir ler o Firestore, verifica pela senha temporária
+        if (senha === SENHA_TEMPORARIA) primeiroAcesso = true;
+      }
+
+      if (primeiroAcesso) {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('tela-trocar-senha').style.display = 'block';
         return;
@@ -2612,6 +2633,11 @@
 
     try {
       await updatePassword(usuarioAtual, nova);
+      // Marca no Firestore que a senha foi configurada
+      try {
+        const docRef = doc(db, 'usuarios', usuarioAtual.uid);
+        await setDoc(docRef, { senhaConfigurada: true, email: usuarioAtual.email }, { merge: true });
+      } catch(e) { /* silencioso */ }
       document.getElementById('modal-login').style.display = 'none';
       document.getElementById('tela-login').style.display = 'block';
       document.getElementById('tela-trocar-senha').style.display = 'none';
