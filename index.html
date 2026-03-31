@@ -2654,7 +2654,6 @@
   window.fazerLogout = async function() {
     await signOut(auth);
     usuarioAtual = null;
-    document.getElementById('restrito').style.display = 'none';
     if (typeof navegarPara === 'function') navegarPara('inicio');
   };
 
@@ -2746,19 +2745,16 @@
   }
 
   function mostrarAreaRestrita(user) {
-    // Oculta todas as seções e mostra a restrita
-    document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
-    const sec = document.getElementById('restrito');
-    sec.style.display = 'block';
-
+    // Usa o mesmo sistema das outras seções (classe 'ativo')
+    if (typeof navegarPara === 'function') {
+      navegarPara('restrito');
+    } else {
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('ativo'));
+      document.getElementById('restrito').classList.add('ativo');
+    }
     // Info do usuário
     document.getElementById('restrito-usuario-info').textContent =
       '👮 Conectado como: ' + (user.email || '');
-
-    // Atualiza breadcrumb
-    const bc = document.getElementById('breadcrumbAtual');
-    if (bc) bc.textContent = 'Área Restrita';
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
