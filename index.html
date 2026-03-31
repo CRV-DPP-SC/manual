@@ -2449,7 +2449,7 @@
 </div>
 
 <!-- ========== SEÇÃO ÁREA RESTRITA ========== -->
-<section id="restrito" class="page-section" style="display:none;">
+<section id="restrito" class="page-section">
   <div class="main-wrapper">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
       <div>
@@ -2657,7 +2657,12 @@
   window.fazerLogout = async function() {
     await signOut(auth);
     usuarioAtual = null;
-    if (typeof navegarPara === 'function') navegarPara('inicio');
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('ativo'));
+    const inicio = document.getElementById('inicio');
+    if (inicio) inicio.classList.add('ativo');
+    const bc = document.getElementById('breadcrumbAtual');
+    if (bc) bc.textContent = 'Início';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   window.toggleSenhaVis = function(id) {
@@ -2748,16 +2753,21 @@
   }
 
   function mostrarAreaRestrita(user) {
-    // Usa o mesmo sistema das outras seções (classe 'ativo')
-    if (typeof navegarPara === 'function') {
-      navegarPara('restrito');
-    } else {
-      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('ativo'));
-      document.getElementById('restrito').classList.add('ativo');
-    }
+    // Oculta todas as seções
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('ativo'));
+    // Mostra a restrita
+    const sec = document.getElementById('restrito');
+    if (sec) sec.classList.add('ativo');
+    // Atualiza nav
+    document.querySelectorAll('.nav-principal a').forEach(a => a.classList.remove('ativo'));
+    const navBtn = document.getElementById('nav-restrito');
+    if (navBtn) navBtn.classList.add('ativo');
+    // Atualiza breadcrumb
+    const bc = document.getElementById('breadcrumbAtual');
+    if (bc) bc.textContent = 'Área Restrita';
     // Info do usuário
-    document.getElementById('restrito-usuario-info').textContent =
-      '👮 Conectado como: ' + (user.email || '');
+    const info = document.getElementById('restrito-usuario-info');
+    if (info) info.textContent = '👮 Conectado como: ' + (user.email || '');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
