@@ -517,7 +517,7 @@ function construirListaAssinaturas(ori, des, isUSM) {
   const assinaturas = [];
 
   // Modelos que assinam somente o Diretor da unidade que comunica
-  const somenteDiretorOrigem = ['comunicacao', 'mandado-comarca'].includes(modeloAtual);
+  const somenteDiretorOrigem = ['comunicacao', 'mandado-comarca', 'mandado'].includes(modeloAtual);
   if (somenteDiretorOrigem) {
     assinaturas.push({
       nome:  ori ? ori.diretor   : '[NOME DO DIRETOR]',
@@ -794,7 +794,7 @@ const modelosTexto = {
         titulo: '🏛️ Comunicação ao Juízo de Execução — Saída',
         paragrafos: [
           { texto: 'Comunicamos a Vossa Excelência que o(a) custodiado(a) [NOME COMPLETO], IPEN nº [NÚMERO], foi transferido(a) desta Unidade Prisional para a [UNIDADE PRISIONAL DE DESTINO], localizada em [CIDADE DE DESTINO]/SC, no dia [DATA].', editavel: false },
-          { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa.', editavel: false },
+          { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que [MOTIVO DA TRANSFERÊNCIA — Ex.: a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa / a transferência ocorreu provisoriamente para manutenção da ordem e segurança].', editavel: false },
           { texto: 'Nada mais havendo a comunicar, ficamos à disposição de Vossa Excelência para quaisquer esclarecimentos que se façam necessários.', editavel: false }
         ],
       },
@@ -802,14 +802,14 @@ const modelosTexto = {
         titulo: '🏛️ Comunicação ao Juízo de Execução — Entrada',
         paragrafos: [
           { texto: 'Comunicamos a Vossa Excelência que o(a) custodiado(a) [NOME COMPLETO], IPEN nº [NÚMERO], ingressou nesta Unidade Prisional, oriundo(a) da [UNIDADE PRISIONAL DE ORIGEM], localizada em [CIDADE DE ORIGEM]/SC, no dia [DATA].', editavel: false },
-          { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa.', editavel: false },
+          { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que [MOTIVO DA TRANSFERÊNCIA — Ex.: a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa / a transferência ocorreu provisoriamente para manutenção da ordem e segurança].', editavel: false },
           { texto: 'Nada mais havendo a comunicar, ficamos à disposição de Vossa Excelência para quaisquer esclarecimentos que se façam necessários.', editavel: false }
         ],
       },
     },
     paragrafos: [
   { texto: 'Comunicamos a Vossa Excelência que o(a) custodiado(a) [NOME COMPLETO], IPEN nº [NÚMERO], foi transferido(a) desta Unidade Prisional para a [UNIDADE PRISIONAL DE DESTINO], localizada em [CIDADE DE DESTINO]/SC, no dia [DATA].', editavel: false },
-  { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa.', editavel: false },
+  { texto: 'A transferência foi devidamente autorizada pela Central de Regulação de Vagas — CRV/DPP, uma vez que [MOTIVO DA TRANSFERÊNCIA — Ex.: a Unidade Prisional de Destino é competente para a manutenção da prisão do custodiado por estar vinculada à Unidade Judiciária que determinou a prisão da referida pessoa / a transferência ocorreu provisoriamente para manutenção da ordem e segurança].', editavel: false },
   { texto: 'Nada mais havendo a comunicar, ficamos à disposição de Vossa Excelência para quaisquer esclarecimentos que se façam necessários.', editavel: false }
 ]
 },  // fecha: comunicacao
@@ -972,33 +972,45 @@ function coletarTextoOficio() {
   const saudSel  = document.getElementById('ofc-saudacao');
   const saudacao = saudSel?.value || 'Prezado(a) Coordenador(a),';
   const despedida = document.getElementById('ofc-despedida')?.value || 'Atenciosamente,';
-  // Coleta parágrafos com campos inline preenchidos
-  const paras = [...document.querySelectorAll('#ofc-paragrafos .oficio-paragrafo-inline')].map(div => {
+  // Coleta parágrafos com campos inline preenchidos (texto puro para cópia)
+  // e parasHtml com campos em negrito + quebras de linha para PDF/Word
+  const parasRaw = [...document.querySelectorAll('#ofc-paragrafos .oficio-paragrafo-inline')].map(div => {
     let texto = div.dataset.textoOriginal || '';
+    let textoHtml = div.dataset.textoOriginal || '';
 
     // Bloco de lista de reeducandos (modelo coletivo)
     if (texto === '[LISTA_REEDUCANDOS]') {
       const itens = [...div.querySelectorAll('.lista-reeducando-item')].map((item, i) => {
         const nome = item.querySelector('[data-field="nome"]')?.value.trim() || '(nome não informado)';
         const ipen = item.querySelector('[data-field="ipen"]')?.value.trim() || '(IPEN não informado)';
+        return `${i + 1}. <strong>${nome}</strong> — IPEN Nº <strong>${ipen}</strong>`;
+      });
+      // Para texto puro (cópia): sem tags, separado por \n
+      const itensPuro = [...div.querySelectorAll('.lista-reeducando-item')].map((item, i) => {
+        const nome = item.querySelector('[data-field="nome"]')?.value.trim() || '(nome não informado)';
+        const ipen = item.querySelector('[data-field="ipen"]')?.value.trim() || '(IPEN não informado)';
         return `${i + 1}. ${nome} — IPEN Nº ${ipen}`;
       });
-      return itens.join('\n');
+      return { puro: itensPuro.join('\n'), html: itens.join('<br>') };
     }
 
     div.querySelectorAll('.campo-inline-editavel').forEach(input => {
       const original = input.dataset.original || input.placeholder;
       const valor = input.value.trim() || input.placeholder;
       texto = texto.replace('[' + original + ']', valor);
+      textoHtml = textoHtml.replace('[' + original + ']', '<strong>' + valor + '</strong>');
     });
     // Substitui selects inline
     div.querySelectorAll('.campo-inline-select').forEach(sel => {
       const original = sel.dataset.original || '';
       const valor = sel.value || original;
       texto = texto.replace('[' + original + ']', valor);
+      textoHtml = textoHtml.replace('[' + original + ']', '<strong>' + valor + '</strong>');
     });
-    return texto.trim();
-  }).filter(Boolean);
+    return { puro: texto.trim(), html: textoHtml.trim() };
+  });
+  const paras    = parasRaw.filter(p => p && p.puro).map(p => p.puro);
+  const parasHtml = parasRaw.filter(p => p && p.html).map(p => p.html);
   const asss     = [...document.querySelectorAll('#ofc-assinaturas .oficio-assinatura-bloco')].map(b => {
     const nome   = b.querySelector('.ass-nome input')?.value || '';
     const cargos = [...b.querySelectorAll('.ass-cargo input')].map(i => i.value).filter(Boolean);
@@ -1022,7 +1034,7 @@ function coletarTextoOficio() {
       destHTML = destEl2.innerText || '';
     }
   }
-  return { cidade, data, saudacao, paras, despedida, asss, destHTML };
+  return { cidade, data, saudacao, paras, parasHtml, despedida, asss, destHTML };
 }
 
 function copiarOficio() {
@@ -1090,7 +1102,7 @@ function _destTextoLimpo() {
 }
 
 function gerarPDF() {
-  const { cidade, data, saudacao, paras, despedida, asss } = coletarTextoOficio();
+  const { cidade, data, saudacao, paras, parasHtml, despedida, asss } = coletarTextoOficio();
   const u   = _dadosUnidade();
   const dest = _destTextoLimpo();
 
@@ -1142,7 +1154,7 @@ function gerarPDF() {
     // Corpo
     + '<div class="data">' + cidade + ', ' + data + '.</div>'
     + '<div class="saud">' + saudacao + '</div>'
-    + paras.map(p => '<div class="par">' + p + '</div>').join('')
+    + paras.map((p, i) => '<div class="par">' + (parasHtml[i] || p) + '</div>').join('')
     + '<div class="desp">' + despedida + '</div>'
     + '<div class="asss">'
     + asss.map(a =>
@@ -1175,7 +1187,7 @@ function gerarPDF() {
 }
 
 function gerarWord() {
-  const { cidade, data, saudacao, paras, despedida, asss } = coletarTextoOficio();
+  const { cidade, data, saudacao, paras, parasHtml, despedida, asss } = coletarTextoOficio();
   const u    = _dadosUnidade();
   const dest = _destTextoLimpo();
 
@@ -1224,7 +1236,7 @@ function gerarWord() {
     + '<p class="data">' + cidade + ', ' + data + '.</p>'
     + '<p class="gap4">&nbsp;</p>'
     + '<p class="i15 gap4">' + saudacao + '</p>'
-    + paras.map(p => '<p class="i15">' + p + '</p><p>&nbsp;</p>').join('')
+    + paras.map((p, i) => '<p class="i15">' + (parasHtml[i] || p) + '</p><p>&nbsp;</p>').join('')
     + '<p class="i8 gap4">' + despedida + '</p>'
     + '<p class="gap5">&nbsp;</p>'
     + asss.map(a =>
