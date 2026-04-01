@@ -2652,7 +2652,7 @@
   </div>
 
   <div class="card">
-    <div class="card-title">Vagas Disponíveis</div>
+    <div class="card-title">Vagas Existentes</div>
     <div class="grid2">
       <div><label for="vm">Masculino</label><input type="number" id="vm" placeholder="0" min="0" oninput="calc()"></div>
       <div><label for="vf">Feminino</label><input type="number" id="vf" placeholder="0" min="0" oninput="calc()"></div>
@@ -2670,9 +2670,9 @@
   <div class="card">
     <div class="card-title">Resumo de Vagas e Recolhidos</div>
     <div class="grid3">
-      <div class="stat"><div class="stat-label">Vagas Masculinas</div><div class="stat-val" id="s-vm">—</div></div>
-      <div class="stat"><div class="stat-label">Vagas Femininas</div><div class="stat-val" id="s-vf">—</div></div>
-      <div class="stat"><div class="stat-label">Total de Vagas</div><div class="stat-val" id="s-tv">—</div></div>
+      <div class="stat"><div class="stat-label">Vagas Existentes Masc.</div><div class="stat-val" id="s-vm">—</div></div>
+      <div class="stat"><div class="stat-label">Vagas Existentes Fem.</div><div class="stat-val" id="s-vf">—</div></div>
+      <div class="stat"><div class="stat-label">Total de Vagas Existentes</div><div class="stat-val" id="s-tv">—</div></div>
       <div class="stat"><div class="stat-label">Presos Masculinos</div><div class="stat-val" id="s-pm">—</div></div>
       <div class="stat"><div class="stat-label">Presas Femininas</div><div class="stat-val" id="s-pf">—</div></div>
       <div class="stat"><div class="stat-label">Total Recolhidos</div><div class="stat-val" id="s-tp">—</div></div>
@@ -2779,7 +2779,7 @@ function buildText(){
   return 'RELATÓRIO DO SISTEMA PRISIONAL\n'+
     'Estado de Santa Catarina\n'+
     'Florianópolis/SC, '+getDate()+'.\n\n'+
-    'VAGAS DISPONÍVEIS\n'+
+    'VAGAS EXISTENTES (Com base no Relatório 1.4 do iPEN)\n'+
     '  Masculino: '+fmt(_vm)+'\n'+
     '  Feminino:  '+fmt(_vf)+'\n'+
     '  TOTAL:     '+fmt(_tv)+'\n\n'+
@@ -2806,7 +2806,7 @@ function buildPlantao(tipo){
     ? 'Iniciamos o plantão com o seguinte quantitativo lotacional:'
     : 'Finalizamos o plantão sem alterações e com o seguinte quantitativo lotacional:';
   return intro+'\n\n'+
-    'VAGAS DISPONÍVEIS\n'+
+    'VAGAS EXISTENTES (Com base no Relatório 1.4 do iPEN)\n'+
     '  Masculino: '+fmt(_vm)+'\n'+
     '  Feminino:  '+fmt(_vf)+'\n'+
     '  TOTAL:     '+fmt(_tv)+'\n\n'+
@@ -2881,7 +2881,7 @@ function generatePDF(){
 
   // Vagas
   doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(0,0,0);
-  doc.text('VAGAS DISPONÍVEIS',L,y); y+=lh+1;
+  doc.text('VAGAS EXISTENTES (Com base no Relatório 1.4 do iPEN)',L,y); y+=lh+1;
   doc.setFont('helvetica','normal');
   doc.text('Masculino:',L+5,y); doc.text(fmt(_vm),RE,y,{align:'right'}); y+=lh;
   doc.text('Feminino:',L+5,y); doc.text(fmt(_vf),RE,y,{align:'right'}); y+=lh;
@@ -2973,7 +2973,7 @@ function generateDOC(){
     '</td></tr></table>'+
     '<hr class="sep">'+
     '<p class="date">Florianópolis/SC, '+getDate()+'.</p>'+
-    '<h2>VAGAS DISPONÍVEIS</h2>'+
+    '<h2>VAGAS EXISTENTES <small style="font-size:8pt;font-weight:normal;">(Com base no Relatório 1.4 do iPEN)</small></h2>'+
     '<table class="d">'+
     '<tr><td>Masculino</td><td>'+fmt(_vm)+'</td></tr>'+
     '<tr><td>Feminino</td><td>'+fmt(_vf)+'</td></tr>'+
