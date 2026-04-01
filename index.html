@@ -3039,6 +3039,16 @@ window.abrirModal = function(id) {
 
 window.abrirCalculadora = function() { window.abrirModal('modal-calculadora'); };
 window.fecharCalculadora = function() { window.fecharModal('modal-calculadora'); };
+
+// Fallback para Área Restrita (module sobrescreve quando carregado)
+window.abrirAreaRestrita = function() {
+  var el = document.getElementById('modal-login');
+  if (el) { el.style.display = 'flex'; }
+  setTimeout(function() {
+    var emailEl = document.getElementById('login-email');
+    if (emailEl) emailEl.focus();
+  }, 100);
+};
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
@@ -3214,8 +3224,6 @@ window.fecharCalculadora = function() { window.fecharModal('modal-calculadora');
     el.type = el.type === 'password' ? 'text' : 'password';
   };
 
-  
-  };
 
   window.fecharNovidades = function() {
     document.getElementById('modal-novidades').style.display = 'none';
