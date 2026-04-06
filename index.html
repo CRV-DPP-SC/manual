@@ -96,7 +96,6 @@
       <a href="#" data-pagina="fluxo"       onclick="navegarPara('fluxo');return false;">Fluxo Operacional</a>
       <a href="#" data-pagina="documentos"  onclick="navegarPara('documentos');return false;">Documentos</a>
       <a href="#" data-pagina="modelos"     onclick="navegarPara('modelos');return false;">Modelos de Ofícios</a>
-      <a href="gerador_oficios_v5.html" target="_blank" style="background:linear-gradient(135deg,#1a4a8a,#2563b0);color:#fff!important;border-radius:6px;padding:4px 14px;font-weight:700;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.2);">✦ Gerador de Ofícios</a>
       <a href="#" data-pagina="vedacoes"    onclick="navegarPara('vedacoes');return false;">Vedações</a>
       <a href="#" data-pagina="faq"         onclick="navegarPara('faq');return false;">FAQ</a>
       <a href="#" data-pagina="erros-comuns" onclick="navegarPara('erros-comuns');return false;">Erros Comuns</a>
@@ -921,15 +920,6 @@
       <div>Clique em um dos cartões abaixo para abrir o modelo em um painel flutuante. Edite os campos, escolha a saudação e despedida, e exporte com formatação oficial (Arial 11, justificado, recuos corretos).</div>
     </div>
 
-    <!-- Banner Gerador em Desenvolvimento -->
-    <div style="background:linear-gradient(135deg,#0d2b55,#174b8a);color:#fff;border-radius:10px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(0,0,0,.2);">
-      <div style="font-size:2rem;flex-shrink:0;">✦</div>
-      <div style="flex:1;">
-        <div style="font-weight:700;font-size:1rem;margin-bottom:4px;">Gerador de Ofícios — Em Desenvolvimento</div>
-        <div style="font-size:.83rem;opacity:.85;line-height:1.5;">O novo <strong>Gerador de Ofícios</strong> está em fase de testes. Ele guia o usuário passo a passo por um chat interativo e monta o ofício automaticamente, com formatação oficial.</div>
-      </div>
-      <a href="gerador_oficios_v5.html" target="_blank" style="background:#f0c040;color:#0d2b55;font-weight:800;border-radius:8px;padding:10px 20px;text-decoration:none;font-size:.85rem;white-space:nowrap;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2);">🧪 Testar →</a>
-    </div>
 
     <!-- Grade de cartões de modelos -->
     <div class="modelos-grade">
@@ -2518,13 +2508,13 @@
         <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Consulta de unidades por regional</div>
       </div>
 
-      <!-- Gerador de Ofício -->
-      <div onclick="window.abrirModal('modal-gerador-oficio')"
-        style="background:#fff;border:2px solid #1a2a4a;border-radius:12px;padding:1.5rem;cursor:pointer;transition:.2s;text-align:center;"
+      <!-- Gerador de Despachos -->
+      <div onclick="window.open('gerador_despachos_crv.html','_blank')"
+        style="background:#fff;border:2px solid #0d2b55;border-radius:12px;padding:1.5rem;cursor:pointer;transition:.2s;text-align:center;"
         onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
-        <div style="font-size:2rem;margin-bottom:.6rem;">📝</div>
-        <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">Gerador de Ofício</div>
-        <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Gerar, copiar, PDF e DOC</div>
+        <div style="font-size:2rem;margin-bottom:.6rem;">⚖️</div>
+        <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">Gerador de Despachos</div>
+        <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Deferir, Indeferir e Devolver — CRV</div>
       </div>
 
       <!-- Trello Fake by Jessica -->
