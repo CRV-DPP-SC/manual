@@ -2527,6 +2527,15 @@
         <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Acesso à escala da equipe</div>
       </div>
 
+      <!-- Questionário Fluxo Ingresso -->
+      <div onclick="abrirPainelRespostas()"
+        style="background:#fff;border:2px solid #1a2a4a;border-radius:12px;padding:1.5rem;cursor:pointer;transition:.2s;text-align:center;"
+        onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
+        <div style="font-size:2rem;margin-bottom:.6rem;">📋</div>
+        <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">Fluxo — Ingresso de Presos / Exame de Corpo de Delito</div>
+        <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Respostas, compilados e filtros</div>
+      </div>
+
       <!-- SEEU -->
       <div onclick="window.open('https://seeu.pje.jus.br/seeu/','_blank')"
         style="background:#fff;border:2px solid #1a2a4a;border-radius:12px;padding:1.5rem;cursor:pointer;transition:.2s;text-align:center;"
@@ -2631,6 +2640,116 @@
   </div>
 </footer>
 
+
+<!-- ========== MODAL PAINEL RESPOSTAS QUESTIONÁRIO ========== -->
+<div id="modal-painel-respostas" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9995;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem;">
+  <div style="background:#f4f6f9;border-radius:16px;width:100%;max-width:1100px;margin:2rem auto;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;">
+    <div style="background:#1a2a4a;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
+      <h3 style="color:#fff;font-size:1rem;font-weight:700;margin:0;">📋 Fluxo — Ingresso de Presos / Exame de Corpo de Delito</h3>
+      <button onclick="fecharPainelRespostas()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;">×</button>
+    </div>
+    <div style="padding:1.5rem;">
+      <div style="display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:2px solid #e5e7eb;">
+        <button id="aba-individual" onclick="mudarAba('individual')" style="padding:.6rem 1.2rem;border:none;border-bottom:3px solid #1a2a4a;background:none;font-weight:700;color:#1a2a4a;cursor:pointer;font-size:.85rem;">📄 Respostas Individuais</button>
+        <button id="aba-compilado" onclick="mudarAba('compilado')" style="padding:.6rem 1.2rem;border:none;border-bottom:3px solid transparent;background:none;font-weight:500;color:#6b7280;cursor:pointer;font-size:.85rem;">📊 Dados Compilados</button>
+      </div>
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;margin-bottom:1.2rem;">
+        <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;">🔍 Filtros</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.75rem;align-items:end;">
+          <div>
+            <label style="font-size:.75rem;font-weight:600;color:#374151;display:block;margin-bottom:3px;">Regional</label>
+            <select id="f-regional" onchange="aplicarFiltros()" style="width:100%;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:.8rem;">
+              <option value="">Todas</option>
+              <option value="SR01">SR01 – Grande Florianópolis</option>
+              <option value="SR02">SR02 – Sul</option>
+              <option value="SR03">SR03 – Norte Catarinense</option>
+              <option value="SR04">SR04 – Vale do Itajaí</option>
+              <option value="SR05">SR05 – Serrana</option>
+              <option value="SR06">SR06 – Oeste</option>
+              <option value="SR07">SR07 – Médio Vale do Itajaí</option>
+              <option value="SR08">SR08 – Planalto Norte</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:600;color:#374151;display:block;margin-bottom:3px;">Público</label>
+            <select id="f-sexo" onchange="aplicarFiltros()" style="width:100%;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:.8rem;">
+              <option value="">Todos</option>
+              <option value="MASCULINO">Masculino</option>
+              <option value="FEMININO">Feminino</option>
+              <option value="MISTO">Misto</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:600;color:#374151;display:block;margin-bottom:3px;">Modalidade de Recebimento</label>
+            <select id="f-recebe" onchange="aplicarFiltros()" style="width:100%;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:.8rem;">
+              <option value="">Todas</option>
+              <option value="RECEBE">Recebe na unidade</option>
+              <option value="BUSCA">Vai buscar nas delegacias</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:600;color:#374151;display:block;margin-bottom:3px;">Horário de Recebimento</label>
+            <select id="f-horario" onchange="aplicarFiltros()" style="width:100%;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:.8rem;">
+              <option value="">Todos</option>
+              <option value="QUALQUER">Qualquer horário</option>
+              <option value="ACORDO">Com acordo/restrição</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:600;color:#374151;display:block;margin-bottom:3px;">IGP na cidade</label>
+            <select id="f-igp" onchange="aplicarFiltros()" style="width:100%;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:.8rem;">
+              <option value="">Todos</option>
+              <option value="sim">Tem IGP na cidade</option>
+              <option value="nao">Vai a outra cidade</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:.5rem;align-items:flex-end;">
+            <button onclick="limparFiltros()" style="flex:1;padding:6px 8px;background:#fff;border:1px solid #d1d5db;border-radius:6px;font-size:.78rem;cursor:pointer;color:#374151;">Limpar</button>
+            <button onclick="exportarCSV()" style="flex:1;padding:6px 8px;background:#15803d;border:none;border-radius:6px;font-size:.78rem;cursor:pointer;color:#fff;font-weight:600;">⬇ CSV</button>
+          </div>
+        </div>
+        <div id="filtro-status" style="font-size:.75rem;color:#6b7280;margin-top:.6rem;"></div>
+      </div>
+      <div id="painel-individual">
+        <div id="loading-respostas" style="text-align:center;padding:2rem;color:#6b7280;font-size:.9rem;">⏳ Carregando respostas...</div>
+        <div id="tabela-respostas" style="display:none;overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:.78rem;">
+            <thead>
+              <tr style="background:#1a2a4a;color:#fff;">
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Data/Hora</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Unidade</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Regional</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Respondente</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Função</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Público</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Modalidade</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">Horário</th>
+                <th style="padding:.5rem .6rem;text-align:left;white-space:nowrap;">IGP</th>
+                <th style="padding:.5rem .6rem;text-align:center;">Detalhes</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-respostas"></tbody>
+          </table>
+        </div>
+        <div id="sem-respostas" style="display:none;text-align:center;padding:2rem;color:#6b7280;">Nenhuma resposta encontrada com os filtros selecionados.</div>
+      </div>
+      <div id="painel-compilado" style="display:none;">
+        <div id="compilado-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal detalhe individual -->
+<div id="modal-detalhe-resp" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:14px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+    <div style="background:#1a2a4a;padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-radius:14px 14px 0 0;position:sticky;top:0;">
+      <h3 style="color:#fff;font-size:.9rem;font-weight:700;margin:0;">📄 Detalhes da Resposta</h3>
+      <button onclick="document.getElementById('modal-detalhe-resp').style.display='none'" style="background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;">×</button>
+    </div>
+    <div id="detalhe-corpo" style="padding:1.25rem;font-size:.84rem;"></div>
+  </div>
+</div>
 
 <!-- ========== MODAL CALCULADORA ========== -->
 
@@ -3289,6 +3408,289 @@ window.abrirAreaRestrita = function() {
   function mostrarToastCRV(msg) {
     if (typeof showToast === 'function') showToast(msg);
   }
+
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // PAINEL DE RESPOSTAS — Fluxo Ingresso de Presos
+  // ══════════════════════════════════════════════════════════════════════════
+
+  const COLECAO_QUESTIONARIO = 'Respostas Fluxo - Ingresso de Presos / Exame de Corpo de Delito';
+  let todasRespostas = [];
+  let respostasFiltradas = [];
+  let painelCarregado = false;
+
+  window.abrirPainelRespostas = async function() {
+    const modal = document.getElementById('modal-painel-respostas');
+    modal.style.display = 'flex';
+    if (!painelCarregado) {
+      await carregarRespostas();
+      painelCarregado = true;
+    }
+  };
+
+  window.fecharPainelRespostas = function() {
+    document.getElementById('modal-painel-respostas').style.display = 'none';
+  };
+
+  async function carregarRespostas() {
+    try {
+      const snap = await getDocs(collection(db, COLECAO_QUESTIONARIO));
+      todasRespostas = [];
+      snap.forEach(d => todasRespostas.push({ id: d.id, ...d.data() }));
+      // Ordena por data decrescente
+      todasRespostas.sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+      aplicarFiltros();
+    } catch(e) {
+      document.getElementById('loading-respostas').textContent = '❌ Erro ao carregar respostas. Verifique as permissões do Firestore.';
+      console.error(e);
+    }
+  }
+
+  window.aplicarFiltros = function() {
+    const fReg   = document.getElementById('f-regional')?.value || '';
+    const fSexo  = document.getElementById('f-sexo')?.value || '';
+    const fRec   = document.getElementById('f-recebe')?.value || '';
+    const fHor   = document.getElementById('f-horario')?.value || '';
+    const fIgp   = document.getElementById('f-igp')?.value || '';
+
+    respostasFiltradas = todasRespostas.filter(r => {
+      if (fReg  && r.regional_sr !== fReg) return false;
+      if (fSexo && !((r.sexo_presos || '').toUpperCase().includes(fSexo))) return false;
+      if (fRec) {
+        const rec = (r.recebe_presos || '').toUpperCase();
+        if (fRec === 'RECEBE' && !rec.includes('RECEBE') && !rec.includes('PROPIA') && !rec.includes('PRÓPRIA') && !rec.includes('NA UNIDADE')) return false;
+        if (fRec === 'BUSCA' && !rec.includes('BUSCA') && !rec.includes('DELEGACIA')) return false;
+      }
+      if (fHor) {
+        const hor = (r.forca_horario || '').toUpperCase();
+        if (fHor === 'QUALQUER' && !hor.includes('QUALQUER') && !hor.includes('24')) return false;
+        if (fHor === 'ACORDO' && (hor.includes('QUALQUER') || hor.includes('24'))) return false;
+      }
+      if (fIgp) {
+        const cidade = (r.ecd_cidade || '').toLowerCase();
+        const unidade = (r.unidade || '').toLowerCase();
+        // Se a cidade do IGP for a mesma/similar à da unidade → "sim"
+        const mesmaCidade = cidade.length > 2 && unidade.includes(cidade.split(' ')[0]);
+        if (fIgp === 'sim' && !mesmaCidade) return false;
+        if (fIgp === 'nao' && mesmaCidade) return false;
+      }
+      return true;
+    });
+
+    const total = todasRespostas.length;
+    const filtrado = respostasFiltradas.length;
+    const statusEl = document.getElementById('filtro-status');
+    if (statusEl) statusEl.textContent = filtrado === total
+      ? `Total: ${total} resposta(s)`
+      : `Exibindo ${filtrado} de ${total} resposta(s)`;
+
+    renderizarTabela();
+    renderizarCompilado();
+  };
+
+  window.limparFiltros = function() {
+    ['f-regional','f-sexo','f-recebe','f-horario','f-igp'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    aplicarFiltros();
+  };
+
+  function renderizarTabela() {
+    const loading = document.getElementById('loading-respostas');
+    const tabela  = document.getElementById('tabela-respostas');
+    const semDados = document.getElementById('sem-respostas');
+    const tbody   = document.getElementById('tbody-respostas');
+
+    loading.style.display = 'none';
+
+    if (!respostasFiltradas.length) {
+      tabela.style.display = 'none';
+      semDados.style.display = 'block';
+      return;
+    }
+
+    tabela.style.display = 'block';
+    semDados.style.display = 'none';
+
+    const linhas = respostasFiltradas.map((r, i) => {
+      const cor = i % 2 === 0 ? '#fff' : '#f9fafb';
+      const horario = (r.forca_horario || '').toUpperCase().includes('QUALQUER') || (r.forca_horario || '').includes('24')
+        ? '<span style="color:#15803d;font-weight:600;">Qualquer hora</span>'
+        : '<span style="color:#b45309;font-weight:600;">Com acordo</span>';
+      const igpLocal = r.ecd_cidade
+        ? (r.ecd_cidade.toLowerCase().split(' ').some(p => (r.unidade||'').toLowerCase().includes(p) && p.length > 3)
+          ? '<span style="color:#15803d;">✔ Na cidade</span>'
+          : `<span style="color:#b45309;">↗ ${r.ecd_cidade}</span>`)
+        : '—';
+      return `<tr style="background:${cor};">
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;white-space:nowrap;">${r.data_br || '—'}<br><span style="color:#9ca3af;font-size:.72rem;">${r.hora_br || ''}</span></td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;font-weight:600;max-width:180px;">${r.unidade || '—'}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;white-space:nowrap;">${r.regional_sr || '—'}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;">${r.resp_nome || '—'}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;white-space:nowrap;">${r.resp_funcao || '—'}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;white-space:nowrap;">${r.sexo_presos || '—'}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;white-space:nowrap;">${r.recebe_presos || '—'}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;">${horario}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;">${igpLocal}</td>
+        <td style="padding:.45rem .6rem;border:1px solid #e5e7eb;text-align:center;">
+          <button onclick="verDetalhe('${r.id}')" style="padding:3px 10px;background:#1a2a4a;color:#fff;border:none;border-radius:5px;font-size:.72rem;cursor:pointer;">Ver</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    tbody.innerHTML = linhas;
+  }
+
+  window.verDetalhe = function(id) {
+    const r = todasRespostas.find(x => x.id === id);
+    if (!r) return;
+    const linha = (label, val) => val
+      ? `<div style="display:flex;gap:.5rem;padding:.4rem 0;border-bottom:1px solid #f3f4f6;"><span style="font-weight:600;color:#374151;min-width:160px;flex-shrink:0;">${label}</span><span style="color:#1f2937;">${val}</span></div>`
+      : '';
+    document.getElementById('detalhe-corpo').innerHTML = `
+      <div style="background:#f0f4ff;border-radius:8px;padding:.75rem 1rem;margin-bottom:1rem;">
+        <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">${r.unidade || '—'}</div>
+        <div style="font-size:.78rem;color:#6b7280;">${r.regional_nome || ''} · ${r.data_br || ''} às ${r.hora_br || ''}</div>
+      </div>
+      ${linha('Respondente', r.resp_nome)}
+      ${linha('Função', r.resp_funcao)}
+      ${linha('Público', r.sexo_presos)}
+      ${linha('Modalidade de Recebimento', r.recebe_presos)}
+      ${linha('Encaminhamento', r.encaminhamento)}
+      ${linha('Horário (forças de segurança)', r.forca_horario)}
+      ${linha('Acordo/restrição (desc.)', r.forca_acordo_desc)}
+      ${linha('Transporte (flagrante)', r.flagrante_transporte)}
+      ${linha('Outro (flagrante)', r.flagrante_outro)}
+      ${linha('Cidade IGP (ECD)', r.ecd_cidade)}
+      ${linha('Distância IGP', r.ecd_distancia ? r.ecd_distancia + ' km' : '')}
+      ${linha('Município plantão IGP', r.plantao_mun)}
+      ${linha('Distância plantão', r.plantao_dist ? r.plantao_dist + ' km' : '')}
+      ${linha('Fluxo mandado', r.mandado_fluxo)}
+      ${linha('Outro (mandado)', r.mandado_outro)}
+    `;
+    document.getElementById('modal-detalhe-resp').style.display = 'flex';
+  };
+
+  function renderizarCompilado() {
+    const el = document.getElementById('compilado-content');
+    if (!el) return;
+    const r = respostasFiltradas;
+    const total = r.length;
+    if (!total) { el.innerHTML = '<p style="color:#6b7280;text-align:center;padding:2rem;">Nenhum dado para compilar com os filtros selecionados.</p>'; return; }
+
+    function contarCampo(arr, campo, termos) {
+      return termos.map(([label, regex]) => ({
+        label,
+        n: arr.filter(x => regex.test((x[campo] || '').toUpperCase())).length
+      }));
+    }
+
+    function barraHTML(items, total) {
+      return items.map(({label, n}) => {
+        const pct = total ? Math.round((n/total)*100) : 0;
+        return `<div style="margin-bottom:.6rem;">
+          <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:2px;">
+            <span style="color:#374151;">${label}</span>
+            <span style="font-weight:700;color:#1a2a4a;">${n} <span style="font-weight:400;color:#9ca3af;">(${pct}%)</span></span>
+          </div>
+          <div style="background:#e5e7eb;border-radius:99px;height:8px;overflow:hidden;">
+            <div style="background:#1a2a4a;height:100%;width:${pct}%;border-radius:99px;transition:.3s;"></div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function card(titulo, corpo) {
+      return `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;">${titulo}</div>
+        ${corpo}
+      </div>`;
+    }
+
+    // Compilados por Regional
+    const regionais = [...new Set(r.map(x => x.regional_sr))].sort();
+    const porRegional = regionais.map(sr => {
+      const nome = r.find(x => x.regional_sr === sr)?.regional_nome || sr;
+      return { label: `${sr} – ${nome}`, n: r.filter(x => x.regional_sr === sr).length };
+    });
+
+    // Sexo
+    const sexo = contarCampo(r, 'sexo_presos', [
+      ['Masculino', /MASCULINO|MASC/],
+      ['Feminino',  /FEMININO|FEM/],
+      ['Misto',     /MISTO|MISTA|AMBOS/],
+    ]);
+
+    // Modalidade
+    const modalidade = [
+      { label: 'Recebe na unidade', n: r.filter(x => /RECEBE|PRÓPRIA|PROPRIA|NA UNIDADE/i.test(x.recebe_presos||'')).length },
+      { label: 'Vai buscar nas delegacias', n: r.filter(x => /BUSCA|DELEGACIA/i.test(x.recebe_presos||'')).length },
+      { label: 'Outro/misto', n: r.filter(x => !/RECEBE|PRÓPRIA|PROPRIA|NA UNIDADE|BUSCA|DELEGACIA/i.test(x.recebe_presos||'')).length },
+    ];
+
+    // Horário
+    const horario = [
+      { label: 'Qualquer horário (24h)', n: r.filter(x => /QUALQUER|24H|24 H/i.test(x.forca_horario||'')).length },
+      { label: 'Com acordo / restrição', n: r.filter(x => !/QUALQUER|24H|24 H/i.test(x.forca_horario||'') && (x.forca_horario||'').length > 0).length },
+    ];
+
+    // IGP — mesma cidade ou outra
+    const comIgpLocal = r.filter(x => {
+      const cidade = (x.ecd_cidade||'').toLowerCase();
+      const unidade = (x.unidade||'').toLowerCase();
+      return cidade.length > 2 && cidade.split(' ').some(p => p.length > 3 && unidade.includes(p));
+    }).length;
+    const igp = [
+      { label: 'IGP na própria cidade', n: comIgpLocal },
+      { label: 'IGP em outra cidade', n: total - comIgpLocal },
+    ];
+
+    el.innerHTML =
+      `<div style="background:#1a2a4a;color:#fff;border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem;">
+        <div style="font-size:2rem;">📊</div>
+        <div><div style="font-size:1.5rem;font-weight:700;">${total}</div><div style="font-size:.8rem;opacity:.8;">resposta(s) no filtro atual</div></div>
+      </div>` +
+      card('Por Regional', barraHTML(porRegional, total)) +
+      card('Público (Sexo)', barraHTML(sexo, total)) +
+      card('Modalidade de Recebimento', barraHTML(modalidade, total)) +
+      card('Horário de Recebimento (forças de segurança)', barraHTML(horario, total)) +
+      card('Sede do IGP (Exame de Corpo de Delito)', barraHTML(igp, total));
+  }
+
+  window.mudarAba = function(aba) {
+    const isIndividual = aba === 'individual';
+    document.getElementById('painel-individual').style.display = isIndividual ? 'block' : 'none';
+    document.getElementById('painel-compilado').style.display = isIndividual ? 'none' : 'block';
+    document.getElementById('aba-individual').style.borderBottomColor = isIndividual ? '#1a2a4a' : 'transparent';
+    document.getElementById('aba-individual').style.color = isIndividual ? '#1a2a4a' : '#6b7280';
+    document.getElementById('aba-individual').style.fontWeight = isIndividual ? '700' : '500';
+    document.getElementById('aba-compilado').style.borderBottomColor = isIndividual ? 'transparent' : '#1a2a4a';
+    document.getElementById('aba-compilado').style.color = isIndividual ? '#6b7280' : '#1a2a4a';
+    document.getElementById('aba-compilado').style.fontWeight = isIndividual ? '500' : '700';
+    if (!isIndividual) renderizarCompilado();
+  };
+
+  window.exportarCSV = function() {
+    if (!respostasFiltradas.length) { alert('Nenhum dado para exportar.'); return; }
+    const cabecalho = ['Data','Hora','Unidade','Regional SR','Regional Nome','Respondente','Função','Público','Modalidade Recebimento','Encaminhamento','Horário Forças','Acordo Desc','Transporte Flagrante','Cidade IGP','Distância IGP','Município Plantão','Dist Plantão','Mandado Fluxo','Mandado Outro'];
+    const esc = v => '"' + String(v||'').replace(/"/g,'""') + '"';
+    const linhas = respostasFiltradas.map(r => [
+      r.data_br, r.hora_br, r.unidade, r.regional_sr, r.regional_nome,
+      r.resp_nome, r.resp_funcao, r.sexo_presos, r.recebe_presos,
+      r.encaminhamento, r.forca_horario, r.forca_acordo_desc,
+      r.flagrante_transporte, r.ecd_cidade, r.ecd_distancia,
+      r.plantao_mun, r.plantao_dist, r.mandado_fluxo, r.mandado_outro
+    ].map(esc).join(','));
+    const csv = [cabecalho.map(esc).join(','), ...linhas].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'fluxo_ingresso_presos_' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   // Monitora estado de autenticação (para persistir sessão)
   onAuthStateChanged(auth, user => {
