@@ -285,8 +285,8 @@ const REGIONAIS = [
 function generoUnidade(nome) {
   const masc = /^(Presídio|Hospital de Custódia|Complexo|Unidade de Monitoramento)/i.test(nome);
   return masc
-    ? { art: 'o', prep: 'do', De: 'Do' }
-    : { art: 'a', prep: 'da', De: 'Da' };
+    ? { art: 'o', prep: 'no', prep2: 'ao', De: 'Do' }
+    : { art: 'a', prep: 'na', prep2: 'à', De: 'Da' };
 }
 
 // Retorna string como "o Presídio Regional de Lages" ou "a Penitenciária Sul"
@@ -507,7 +507,7 @@ async function flow() {
   ans.plantao_mun = plantao.mun; ans.plantao_dist = plantao.dist;
   step++; updateProgress();
 
-  await botSay(`Na prática, as forças de segurança (PM/PC) levam presos ${g.prep} <strong>${ans.unidade}</strong> em <strong>qualquer horário durante o plantão</strong>, ou há algum acordo informal sobre os horários de entrega?`, 900);
+  await botSay(`Na prática, as forças de segurança (PM/PC/PRF/GM, etc.) levam presos ${g.prep} <strong>${ans.unidade}</strong> em <strong>qualquer horário durante o plantão</strong>, ou há algum acordo informal sobre os horários de entrega?`, 900);
   const forca = await chips([
     { value: 'QUALQUER', label: 'Levam em qualquer horário, sem restrição' },
     { value: 'ACORDO', label: 'Há um acordo/combinado sobre os horários', col: true },
@@ -519,9 +519,9 @@ async function flow() {
   }
   step++; updateProgress();
 
-  await botSay(`No caso de <strong>flagrante delito</strong>, após a conclusão do APF, como os presos chegam ${g.prep} <strong>${ans.unidade}</strong>?`, 800);
+  await botSay(`No caso de <strong>flagrante delito</strong>, após a conclusão do APF, como os presos chegam ${g.prep2} <strong>${ans.unidade}</strong>?`, 800);
   const flag = await chips([
-    { value: 'PC_LEVA', label: `Polícia Civil leva os presos ${g.prep} ${ans.unidade}`, col: true },
+    { value: 'PC_LEVA', label: `Polícia Civil leva os presos ${g.prep2} ${ans.unidade}`, col: true },
     { value: 'PP_BUSCA', label: 'Polícia Penal busca os presos na Delegacia', col: true },
     { value: 'OUTRO', label: 'Outro' },
   ]);
@@ -532,10 +532,10 @@ async function flow() {
   }
   step++; updateProgress();
 
-  await botSay(`No <strong>cumprimento de Mandado de Prisão</strong>, o preso passa pela Delegacia antes de ser encaminhado ${g.prep} <strong>${ans.unidade}</strong>, ou é levado diretamente?`, 800);
+  await botSay(`No <strong>cumprimento de Mandado de Prisão</strong>, o preso passa pela Delegacia antes de ser encaminhado ${g.prep2} <strong>${ans.unidade}</strong>, ou é levado diretamente?`, 800);
   const mandado = await chips([
     { value: 'PASSA_DELEGACIA', label: 'Passa pela Delegacia de Polícia', col: true },
-    { value: 'DIRETO_UNIDADE', label: `Vai direto ${g.prep} ${ans.unidade}`, col: true },
+    { value: 'DIRETO_UNIDADE', label: `Vai direto ${g.prep2} ${ans.unidade}`, col: true },
     { value: 'OUTRO', label: 'Outro' },
   ]);
   ans.mandado_fluxo = mandado.value;
@@ -603,7 +603,7 @@ async function flow() {
 
     const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
     const db  = getFirestore(app);
-    await addDoc(collection(db, 'Respostas Fluxo - Ingresso de Presos / Exame de Corpo de Delito'), registro);
+    await addDoc(collection(db, 'Respostas_Fluxo_Ingresso_Presos'), registro);
     salvo = true;
   } catch (err) {
     console.error('Erro ao salvar:', err);
