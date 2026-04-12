@@ -2759,65 +2759,8 @@
       <h3 style="color:#fff;font-size:1rem;font-weight:700;margin:0;">📊 Calculadora de Gestão de Vagas</h3>
       <button onclick="fecharCalculadora()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;">×</button>
     </div>
-    <div style="padding:1.5rem 1rem;">
-      <div id="calc-wrapper"><div class="wrap">
-  </div>
-
-  <div class="card">
-    <div class="card-title">Vagas Existentes</div>
-    <div class="grid2">
-      <div><label for="vm">Masculino</label><input type="number" id="vm" placeholder="0" min="0" oninput="calc()"></div>
-      <div><label for="vf">Feminino</label><input type="number" id="vf" placeholder="0" min="0" oninput="calc()"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Pessoas Recolhidas</div>
-    <div class="grid2">
-      <div><label for="pm">Masculino</label><input type="number" id="pm" placeholder="0" min="0" oninput="calc()"></div>
-      <div><label for="pf">Feminino</label><input type="number" id="pf" placeholder="0" min="0" oninput="calc()"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Resumo de Vagas e Recolhidos</div>
-    <div class="grid3">
-      <div class="stat"><div class="stat-label">Vagas Existentes Masc.</div><div class="stat-val" id="s-vm">—</div></div>
-      <div class="stat"><div class="stat-label">Vagas Existentes Fem.</div><div class="stat-val" id="s-vf">—</div></div>
-      <div class="stat"><div class="stat-label">Total de Vagas Existentes</div><div class="stat-val" id="s-tv">—</div></div>
-      <div class="stat"><div class="stat-label">Presos Masculinos</div><div class="stat-val" id="s-pm">—</div></div>
-      <div class="stat"><div class="stat-label">Presas Femininas</div><div class="stat-val" id="s-pf">—</div></div>
-      <div class="stat"><div class="stat-label">Total Recolhidos</div><div class="stat-val" id="s-tp">—</div></div>
-    </div>
-  </div>
-
-  <div class="card card-highlight">
-    <div class="card-title">Déficit de Vagas</div>
-    <div class="grid3">
-      <div class="stat" id="d-m"><div class="stat-label">Déficit Masculino</div><div class="stat-val" id="dv-m">—</div><div class="stat-sub" id="dp-m"></div></div>
-      <div class="stat" id="d-f"><div class="stat-label">Déficit Feminino</div><div class="stat-val" id="dv-f">—</div><div class="stat-sub" id="dp-f"></div></div>
-      <div class="stat" id="d-t"><div class="stat-label">Déficit Total</div><div class="stat-val" id="dv-t">—</div><div class="stat-sub" id="dp-t"></div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Gerar Relatório</div>
-    <div class="btn-row">
-      <button onclick="copyText()">📋 Copiar Texto</button>
-      <button onclick="generatePDF()">📄 Baixar PDF</button>
-      <button onclick="generateDOC()">📝 Baixar DOC</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Para Uso do Plantão</div>
-    <div class="btn-row">
-      <button onclick="copyPlantao('inicio')">📋 Gerar Texto de Início de Plantão</button>
-      <button onclick="copyPlantao('termino')">📋 Gerar Texto de Término de Plantão</button>
-    </div>
-  </div>
-
-  <p class="footer-note">Os valores são calculados automaticamente em tempo real.</p>
+    <div style="padding:0;">
+      <iframe src="calculadora-prisional.html" id="calc-iframe" style="width:100%;height:85vh;border:none;display:block;" title="Calculadora de Gestão de Vagas"></iframe>
 </div>
 
 <!-- Modal plantão -->
