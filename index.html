@@ -2492,7 +2492,7 @@
         <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Déficit, excedente e taxa de ocupação</div>
       </div>
       <!-- Porta de Entrada -->
-      <div onclick="window.abrirModal('modal-porta-entrada'); if(window.peRender) window.peRender();"
+      <div onclick="window.abrirModal('modal-porta-entrada'); setTimeout(function(){ if(window.pe2Render) window.pe2Render(); }, 30);"
         style="background:#fff;border:2px solid #1a2a4a;border-radius:12px;padding:1.5rem;cursor:pointer;transition:.2s;text-align:center;"
         onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
         <div style="font-size:2rem;margin-bottom:.6rem;">🚪</div>
@@ -3737,308 +3737,549 @@ window.abrirAreaRestrita = function() {
 
 <!-- ========== MODAL PORTA DE ENTRADA ========== -->
 <div id="modal-porta-entrada" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9990;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
-  <div style="background:#fff;border-radius:16px;width:100%;max-width:1100px;margin:1.5rem auto;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;font-family:'Inter',system-ui,sans-serif;">
+  <div style="background:#f4f6fb;border-radius:16px;width:100%;max-width:1200px;margin:1.5rem auto;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;font-family:'Inter',system-ui,sans-serif;">
 
     <!-- Header -->
-    <div style="background:#1a2a4a;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
+    <div style="background:#1a2a4a;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
       <div style="display:flex;align-items:center;gap:.75rem;">
-        <span style="font-size:1.2rem;">🚪</span>
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🚪</div>
         <div>
-          <div style="color:#fff;font-size:.95rem;font-weight:700;letter-spacing:-.01em;">Porta de Entrada — Consulta por Município</div>
-          <div style="color:rgba(255,255,255,.6);font-size:.72rem;margin-top:1px;">295 municípios · 8 Superintendências Regionais · 16 VRGs</div>
+          <div style="color:#fff;font-size:.95rem;font-weight:700;letter-spacing:-.01em;">Consulta Porta de Entrada</div>
+          <div style="color:rgba(255,255,255,.55);font-size:.7rem;margin-top:1px;">Varas de Garantia · Unidades Prisionais · SC — 295 municípios</div>
         </div>
       </div>
-      <button onclick="document.getElementById('modal-porta-entrada').style.display='none'" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;opacity:.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">×</button>
+      <button onclick="document.getElementById('modal-porta-entrada').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">×</button>
     </div>
 
-    <!-- Barra de busca e filtros -->
-    <div style="background:#f0f3fa;border-bottom:1.5px solid #dde3f0;padding:.75rem 1.25rem;position:sticky;top:64px;z-index:9;">
-      <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;">
-        <div style="position:relative;flex:1;min-width:200px;max-width:400px;">
-          <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:.85rem;">🔍</span>
-          <input id="pe-search" type="text" placeholder="Buscar município, unidade, comarca…" autocomplete="off"
-            style="width:100%;padding:.45rem 1rem .45rem 2.2rem;border:1.5px solid #c8d0e8;border-radius:8px;font-size:.82rem;font-family:inherit;outline:none;color:#1a2a4a;background:#fff;"
-            oninput="peRender()" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#c8d0e8'">
+    <!-- Stats bar -->
+    <div style="background:#e8ecf5;border-bottom:1px solid #cdd3e8;padding:.45rem 1.5rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:.75rem;color:#374151;display:flex;align-items:center;gap:.35rem;"><strong style="font-family:'Courier New',monospace;color:#2563eb;" id="pe2-total">295</strong> municípios</span>
+      <span style="width:1px;height:14px;background:#c8d0e8;"></span>
+      <span style="font-size:.75rem;color:#374151;display:flex;align-items:center;gap:.35rem;"><strong style="font-family:'Courier New',monospace;color:#16a34a;">54</strong> unidades</span>
+      <span style="width:1px;height:14px;background:#c8d0e8;"></span>
+      <span style="font-size:.75rem;color:#374151;display:flex;align-items:center;gap:.35rem;"><strong style="font-family:'Courier New',monospace;color:#d97706;">16</strong> VRGs</span>
+      <span style="width:1px;height:14px;background:#c8d0e8;"></span>
+      <span style="font-size:.75rem;color:#374151;display:flex;align-items:center;gap:.35rem;"><strong style="font-family:'Courier New',monospace;color:#374151;" id="pe2-visible">—</strong> exibidos</span>
+    </div>
+
+    <!-- Filtros -->
+    <div style="background:#fff;border-bottom:1.5px solid #dde3f0;padding:.6rem 1.5rem;position:sticky;top:64px;z-index:9;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#9ca3af;flex-shrink:0;">Regional:</span>
+        <button class="pe2-sr" data-sr="all" onclick="pe2SrFilter(this)" style="background:#1a2a4a;color:#fff;border:1.5px solid #1a2a4a;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">Todas</button>
+        <button class="pe2-sr" data-sr="SR01" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR01</button>
+        <button class="pe2-sr" data-sr="SR02" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR02</button>
+        <button class="pe2-sr" data-sr="SR03" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR03</button>
+        <button class="pe2-sr" data-sr="SR04" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR04</button>
+        <button class="pe2-sr" data-sr="SR05" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR05</button>
+        <button class="pe2-sr" data-sr="SR06" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR06</button>
+        <button class="pe2-sr" data-sr="SR07" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR07</button>
+        <button class="pe2-sr" data-sr="SR08" onclick="pe2SrFilter(this)" style="background:#fff;color:#374151;border:1.5px solid #dde1ee;border-radius:20px;padding:.22rem .7rem;font-size:.73rem;font-weight:600;cursor:pointer;font-family:inherit;">SR08</button>
+        <div style="width:1px;height:18px;background:#dde1ee;margin:0 .2rem;"></div>
+        <div style="position:relative;flex:1;min-width:180px;max-width:380px;">
+          <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#9ca3af;pointer-events:none;">🔍</span>
+          <input id="pe2-search" type="text" placeholder="Buscar município, comarca, VRG, unidade…" autocomplete="off" spellcheck="false"
+            style="width:100%;padding:.42rem 2rem .42rem 2.1rem;border:1.5px solid #dde1ee;border-radius:9px;font-size:.8rem;font-family:inherit;outline:none;color:#111827;background:#f4f6fb;"
+            oninput="pe2Render()" onfocus="this.style.borderColor='#2563eb';this.style.background='#fff'" onblur="this.style.borderColor='#dde1ee';this.style.background='#f4f6fb'">
+          <button id="pe2-clear" onclick="pe2ClearSearch()" style="display:none;position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;padding:2px;font-size:.9rem;">✕</button>
         </div>
-        <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;">
-          <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;">SR:</span>
-          <button class="pe-sr-btn active" data-sr="all" onclick="peSrFilter(this)" style="background:#1a2a4a;color:#fff;border:1.5px solid #1a2a4a;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">Todas</button>
-          <button class="pe-sr-btn" data-sr="SR01" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR01</button>
-          <button class="pe-sr-btn" data-sr="SR02" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR02</button>
-          <button class="pe-sr-btn" data-sr="SR03" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR03</button>
-          <button class="pe-sr-btn" data-sr="SR04" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR04</button>
-          <button class="pe-sr-btn" data-sr="SR05" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR05</button>
-          <button class="pe-sr-btn" data-sr="SR06" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR06</button>
-          <button class="pe-sr-btn" data-sr="SR07" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR07</button>
-          <button class="pe-sr-btn" data-sr="SR08" onclick="peSrFilter(this)" style="background:#fff;color:#4a5278;border:1.5px solid #c8d0e8;border-radius:20px;padding:.22rem .65rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;">SR08</button>
-        </div>
-        <span id="pe-count" style="margin-left:auto;font-size:.72rem;color:#6b7280;font-family:'Courier New',monospace;white-space:nowrap;">— municípios</span>
+        <span id="pe2-result-info" style="margin-left:auto;font-size:.72rem;color:#9ca3af;font-family:'Courier New',monospace;white-space:nowrap;"></span>
       </div>
     </div>
 
-    <!-- Conteúdo principal -->
-    <div style="padding:1.25rem;" id="pe-main-content">
+    <!-- Conteúdo -->
+    <div id="pe2-content" style="padding:1.25rem 1.5rem;min-height:200px;">
       <div style="text-align:center;padding:3rem;color:#9ca3af;">Carregando…</div>
     </div>
 
   </div>
 </div>
 
+<style>
+.pe2-chip-prov{background:#ede9fe;color:#5b21b6}
+.pe2-chip-fech{background:#fee2e2;color:#991b1b}
+.pe2-chip-semi{background:#d1fae5;color:#065f46}
+.pe2-chip-aber{background:#fef3c7;color:#92400e}
+.pe2-chip-civ{background:#e0f2fe;color:#075985}
+.pe2-muni-card{background:#fff;border:1.5px solid #dde1ee;border-radius:13px;box-shadow:0 1px 3px rgba(30,40,90,.07),0 4px 14px rgba(30,40,90,.04);transition:border-color .18s,box-shadow .18s;overflow:hidden;}
+.pe2-muni-card:hover{border-color:#2563eb;box-shadow:0 2px 8px rgba(30,40,90,.1),0 8px 24px rgba(30,40,90,.07);}
+.pe2-card-hd{padding:.85rem 1rem;cursor:pointer;user-select:none;display:flex;align-items:flex-start;gap:.7rem;transition:background .15s;}
+.pe2-card-hd:hover{background:#f4f6fb}
+.pe2-card-bd{display:none;border-top:1.5px solid #dde1ee;padding:.85rem 1rem;background:#f8f9fd;}
+.pe2-card-bd.open{display:block}
+.pe2-card-hd.open .pe2-chev{transform:rotate(180deg)}
+.pe2-chev{color:#9ca3af;transition:transform .22s;flex-shrink:0;margin-top:3px;}
+.pe2-tag{display:inline-flex;align-items:center;border-radius:6px;padding:.16rem .45rem;font-size:.66rem;font-weight:600;white-space:nowrap;}
+.pe2-chip{display:inline-block;border-radius:20px;padding:.16rem .5rem;font-size:.67rem;font-weight:600;}
+.pe2-obs{background:#fef3c7;border:1px solid rgba(217,119,6,.25);border-radius:8px;padding:.45rem .65rem;font-size:.73rem;color:#78350f;margin-top:.6rem;line-height:1.5;}
+.pe2-nome mark{background:rgba(37,99,235,.15);color:#2563eb;border-radius:3px;padding:0 2px;font-style:normal;}
+</style>
+
 <script>
 (function(){
-  // ── DADOS DOS MUNICÍPIOS ──────────────────────────────────────────────
-  var PE_DATA = [
-    // SR01
-    {m:"Florianópolis",sr:"SR01",vrg:"Florianópolis (Capital)",comarca:"Florianópolis",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"São José",sr:"SR01",vrg:"São José",comarca:"São José",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Palhoça",sr:"SR01",vrg:"São José",comarca:"Palhoça",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Santo Amaro da Imperatriz",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Águas Mornas",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"São Bonifácio",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Rancho Queimado",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Angelina",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Anitápolis",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"São Pedro de Alcântara",sr:"SR01",vrg:"São José",comarca:"São José",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
-    {m:"Biguaçu",sr:"SR01",vrg:"São José",comarca:"Biguaçu",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"],obs:"Crime sexual: Presídio Masculino Regional de Florianópolis (porta específica para Biguaçu, conforme PDF)."},
-    {m:"Antônio Carlos",sr:"SR01",vrg:"São José",comarca:"Biguaçu",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Governador Celso Ramos",sr:"SR01",vrg:"São José",comarca:"Biguaçu",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Tijucas",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Tijucas",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Canelinha",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Tijucas",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"São João Batista",sr:"SR01",vrg:"Balneário Camboriú",comarca:"São João Batista",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Nova Trento",sr:"SR01",vrg:"Balneário Camboriú",comarca:"São João Batista",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Major Gercino",sr:"SR01",vrg:"Balneário Camboriú",comarca:"São João Batista",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Porto Belo",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Porto Belo",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Bombinhas",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Porto Belo",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Balneário Camboriú",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Balneário Camboriú",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Camboriú",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Camboriú",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Itapema",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Itapema",portas:["Presídio Regional de Itapema"],regimes:["Provisório","Fechado","Prisão Civil"],obs:"Flagrante, mandados de prisão provisória, definitiva ou de alimentos."},
-    // SR02
-    {m:"Joinville",sr:"SR02",vrg:"Joinville",comarca:"Joinville",portas:["Presídio Regional de Joinville","Penitenciária Industrial de Joinville"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Itapoá",sr:"SR02",vrg:"Joinville",comarca:"Itapoá",portas:["Presídio Regional de Joinville","Penitenciária Industrial de Joinville"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Garuva",sr:"SR02",vrg:"Joinville",comarca:"Garuva",portas:["Presídio Regional de Joinville","Penitenciária Industrial de Joinville"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Barra Velha",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Barra Velha",portas:["Presídio Regional de Barra Velha"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"São João do Itaperiú",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Barra Velha",portas:["Presídio Regional de Barra Velha"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"São Francisco do Sul",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"São Francisco do Sul",portas:["Presídio Regional de São Francisco do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Araquari",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Araquari",portas:["Presídio Regional de São Francisco do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Balneário Barra do Sul",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Araquari",portas:["Presídio Regional de São Francisco do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Jaraguá do Sul",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Jaraguá do Sul",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Corupá",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Jaraguá do Sul",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Guaramirim",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Guaramirim",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Massaranduba",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Guaramirim",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Schroeder",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Guaramirim",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Balneário Piçarras",sr:"SR02",vrg:"Florianópolis (Capital)",comarca:"Balneário Piçarras",portas:["Presídio Regional de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"],obs:"VRG com 2 varas, uma vinculada à Vara de Organização Criminosa."},
-    {m:"Penha",sr:"SR02",vrg:"Itajaí",comarca:"Navegantes",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
-    // SR03
-    {m:"Itajaí",sr:"SR03",vrg:"Itajaí",comarca:"Itajaí",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"],obs:"Proibição de transferência de regime semiaberto; apenas transferências internas no Complexo."},
-    {m:"Navegantes",sr:"SR03",vrg:"Itajaí",comarca:"Navegantes",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Luís Alves",sr:"SR03",vrg:"Itajaí",comarca:"Navegantes",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Brusque",sr:"SR03",vrg:"Itajaí",comarca:"Brusque",portas:["Presídio Regional de Brusque"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Guabiruba",sr:"SR03",vrg:"Itajaí",comarca:"Brusque",portas:["Presídio Regional de Brusque"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Botuverá",sr:"SR03",vrg:"Itajaí",comarca:"Brusque",portas:["Presídio Regional de Brusque"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Blumenau",sr:"SR03",vrg:"Blumenau",comarca:"Blumenau",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Gaspar",sr:"SR03",vrg:"Blumenau",comarca:"Gaspar",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Ilhota",sr:"SR03",vrg:"Blumenau",comarca:"Gaspar",portas:["Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Indaial",sr:"SR03",vrg:"Blumenau",comarca:"Indaial",portas:["Presídio Regional de Indaial","Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"],obs:"Flagrante em Indaial tem porta de entrada no Presídio Regional de Blumenau; após custódia, segue para Indaial."},
-    {m:"Timbó",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Benedito Novo",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Doutor Pedrinho",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Rio dos Cedros",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Penitenciária Industrial de Blumenau"],regimes:["Fechado","Semiaberto"]},
-    {m:"Pomerode",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Pomerode",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Ascurra",sr:"SR03",vrg:"Blumenau",comarca:"Ascurra",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Apiúna",sr:"SR03",vrg:"Blumenau",comarca:"Ascurra",portas:["Penitenciária Industrial de Blumenau"],regimes:["Fechado","Semiaberto"]},
-    {m:"Rodeio",sr:"SR03",vrg:"Blumenau",comarca:"Ascurra",portas:["Penitenciária Industrial de Blumenau"],regimes:["Fechado","Semiaberto"]},
-    // SR04
-    {m:"São Bento do Sul",sr:"SR04",vrg:"Rio do Sul",comarca:"São Bento do Sul",portas:["Penitenciária Industrial de São Bento do Sul"],regimes:["Fechado","Semiaberto"],obs:"Recebe fechado e semiaberto de Mafra, Canoinhas, Jaraguá do Sul e Porto União também."},
-    {m:"Campo Alegre",sr:"SR04",vrg:"Rio do Sul",comarca:"São Bento do Sul",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
-    {m:"Mafra",sr:"SR04",vrg:"Mafra",comarca:"Mafra",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"],obs:"Ação Civil Pública veda permanência de regime fechado no Presídio Regional de Mafra."},
-    {m:"Itaiópolis",sr:"SR04",vrg:"Mafra",comarca:"Itaiópolis",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
-    {m:"Monte Castelo",sr:"SR04",vrg:"Mafra",comarca:"Papanduva",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
-    {m:"Papanduva",sr:"SR04",vrg:"Mafra",comarca:"Papanduva",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
-    {m:"Rio Negrinho",sr:"SR04",vrg:"Mafra",comarca:"Rio Negrinho",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
-    {m:"Canoinhas",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Major Vieira",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Três Barras",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Bela Vista do Toldo",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Porto União",sr:"SR04",vrg:"Mafra",comarca:"Porto União",portas:["Presídio Regional de Porto União"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Irineópolis",sr:"SR04",vrg:"Mafra",comarca:"Porto União",portas:["Presídio Regional de Porto União"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Matos Costa",sr:"SR04",vrg:"Mafra",comarca:"Porto União",portas:["Presídio Regional de Porto União"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    // SR05 (amostra representativa)
-    {m:"Lages",sr:"SR05",vrg:"Lages",comarca:"Lages",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Bocaína do Sul",sr:"SR05",vrg:"Lages",comarca:"Lages",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"São Joaquim",sr:"SR05",vrg:"Lages",comarca:"São Joaquim",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Curitibanos",sr:"SR05",vrg:"Caçador",comarca:"Curitibanos",portas:["Penitenciária Regional de Curitibanos"],regimes:["Fechado","Semiaberto"]},
-    {m:"Caçador",sr:"SR05",vrg:"Caçador",comarca:"Caçador",portas:["Presídio Regional de Caçador"],regimes:["Provisório","Semiaberto","Prisão Civil"]},
-    {m:"Campos Novos",sr:"SR05",vrg:"Caçador",comarca:"Campos Novos",portas:["Presídio Regional de Campos Novos"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Videira",sr:"SR05",vrg:"Caçador",comarca:"Videira",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Joaçaba",sr:"SR05",vrg:"Caçador",comarca:"Joaçaba",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Fraiburgo",sr:"SR05",vrg:"Caçador",comarca:"Fraiburgo",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Otacílio Costa",sr:"SR05",vrg:"Lages",comarca:"Otacílio Costa",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
-    // SR06
-    {m:"Chapecó",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó","Penitenciária Industrial de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Xanxerê",sr:"SR06",vrg:"Chapecó",comarca:"Xanxerê",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"São Miguel do Oeste",sr:"SR06",vrg:"Chapecó",comarca:"São Miguel do Oeste",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Maravilha",sr:"SR06",vrg:"Chapecó",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"São José do Cedro",sr:"SR06",vrg:"Chapecó",comarca:"São José do Cedro",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Concórdia",sr:"SR06",vrg:"Caçador",comarca:"Concórdia",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
-    // SR07
-    {m:"Rio do Sul",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Sul",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
-    {m:"Ibirama",sr:"SR07",vrg:"Rio do Sul",comarca:"Ibirama",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Ituporanga",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Taió",sr:"SR07",vrg:"Rio do Sul",comarca:"Taió",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
-    // SR08
-    {m:"Criciúma",sr:"SR08",vrg:"Criciúma",comarca:"Criciúma",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Tubarão",sr:"SR08",vrg:"Tubarão",comarca:"Tubarão",portas:["Presídio Regional de Tubarão","Penitenciária Masculina de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Araranguá",sr:"SR08",vrg:"Criciúma",comarca:"Araranguá",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Laguna",sr:"SR08",vrg:"Tubarão",comarca:"Laguna",portas:["Presídio Regional de Laguna"],regimes:["Provisório","Fechado","Semiaberto"]},
-    {m:"Imbituba",sr:"SR08",vrg:"Tubarão",comarca:"Imbituba",portas:["Presídio Regional de Imbituba"],regimes:["Provisório","Fechado","Semiaberto"]},
-  ];
 
-  var PE_SR_COLORS = {
-    SR01:'#2f5ae8', SR02:'#0ea472', SR03:'#d97706',
-    SR04:'#7c3aed', SR05:'#e05a2b', SR06:'#db2777',
-    SR07:'#059669', SR08:'#0284c7'
-  };
+var PE2_MUNIS = [
+  // SR01
+  {municipio:"Florianópolis",sr:"SR01",vrg:"Florianópolis (Capital)",comarca:"Florianópolis",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"],obs:"Crimes contra liberdade sexual: Presídio Masculino Regional de Florianópolis (regime semiaberto vedado por determinação judicial nesta unidade)."},
+  {municipio:"São José",sr:"SR01",vrg:"São José",comarca:"São José",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Palhoça",sr:"SR01",vrg:"São José",comarca:"Palhoça",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Santo Amaro da Imperatriz",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Águas Mornas",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"São Bonifácio",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Rancho Queimado",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Angelina",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Anitápolis",sr:"SR01",vrg:"São José",comarca:"Santo Amaro da Imperatriz",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"São Pedro de Alcântara",sr:"SR01",vrg:"São José",comarca:"São José",portas:["Penitenciária de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"]},
+  {municipio:"Biguaçu",sr:"SR01",vrg:"São José",comarca:"Biguaçu",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"],obs:"Crime sexual: Presídio Masculino Regional de Florianópolis (porta específica para Biguaçu, conforme PDF)."},
+  {municipio:"Antônio Carlos",sr:"SR01",vrg:"São José",comarca:"Biguaçu",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Governador Celso Ramos",sr:"SR01",vrg:"São José",comarca:"Biguaçu",portas:["Penitenciária de Florianópolis","Presídio Masculino Regional de Florianópolis"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Tijucas",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Tijucas",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Canelinha",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Tijucas",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São João Batista",sr:"SR01",vrg:"Balneário Camboriú",comarca:"São João Batista",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Nova Trento",sr:"SR01",vrg:"Balneário Camboriú",comarca:"São João Batista",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Major Gercino",sr:"SR01",vrg:"Balneário Camboriú",comarca:"São João Batista",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Porto Belo",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Porto Belo",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Bombinhas",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Porto Belo",portas:["Presídio Regional de Tijucas"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Balneário Camboriú",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Balneário Camboriú",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Camboriú",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Camboriú",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Itapema",sr:"SR01",vrg:"Balneário Camboriú",comarca:"Itapema",portas:["Presídio Regional de Itapema"],regimes:["Provisório","Fechado","Prisão Civil"],obs:"Flagrante, mandados de prisão provisória, definitiva ou de alimentos."},
 
-  var PE_SR_LABELS = {
-    SR01:'SR01 — Grande Florianópolis',
-    SR02:'SR02 — Norte / Joinville',
-    SR03:'SR03 — Vale do Itajaí',
-    SR04:'SR04 — Planalto Norte',
-    SR05:'SR05 — Serrana / Meio-Oeste',
-    SR06:'SR06 — Oeste Catarinense',
-    SR07:'SR07 — Alto Vale do Itajaí',
-    SR08:'SR08 — Sul Catarinense'
-  };
+  // SR02
+  {municipio:"Joinville",sr:"SR02",vrg:"Joinville",comarca:"Joinville",portas:["Presídio Regional de Joinville","Penitenciária Industrial de Joinville"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Itapoá",sr:"SR02",vrg:"Joinville",comarca:"Itapoá",portas:["Presídio Regional de Joinville","Penitenciária Industrial de Joinville"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Garuva",sr:"SR02",vrg:"Joinville",comarca:"Garuva",portas:["Presídio Regional de Joinville","Penitenciária Industrial de Joinville"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Barra Velha",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Barra Velha",portas:["Presídio Regional de Barra Velha"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"São João do Itaperiú",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Barra Velha",portas:["Presídio Regional de Barra Velha"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"São Francisco do Sul",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"São Francisco do Sul",portas:["Presídio Regional de São Francisco do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Araquari",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Araquari",portas:["Presídio Regional de São Francisco do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Balneário Barra do Sul",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Araquari",portas:["Presídio Regional de São Francisco do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Jaraguá do Sul",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Jaraguá do Sul",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Corupá",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Jaraguá do Sul",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Guaramirim",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Guaramirim",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Massaranduba",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Guaramirim",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Schroeder",sr:"SR02",vrg:"Jaraguá do Sul",comarca:"Guaramirim",portas:["Presídio Regional de Jaraguá do Sul"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Balneário Piçarras",sr:"SR02",vrg:"Florianópolis (Capital)",comarca:"Balneário Piçarras",portas:["Presídio Regional de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"],obs:"VRG com 2 varas, uma vinculada à Vara de Organização Criminosa."},
+  {municipio:"Penha",sr:"SR02",vrg:"Itajaí",comarca:"Navegantes",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
 
-  var peActiveSR = 'all';
+  // SR03
+  {municipio:"Itajaí",sr:"SR03",vrg:"Itajaí",comarca:"Itajaí",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto","Aberto","Prisão Civil"],obs:"Proibição de transferência de regime semiaberto; apenas transferências internas no Complexo."},
+  {municipio:"Navegantes",sr:"SR03",vrg:"Itajaí",comarca:"Navegantes",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Luís Alves",sr:"SR03",vrg:"Itajaí",comarca:"Navegantes",portas:["Presídio Regional de Itajaí","Penitenciária Masculina de Itajaí"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Brusque",sr:"SR03",vrg:"Itajaí",comarca:"Brusque",portas:["Presídio Regional de Brusque"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Guabiruba",sr:"SR03",vrg:"Itajaí",comarca:"Brusque",portas:["Presídio Regional de Brusque"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Botuverá",sr:"SR03",vrg:"Itajaí",comarca:"Brusque",portas:["Presídio Regional de Brusque"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Blumenau",sr:"SR03",vrg:"Blumenau",comarca:"Blumenau",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Gaspar",sr:"SR03",vrg:"Blumenau",comarca:"Gaspar",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Ilhota",sr:"SR03",vrg:"Blumenau",comarca:"Gaspar",portas:["Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Indaial",sr:"SR03",vrg:"Blumenau",comarca:"Indaial",portas:["Presídio Regional de Indaial","Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"],obs:"Flagrante em Indaial tem porta de entrada no Presídio Regional de Blumenau; após custódia, segue para Indaial."},
+  {municipio:"Timbó",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Benedito Novo",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Doutor Pedrinho",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Presídio Regional de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Rio dos Cedros",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Timbó",portas:["Penitenciária Industrial de Blumenau"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Pomerode",sr:"SR03",vrg:"Jaraguá do Sul",comarca:"Pomerode",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ascurra",sr:"SR03",vrg:"Blumenau",comarca:"Ascurra",portas:["Presídio Regional de Blumenau","Penitenciária Industrial de Blumenau"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Apiúna",sr:"SR03",vrg:"Blumenau",comarca:"Ascurra",portas:["Penitenciária Industrial de Blumenau"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Rodeio",sr:"SR03",vrg:"Blumenau",comarca:"Ascurra",portas:["Penitenciária Industrial de Blumenau"],regimes:["Fechado","Semiaberto"]},
 
-  function peNorm(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
-  function peEsc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function peHl(text, q){
-    if(!q) return peEsc(text);
-    var norm = peNorm(text), idx = norm.indexOf(q);
-    if(idx<0) return peEsc(text);
-    return peEsc(text.slice(0,idx))+'<mark style="background:rgba(37,99,235,.15);color:#2563eb;border-radius:3px;padding:0 2px;font-style:normal;">'+peEsc(text.slice(idx,idx+q.length))+'</mark>'+peEsc(text.slice(idx+q.length));
+  // SR04
+  {municipio:"São Bento do Sul",sr:"SR04",vrg:"Rio do Sul",comarca:"São Bento do Sul",portas:["Penitenciária Industrial de São Bento do Sul"],regimes:["Fechado","Semiaberto"],obs:"Recebe fechado e semiaberto de Mafra, Canoinhas, Jaraguá do Sul e Porto União também."},
+  {municipio:"Campo Alegre",sr:"SR04",vrg:"Rio do Sul",comarca:"São Bento do Sul",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
+  {municipio:"Mafra",sr:"SR04",vrg:"Mafra",comarca:"Mafra",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"],obs:"Ação Civil Pública veda permanência de regime fechado no Presídio Regional de Mafra."},
+  {municipio:"Itaiópolis",sr:"SR04",vrg:"Mafra",comarca:"Itaiópolis",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
+  {municipio:"Monte Castelo",sr:"SR04",vrg:"Mafra",comarca:"Papanduva",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
+  {municipio:"Papanduva",sr:"SR04",vrg:"Mafra",comarca:"Papanduva",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
+  {municipio:"Rio Negrinho",sr:"SR04",vrg:"Mafra",comarca:"Rio Negrinho",portas:["Presídio Regional de Mafra"],regimes:["Provisório","Prisão Civil"]},
+  {municipio:"Canoinhas",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Major Vieira",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Três Barras",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Bela Vista do Toldo",sr:"SR04",vrg:"Mafra",comarca:"Canoinhas",portas:["Presídio Regional de Canoinhas"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Porto União",sr:"SR04",vrg:"Mafra",comarca:"Porto União",portas:["Presídio Regional de Porto União"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Irineópolis",sr:"SR04",vrg:"Mafra",comarca:"Porto União",portas:["Presídio Regional de Porto União"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Matos Costa",sr:"SR04",vrg:"Mafra",comarca:"Porto União",portas:["Presídio Regional de Porto União"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+
+  // SR05
+  {municipio:"Lages",sr:"SR05",vrg:"Lages",comarca:"Lages",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto","Prisão Civil"]},
+  {municipio:"Bocaína do Sul",sr:"SR05",vrg:"Lages",comarca:"Lages",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Painel",sr:"SR05",vrg:"Lages",comarca:"Lages",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São José do Cerrito",sr:"SR05",vrg:"Lages",comarca:"Lages",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Anita Garibaldi",sr:"SR05",vrg:"Joinville",comarca:"Anita Garibaldi",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Abdon Batista",sr:"SR05",vrg:"Joinville",comarca:"Anita Garibaldi",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Celso Ramos",sr:"SR05",vrg:"Joinville",comarca:"Anita Garibaldi",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Bom Retiro",sr:"SR05",vrg:"Joinville",comarca:"Bom Retiro",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Alfredo Wagner",sr:"SR05",vrg:"Joinville",comarca:"Bom Retiro",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Otacílio Costa",sr:"SR05",vrg:"Lages",comarca:"Otacílio Costa",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Palmeira",sr:"SR05",vrg:"Lages",comarca:"Otacílio Costa",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Correia Pinto",sr:"SR05",vrg:"Lages",comarca:"Correia Pinto",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ponte Alta",sr:"SR05",vrg:"Lages",comarca:"Correia Pinto",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Cerro Negro",sr:"SR05",vrg:"Lages",comarca:"Campo Belo do Sul",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Campo Belo do Sul",sr:"SR05",vrg:"Lages",comarca:"Campo Belo do Sul",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Capão Alto",sr:"SR05",vrg:"Lages",comarca:"Campo Belo do Sul",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Santa Cecília",sr:"SR05",vrg:"Lages",comarca:"Santa Cecília",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"Timbó Grande",sr:"SR05",vrg:"Lages",comarca:"Santa Cecília",portas:["Presídio Masculino de Lages"],regimes:["Provisório","Fechado"]},
+  {municipio:"São Joaquim",sr:"SR05",vrg:"Lages",comarca:"São Joaquim",portas:["Presídio Masculino de Lages","Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Bom Jardim da Serra",sr:"SR05",vrg:"Lages",comarca:"São Joaquim",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Urupema",sr:"SR05",vrg:"Lages",comarca:"São Joaquim",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Urubici",sr:"SR05",vrg:"Lages",comarca:"Urubici",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Rio Rufino",sr:"SR05",vrg:"Lages",comarca:"Urubici",portas:["Presídio Regional de Lages"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Curitibanos",sr:"SR05",vrg:"Caçador",comarca:"Curitibanos",portas:["Penitenciária Regional de Curitibanos"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"São Cristóvão do Sul",sr:"SR05",vrg:"Caçador",comarca:"Curitibanos",portas:["Penitenciária Regional de Curitibanos","Penitenciária Industrial de São Cristóvão do Sul"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Ponte Alta do Norte",sr:"SR05",vrg:"Caçador",comarca:"Curitibanos",portas:["Penitenciária Regional de Curitibanos"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Frei Rogério",sr:"SR05",vrg:"Caçador",comarca:"Curitibanos",portas:["Penitenciária Regional de Curitibanos"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Caçador",sr:"SR05",vrg:"Caçador",comarca:"Caçador",portas:["Presídio Regional de Caçador"],regimes:["Provisório","Semiaberto","Prisão Civil"]},
+  {municipio:"Lebon Régis",sr:"SR05",vrg:"Caçador",comarca:"Lebon Régis",portas:["Presídio Regional de Caçador"],regimes:["Provisório","Semiaberto","Prisão Civil"]},
+  {municipio:"Calmon",sr:"SR05",vrg:"Caçador",comarca:"Caçador",portas:["Presídio Regional de Caçador"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Macieira",sr:"SR05",vrg:"Caçador",comarca:"Caçador",portas:["Presídio Regional de Caçador"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Rio das Antas",sr:"SR05",vrg:"Caçador",comarca:"Caçador",portas:["Presídio Regional de Caçador"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Campos Novos",sr:"SR05",vrg:"Caçador",comarca:"Campos Novos",portas:["Presídio Regional de Campos Novos"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Brunópolis",sr:"SR05",vrg:"Caçador",comarca:"Campos Novos",portas:["Presídio Regional de Campos Novos"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Vargem",sr:"SR05",vrg:"Caçador",comarca:"Campos Novos",portas:["Presídio Regional de Campos Novos"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Zortéa",sr:"SR05",vrg:"Caçador",comarca:"Campos Novos",portas:["Presídio Regional de Campos Novos"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Videira",sr:"SR05",vrg:"Caçador",comarca:"Videira",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Arroio Trinta",sr:"SR05",vrg:"Caçador",comarca:"Videira",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Iomerê",sr:"SR05",vrg:"Caçador",comarca:"Videira",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Salto Veloso",sr:"SR05",vrg:"Caçador",comarca:"Videira",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Monte Carlo",sr:"SR05",vrg:"Caçador",comarca:"Fraiburgo",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Fraiburgo",sr:"SR05",vrg:"Caçador",comarca:"Fraiburgo",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Pinheiro Preto",sr:"SR05",vrg:"Caçador",comarca:"Tangará",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ibiam",sr:"SR05",vrg:"Caçador",comarca:"Tangará",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Tangará",sr:"SR05",vrg:"Caçador",comarca:"Tangará",portas:["Presídio Regional de Videira"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Joaçaba",sr:"SR05",vrg:"Caçador",comarca:"Joaçaba",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Água Doce",sr:"SR05",vrg:"Caçador",comarca:"Joaçaba",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Luzerna",sr:"SR05",vrg:"Caçador",comarca:"Joaçaba",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ibicaré",sr:"SR05",vrg:"Caçador",comarca:"Joaçaba",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Treze Tílias",sr:"SR05",vrg:"Caçador",comarca:"Joaçaba",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Herval d'Oeste",sr:"SR05",vrg:"Caçador",comarca:"Herval D'Oeste",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Erval Velho",sr:"SR05",vrg:"Caçador",comarca:"Herval D'Oeste",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Capinzal",sr:"SR05",vrg:"Caçador",comarca:"Capinzal",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ipira",sr:"SR05",vrg:"Caçador",comarca:"Capinzal",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Lacerdópolis",sr:"SR05",vrg:"Caçador",comarca:"Capinzal",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ouro",sr:"SR05",vrg:"Caçador",comarca:"Capinzal",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Piratuba",sr:"SR05",vrg:"Caçador",comarca:"Capinzal",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Catanduvas",sr:"SR05",vrg:"Caçador",comarca:"Catanduvas",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Jaborá",sr:"SR05",vrg:"Caçador",comarca:"Catanduvas",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Vargem Bonita",sr:"SR05",vrg:"Caçador",comarca:"Catanduvas",portas:["Presídio Regional de Joaçaba"],regimes:["Provisório","Fechado","Semiaberto"]},
+
+  // SR06
+  {municipio:"Chapecó",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó","Penitenciária Industrial de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Caxambu do Sul",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Cordilheira Alta",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Guatambu",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Nova Itaberaba",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Paial",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Planalto Alegre",sr:"SR06",vrg:"Chapecó",comarca:"Chapecó",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Coronel Freitas",sr:"SR06",vrg:"Chapecó",comarca:"Coronel Freitas",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Águas Frias",sr:"SR06",vrg:"Chapecó",comarca:"Coronel Freitas",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Jardinópolis",sr:"SR06",vrg:"Chapecó",comarca:"Coronel Freitas",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"União do Oeste",sr:"SR06",vrg:"Chapecó",comarca:"Coronel Freitas",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Palmitos",sr:"SR06",vrg:"Chapecó",comarca:"Palmitos",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Caibí",sr:"SR06",vrg:"Chapecó",comarca:"Palmitos",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Quilombo",sr:"SR06",vrg:"Chapecó",comarca:"Quilombo",portas:["Presídio Regional de Chapecó"],regimes:["Provisório","Fechado"]},
+  {municipio:"Formosa do Sul",sr:"SR06",vrg:"Chapecó",comarca:"Quilombo",portas:["Presídio Regional de Chapecó"],regimes:["Provisório","Fechado"]},
+  {municipio:"Irati",sr:"SR06",vrg:"Chapecó",comarca:"Quilombo",portas:["Presídio Regional de Chapecó"],regimes:["Provisório","Fechado"]},
+  {municipio:"Santiago do Sul",sr:"SR06",vrg:"Chapecó",comarca:"Quilombo",portas:["Presídio Regional de Chapecó"],regimes:["Provisório","Fechado"]},
+  {municipio:"São Carlos",sr:"SR06",vrg:"Chapecó",comarca:"São Carlos",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Águas de Chapecó",sr:"SR06",vrg:"Chapecó",comarca:"São Carlos",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Cunhataí",sr:"SR06",vrg:"Chapecó",comarca:"São Carlos",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Xaxim",sr:"SR06",vrg:"Chapecó",comarca:"Xaxim",portas:["Presídio Regional de Chapecó","Penitenciária Agrícola de Chapecó"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Lajeado Grande",sr:"SR06",vrg:"Chapecó",comarca:"Xaxim",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Marema",sr:"SR06",vrg:"Chapecó",comarca:"Xaxim",portas:["Penitenciária Agrícola de Chapecó"],regimes:["Fechado","Semiaberto"]},
+  {municipio:"Concórdia",sr:"SR06",vrg:"Concórdia",comarca:"Concórdia",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Alto Bela Vista",sr:"SR06",vrg:"Concórdia",comarca:"Concórdia",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Irani",sr:"SR06",vrg:"Concórdia",comarca:"Concórdia",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Peritiba",sr:"SR06",vrg:"Concórdia",comarca:"Concórdia",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Presidente Castello Branco",sr:"SR06",vrg:"Concórdia",comarca:"Concórdia",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ipumirim",sr:"SR06",vrg:"Concórdia",comarca:"Ipumirim",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Arabutã",sr:"SR06",vrg:"Concórdia",comarca:"Ipumirim",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Lindóia do Sul",sr:"SR06",vrg:"Concórdia",comarca:"Ipumirim",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Itá",sr:"SR06",vrg:"Concórdia",comarca:"Itá",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Seara",sr:"SR06",vrg:"Concórdia",comarca:"Seara",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Arvoredo",sr:"SR06",vrg:"Concórdia",comarca:"Seara",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Xavantina",sr:"SR06",vrg:"Concórdia",comarca:"Seara",portas:["Presídio Regional de Concórdia"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Xanxerê",sr:"SR06",vrg:"Concórdia",comarca:"Xanxerê",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Bom Jesus",sr:"SR06",vrg:"Concórdia",comarca:"Xanxerê",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Faxinal dos Guedes",sr:"SR06",vrg:"Concórdia",comarca:"Xanxerê",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ponte Serrada",sr:"SR06",vrg:"Concórdia",comarca:"Ponte Serrada",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Vargeão",sr:"SR06",vrg:"Concórdia",comarca:"Ponte Serrada",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Passos Maia",sr:"SR06",vrg:"Concórdia",comarca:"Ponte Serrada",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Abelardo Luz",sr:"SR06",vrg:"Concórdia",comarca:"Abelardo Luz",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ouro Verde",sr:"SR06",vrg:"Concórdia",comarca:"Abelardo Luz",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São Domingos",sr:"SR06",vrg:"Concórdia",comarca:"São Domingos",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Galvão",sr:"SR06",vrg:"Concórdia",comarca:"São Domingos",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Coronel Martins",sr:"SR06",vrg:"Concórdia",comarca:"São Domingos",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ipuaçu",sr:"SR06",vrg:"Concórdia",comarca:"São Domingos",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Entre Rios",sr:"SR06",vrg:"Concórdia",comarca:"São Domingos",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São Lourenço do Oeste",sr:"SR06",vrg:"Concórdia",comarca:"São Lourenço do Oeste",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Novo Horizonte",sr:"SR06",vrg:"Concórdia",comarca:"São Lourenço do Oeste",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Jupiá",sr:"SR06",vrg:"Concórdia",comarca:"São Lourenço do Oeste",portas:["Presídio Regional de Xanxerê"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Maravilha",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Iraceminha",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São Miguel da Boa Vista",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Santa Terezinha do Progresso",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Flor do Sertão",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Tigrinhos",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Maravilha",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Pinhalzinho",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Pinhalzinho",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Nova Erechim",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Pinhalzinho",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Saudades",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Pinhalzinho",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Cunha Porã",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Cunha Porã",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Modelo",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Modelo",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Serra Alta",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Modelo",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Sul Brasil",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Modelo",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Bom Jesus do Oeste",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Modelo",portas:["Presídio Regional de Maravilha"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São José do Cedro",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São José do Cedro",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Princesa",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São José do Cedro",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Guarujá do Sul",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São José do Cedro",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Dionísio Cerqueira",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Dionísio Cerqueira",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Palma Sola",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Anchieta",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Romelândia",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Anchieta",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Anchieta",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Anchieta",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Campo Erê",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Campo Erê",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Saltinho",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Campo Erê",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São Bernardino",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Campo Erê",portas:["Presídio Regional de São José do Cedro"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São Miguel do Oeste",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São Miguel do Oeste",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Guaraciaba",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São Miguel do Oeste",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Paraíso",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São Miguel do Oeste",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Bandeirante",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São Miguel do Oeste",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Barra Bonita",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"São Miguel do Oeste",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Descanso",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Descanso",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Belmonte",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Descanso",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Santa Helena",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Descanso",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Itapiranga",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Itapiranga",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Tunápolis",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Itapiranga",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São João do Oeste",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Itapiranga",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Mondaí",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Mondaí",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Iporã do Oeste",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Mondaí",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Riqueza",sr:"SR06",vrg:"São Miguel do Oeste",comarca:"Mondaí",portas:["Presídio Regional de São Miguel do Oeste"],regimes:["Provisório","Fechado","Semiaberto"]},
+
+  // SR07
+  {municipio:"Rio do Sul",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Sul",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Agronômica",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Sul",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Aurora",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Sul",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Lontras",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Sul",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Presidente Nereu",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Sul",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ibirama",sr:"SR07",vrg:"Rio do Sul",comarca:"Ibirama",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"José Boiteux",sr:"SR07",vrg:"Rio do Sul",comarca:"Ibirama",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Ituporanga",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Atalanta",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Chapadão do Lajeado",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Imbuia",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Leoberto Leal",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Petrolândia",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Vidal Ramos",sr:"SR07",vrg:"Rio do Sul",comarca:"Ituporanga",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Presidente Getúlio",sr:"SR07",vrg:"Rio do Sul",comarca:"Presidente Getúlio",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Dona Emma",sr:"SR07",vrg:"Rio do Sul",comarca:"Presidente Getúlio",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Vitor Meireles",sr:"SR07",vrg:"Rio do Sul",comarca:"Presidente Getúlio",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Witmarsum",sr:"SR07",vrg:"Rio do Sul",comarca:"Presidente Getúlio",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Rio do Campo",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Campo",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Santa Terezinha",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Campo",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Rio do Oeste",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Oeste",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Laurentino",sr:"SR07",vrg:"Rio do Sul",comarca:"Rio do Oeste",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Taió",sr:"SR07",vrg:"Rio do Sul",comarca:"Taió",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Mirim Doce",sr:"SR07",vrg:"Rio do Sul",comarca:"Taió",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Salete",sr:"SR07",vrg:"Rio do Sul",comarca:"Taió",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Trombudo Central",sr:"SR07",vrg:"Rio do Sul",comarca:"Trombudo Central",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Agrolândia",sr:"SR07",vrg:"Rio do Sul",comarca:"Trombudo Central",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Braço do Trombudo",sr:"SR07",vrg:"Rio do Sul",comarca:"Trombudo Central",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Pouso Redondo",sr:"SR07",vrg:"Rio do Sul",comarca:"Trombudo Central",portas:["Presídio Regional de Rio do Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+
+  // SR08
+  {municipio:"Tubarão",sr:"SR08",vrg:"Tubarão",comarca:"Tubarão",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Pedras Grandes",sr:"SR08",vrg:"Tubarão",comarca:"Tubarão",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Armazém",sr:"SR08",vrg:"Tubarão",comarca:"Armazém",portas:["Penitenciária Masculina de Tubarão"],regimes:["Fechado","Semiaberto"],obs:"Porta de entrada: Presídio Regional de Tubarão; destino: Penitenciária Masculina de Tubarão."},
+  {municipio:"São Martinho",sr:"SR08",vrg:"Tubarão",comarca:"Armazém",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Gravatal",sr:"SR08",vrg:"Tubarão",comarca:"Armazém",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Braço do Norte",sr:"SR08",vrg:"Tubarão",comarca:"Braço do Norte",portas:["Penitenciária Masculina de Tubarão"],regimes:["Fechado","Semiaberto"],obs:"Porta de entrada: Presídio Regional de Tubarão; destino: Penitenciária Masculina de Tubarão."},
+  {municipio:"Grão Pará",sr:"SR08",vrg:"Tubarão",comarca:"Braço do Norte",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Rio Fortuna",sr:"SR08",vrg:"Tubarão",comarca:"Braço do Norte",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Santa Rosa de Lima",sr:"SR08",vrg:"Tubarão",comarca:"Braço do Norte",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"São Ludgero",sr:"SR08",vrg:"Tubarão",comarca:"Braço do Norte",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Capivari de Baixo",sr:"SR08",vrg:"Tubarão",comarca:"Capivari de Baixo",portas:["Penitenciária Masculina de Tubarão"],regimes:["Fechado","Semiaberto"],obs:"Porta de entrada: Presídio Regional de Tubarão; destino: Penitenciária Masculina de Tubarão."},
+  {municipio:"Garopaba",sr:"SR08",vrg:"Tubarão",comarca:"Garopaba",portas:["Presídio Regional de Imbituba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Paulo Lopes",sr:"SR08",vrg:"Tubarão",comarca:"Garopaba",portas:["Presídio Regional de Imbituba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Imaruí",sr:"SR08",vrg:"Tubarão",comarca:"Imaruí",portas:["Presídio Regional de Laguna"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Imbituba",sr:"SR08",vrg:"Tubarão",comarca:"Imbituba",portas:["Presídio Regional de Imbituba"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Jaguaruna",sr:"SR08",vrg:"Tubarão",comarca:"Jaguaruna",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Sangão",sr:"SR08",vrg:"Tubarão",comarca:"Jaguaruna",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado"]},
+  {municipio:"Treze de Maio",sr:"SR08",vrg:"Tubarão",comarca:"Jaguaruna",portas:["Presídio Regional de Tubarão"],regimes:["Provisório","Fechado"]},
+  {municipio:"Laguna",sr:"SR08",vrg:"Tubarão",comarca:"Laguna",portas:["Presídio Regional de Laguna"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Pescaria Brava",sr:"SR08",vrg:"Tubarão",comarca:"Laguna",portas:["Presídio Regional de Laguna"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Orleans",sr:"SR08",vrg:"Tubarão",comarca:"Orleans",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"],obs:"Conforme regime e disponibilidade de vaga."},
+  {municipio:"Criciúma",sr:"SR08",vrg:"Criciúma",comarca:"Criciúma",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Nova Veneza",sr:"SR08",vrg:"Criciúma",comarca:"Criciúma",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Siderópolis",sr:"SR08",vrg:"Criciúma",comarca:"Criciúma",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Treviso",sr:"SR08",vrg:"Criciúma",comarca:"Criciúma",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Forquilhinha",sr:"SR08",vrg:"Criciúma",comarca:"Forquilhinha",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Içara",sr:"SR08",vrg:"Criciúma",comarca:"Içara",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Balneário Rincão",sr:"SR08",vrg:"Criciúma",comarca:"Içara",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Lauro Müller",sr:"SR08",vrg:"Criciúma",comarca:"Lauro Müller",portas:["Presídio Regional de Criciúma"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Meleiro",sr:"SR08",vrg:"Criciúma",comarca:"Meleiro",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Morro Grande",sr:"SR08",vrg:"Criciúma",comarca:"Meleiro",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Santa Rosa do Sul",sr:"SR08",vrg:"Criciúma",comarca:"Santa Rosa do Sul",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Passo de Torres",sr:"SR08",vrg:"Criciúma",comarca:"Santa Rosa do Sul",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Praia Grande",sr:"SR08",vrg:"Criciúma",comarca:"Santa Rosa do Sul",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"São João do Sul",sr:"SR08",vrg:"Criciúma",comarca:"Santa Rosa do Sul",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Sombrio",sr:"SR08",vrg:"Criciúma",comarca:"Sombrio",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Balneário Gaivota",sr:"SR08",vrg:"Criciúma",comarca:"Sombrio",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Turvo",sr:"SR08",vrg:"Criciúma",comarca:"Turvo",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Ermo",sr:"SR08",vrg:"Criciúma",comarca:"Turvo",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Jacinto Machado",sr:"SR08",vrg:"Criciúma",comarca:"Turvo",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Timbé do Sul",sr:"SR08",vrg:"Criciúma",comarca:"Turvo",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Urussanga",sr:"SR08",vrg:"Criciúma",comarca:"Urussanga",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Cocal do Sul",sr:"SR08",vrg:"Criciúma",comarca:"Urussanga",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Morro da Fumaça",sr:"SR08",vrg:"Criciúma",comarca:"Urussanga",portas:["Presídio Regional de Criciúma","Penitenciária Sul"],regimes:["Provisório","Fechado","Semiaberto"]},
+  {municipio:"Araranguá",sr:"SR08",vrg:"Criciúma",comarca:"Araranguá",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Fechado","Semiaberto"],obs:"Apenados do RS podem ser apresentados no Presídio de Araranguá devido à proximidade geográfica."},
+  {municipio:"Balneário Arroio do Silva",sr:"SR08",vrg:"Criciúma",comarca:"Araranguá",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+  {municipio:"Maracajá",sr:"SR08",vrg:"Criciúma",comarca:"Araranguá",portas:["Presídio Regional de Araranguá"],regimes:["Provisório","Semiaberto"]},
+];
+
+var PE2_COLORS={SR01:"#2f5ae8",SR02:"#0ea472",SR03:"#d97706",SR04:"#7c3aed",SR05:"#e05a2b",SR06:"#db2777",SR07:"#059669",SR08:"#0284c7"};
+var PE2_LABELS={SR01:"SR01 — Grande Florianópolis",SR02:"SR02 — Norte / Joinville",SR03:"SR03 — Vale do Itajaí / Blumenau",SR04:"SR04 — Planalto Norte",SR05:"SR05 — Serrana / Meio-Oeste",SR06:"SR06 — Oeste Catarinense",SR07:"SR07 — Alto Vale do Itajaí",SR08:"SR08 — Sul Catarinense"};
+
+var pe2ActiveSR='all';
+
+function pe2Norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();}
+function pe2Esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function pe2Hl(text,q){
+  if(!q) return pe2Esc(text);
+  var ntext=pe2Norm(text),idx=ntext.indexOf(q);
+  if(idx<0) return pe2Esc(text);
+  return pe2Esc(text.slice(0,idx))+'<mark>'+pe2Esc(text.slice(idx,idx+q.length))+'</mark>'+pe2Esc(text.slice(idx+q.length));
+}
+function pe2ChipClass(r){
+  var n=pe2Norm(r);
+  if(n.includes('provisório')||n.includes('provisorio')) return 'pe2-chip-prov';
+  if(n.includes('fechado')) return 'pe2-chip-fech';
+  if(n.includes('semiaberto')) return 'pe2-chip-semi';
+  if(n.includes('aberto')&&!n.includes('semi')) return 'pe2-chip-aber';
+  return 'pe2-chip-civ';
+}
+
+window.pe2Toggle=function(idx){
+  var hd=document.getElementById('pe2h-'+idx);
+  var bd=document.getElementById('pe2b-'+idx);
+  if(!hd||!bd) return;
+  var isOpen=bd.classList.contains('open');
+  bd.classList.toggle('open');
+  hd.classList.toggle('open');
+};
+
+window.pe2SrFilter=function(btn){
+  document.querySelectorAll('.pe2-sr').forEach(function(b){
+    b.style.background='#fff';b.style.color='#374151';b.style.borderColor='#dde1ee';
+  });
+  btn.style.background='#1a2a4a';btn.style.color='#fff';btn.style.borderColor='#1a2a4a';
+  pe2ActiveSR=btn.dataset.sr;
+  pe2Render();
+};
+
+window.pe2ClearSearch=function(){
+  document.getElementById('pe2-search').value='';
+  document.getElementById('pe2-clear').style.display='none';
+  pe2Render();
+};
+
+window.pe2Render=function(){
+  var raw=document.getElementById('pe2-search').value;
+  var q=pe2Norm(raw);
+  var clr=document.getElementById('pe2-clear');
+  if(clr) clr.style.display=raw.length?'flex':'none';
+
+  var filtered=PE2_MUNIS.filter(function(m){
+    var srOk=pe2ActiveSR==='all'||m.sr===pe2ActiveSR;
+    var txtOk=!q||
+      pe2Norm(m.municipio).includes(q)||
+      pe2Norm(m.comarca).includes(q)||
+      pe2Norm(m.vrg).includes(q)||
+      pe2Norm(m.sr).includes(q)||
+      m.portas.some(function(p){return pe2Norm(p).includes(q);});
+    return srOk&&txtOk;
+  });
+
+  var vis=document.getElementById('pe2-visible');
+  var info=document.getElementById('pe2-result-info');
+  if(vis) vis.textContent=filtered.length;
+  if(info) info.textContent=filtered.length+' resultado'+(filtered.length!==1?'s':'');
+
+  var container=document.getElementById('pe2-content');
+  if(!container) return;
+
+  if(filtered.length===0){
+    container.innerHTML='<div style="text-align:center;padding:4rem 2rem;color:#9ca3af;"><div style="font-size:2.5rem;margin-bottom:.75rem;">🔍</div><div style="font-size:1rem;font-weight:600;color:#6b7280;">Nenhum resultado encontrado</div><div style="font-size:.82rem;margin-top:.4rem;">Tente outro município, comarca ou unidade prisional.</div></div>';
+    return;
   }
 
-  function peRegimeChip(r){
-    var map = {
-      'Provisório':'background:#ede9fe;color:#5b21b6',
-      'Fechado':'background:#fee2e2;color:#991b1b',
-      'Semiaberto':'background:#d1fae5;color:#065f46',
-      'Aberto':'background:#fef3c7;color:#92400e',
-      'Prisão Civil':'background:#e0f2fe;color:#075985'
-    };
-    var st = map[r]||'background:#f3f4f6;color:#374151';
-    return '<span style="display:inline-block;border-radius:20px;padding:.15rem .5rem;font-size:.65rem;font-weight:700;'+st+'">'+peEsc(r)+'</span>';
-  }
+  var bySR={};
+  filtered.forEach(function(m){if(!bySR[m.sr])bySR[m.sr]=[];bySR[m.sr].push(m);});
 
-  window.peSrFilter = function(btn){
-    document.querySelectorAll('.pe-sr-btn').forEach(function(b){
-      b.style.background='#fff'; b.style.color='#4a5278'; b.style.borderColor='#c8d0e8';
-    });
-    btn.style.background='#1a2a4a'; btn.style.color='#fff'; btn.style.borderColor='#1a2a4a';
-    peActiveSR = btn.dataset.sr;
-    peRender();
-  };
+  var html='';
+  Object.keys(bySR).sort().forEach(function(sr){
+    var color=PE2_COLORS[sr]||'#1a2a4a';
+    var label=PE2_LABELS[sr]||sr;
+    html+='<div style="margin-bottom:1.75rem;">';
+    html+='<div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.7rem;">';
+    html+='<div style="width:4px;height:22px;border-radius:2px;background:'+color+';flex-shrink:0;"></div>';
+    html+='<span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#374151;">'+pe2Esc(label)+'</span>';
+    html+='<span style="font-family:\'Courier New\',monospace;font-size:.7rem;color:#9ca3af;background:#eceef5;border:1px solid #dde1ee;border-radius:20px;padding:.08rem .5rem;">'+bySR[sr].length+' município'+(bySR[sr].length!==1?'s':'')+'</span>';
+    html+='<div style="flex:1;height:1px;background:#dde1ee;"></div></div>';
+    html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:.85rem;">';
 
-  window.peRender = function(){
-    var q = peNorm(document.getElementById('pe-search').value.trim());
-    var filtered = PE_DATA.filter(function(d){
-      var srOk = peActiveSR==='all'||d.sr===peActiveSR;
-      var txtOk = !q || peNorm(d.m).includes(q)||peNorm(d.sr).includes(q)||peNorm(d.vrg).includes(q)||peNorm(d.comarca).includes(q)||(d.portas||[]).some(function(p){return peNorm(p).includes(q);})||(d.obs&&peNorm(d.obs).includes(q));
-      return srOk&&txtOk;
-    });
+    bySR[sr].forEach(function(m){
+      var idx=PE2_MUNIS.indexOf(m);
+      var chips=m.regimes.map(function(r){return '<span class="pe2-chip '+pe2ChipClass(r)+'">'+pe2Esc(r)+'</span>';}).join(' ');
+      var portaTags=m.portas.map(function(p){return '<span style="display:inline-block;background:#e8eeff;color:#2563eb;border-radius:6px;padding:.16rem .45rem;font-size:.69rem;font-weight:600;margin:.1rem .1rem .1rem 0;">'+pe2Hl(p,q)+'</span>';}).join('');
 
-    var count = document.getElementById('pe-count');
-    count.textContent = filtered.length+' município'+(filtered.length!==1?'s':'');
+      html+='<div class="pe2-muni-card">';
+      // Header do card
+      html+='<div class="pe2-card-hd" id="pe2h-'+idx+'" onclick="pe2Toggle('+idx+')">';
+      html+='<div style="width:9px;height:9px;border-radius:50%;background:'+color+';flex-shrink:0;margin-top:5px;"></div>';
+      html+='<div style="flex:1;min-width:0;">';
+      html+='<div class="pe2-nome" style="font-size:.97rem;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+pe2Hl(m.municipio,q)+'</div>';
+      html+='<div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.35rem;">';
+      html+='<span class="pe2-tag" style="background:#e8eeff;color:#2563eb;border:1px solid rgba(37,99,235,.2);">'+pe2Hl(m.vrg,q)+'</span>';
+      html+='<span class="pe2-tag" style="background:#eceef5;color:#374151;border:1px solid #dde1ee;">'+pe2Hl(m.comarca,q)+'</span>';
+      html+='</div>';
+      html+='<div style="font-size:.74rem;color:#6b7280;margin-top:.38rem;display:flex;align-items:flex-start;gap:.3rem;">';
+      html+='<span style="color:#d97706;flex-shrink:0;">⛪</span>';
+      html+=pe2Hl(m.portas[0],q)+(m.portas.length>1?' <span style="color:#9ca3af;font-size:.67rem;">+'+( m.portas.length-1)+'</span>':'');
+      html+='</div></div>';
+      html+='<svg class="pe2-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+      html+='</div>';
 
-    var container = document.getElementById('pe-main-content');
-    if(filtered.length===0){
-      container.innerHTML='<div style="text-align:center;padding:3rem;color:#9ca3af;"><div style="font-size:2rem;margin-bottom:.75rem;">🏛️</div><div style="font-weight:600;color:#4b5563;">Nenhum município encontrado</div><div style="font-size:.82rem;margin-top:.35rem;">Tente outro nome ou filtro.</div></div>';
-      return;
-    }
-
-    // Agrupar por SR
-    var bySR = {};
-    filtered.forEach(function(d){
-      if(!bySR[d.sr]) bySR[d.sr]=[];
-      bySR[d.sr].push(d);
-    });
-
-    var html = '';
-    Object.keys(bySR).sort().forEach(function(sr){
-      var color = PE_SR_COLORS[sr]||'#1a2a4a';
-      var label = PE_SR_LABELS[sr]||sr;
-      html += '<div style="margin-bottom:1.5rem;">';
-      html += '<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;">';
-      html += '<div style="width:4px;height:20px;border-radius:2px;background:'+color+';flex-shrink:0;"></div>';
-      html += '<span style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#374151;">'+peEsc(label)+'</span>';
-      html += '<span style="font-family:\'Courier New\',monospace;font-size:.68rem;color:#9ca3af;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:20px;padding:.08rem .45rem;">'+bySR[sr].length+'</span>';
-      html += '<div style="flex:1;height:1px;background:#e5e7eb;"></div></div>';
-      html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.7rem;">';
-
-      bySR[sr].forEach(function(d,i){
-        var cardId = 'pe-card-'+sr+'-'+i;
-        var bodyId = 'pe-body-'+sr+'-'+i;
-        html += '<div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);" id="'+cardId+'">';
-        // Card header
-        html += '<div onclick="peToggle(\''+bodyId+'\')" style="padding:.75rem .9rem;cursor:pointer;display:flex;align-items:flex-start;gap:.6rem;" onmouseover="this.style.background=\'#f8fafc\'" onmouseout="this.style.background=\'#fff\'">';
-        html += '<div style="width:9px;height:9px;border-radius:50%;background:'+color+';flex-shrink:0;margin-top:5px;"></div>';
-        html += '<div style="flex:1;min-width:0;">';
-        html += '<div style="font-size:.9rem;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+peHl(d.m,q)+'</div>';
-        html += '<div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.3rem;">';
-        html += '<span style="background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;border-radius:5px;padding:.12rem .4rem;font-size:.64rem;font-weight:600;">'+peEsc(d.comarca)+'</span>';
-        html += '<span style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:5px;padding:.12rem .4rem;font-size:.64rem;font-weight:600;">VRG: '+peEsc(d.vrg)+'</span>';
-        html += '</div>';
-        html += '<div style="font-size:.72rem;color:#6b7280;margin-top:.35rem;">⛪ '+peHl(d.portas[0],q)+(d.portas.length>1?' <span style="color:#9ca3af;">+'+( d.portas.length-1)+'</span>':'')+'</div>';
-        html += '</div>';
-        html += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;margin-top:3px;transition:transform .2s;" id="pe-chevron-'+bodyId+'"><polyline points="6 9 12 15 18 9"/></svg>';
-        html += '</div>';
-        // Card body (hidden)
-        html += '<div id="'+bodyId+'" style="display:none;border-top:1.5px solid #e5e7eb;padding:.75rem .9rem;background:#f9fafb;">';
-        html += '<div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9ca3af;margin-bottom:.35rem;">Portas de Entrada</div>';
-        d.portas.forEach(function(p){
-          html += '<div style="display:flex;align-items:flex-start;gap:.4rem;margin-bottom:.3rem;font-size:.78rem;color:#1a2a4a;font-weight:500;">⛪ '+peHl(p,q)+'</div>';
-        });
-        html += '<div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9ca3af;margin:.5rem 0 .35rem;">Regimes Atendidos</div>';
-        html += '<div style="display:flex;gap:.3rem;flex-wrap:wrap;">'+d.regimes.map(peRegimeChip).join('')+'</div>';
-        html += '<div style="margin-top:.5rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9ca3af;margin-bottom:.35rem;">Jurisdição</div>';
-        html += '<div style="font-size:.78rem;color:#374151;">VRG: <strong>'+peEsc(d.vrg)+'</strong> · Comarca: <strong>'+peEsc(d.comarca)+'</strong></div>';
-        if(d.obs){ html += '<div style="margin-top:.5rem;background:#fef3c7;border:1px solid rgba(217,119,6,.25);border-radius:6px;padding:.4rem .55rem;font-size:.72rem;color:#78350f;line-height:1.45;">⚠️ '+peEsc(d.obs)+'</div>'; }
-        html += '</div>';
-        html += '</div>';
-      });
-
-      html += '</div></div>';
-    });
-
-    container.innerHTML = html;
-  };
-
-  window.peToggle = function(bodyId){
-    var body = document.getElementById(bodyId);
-    var chev = document.getElementById('pe-chevron-'+bodyId);
-    if(!body) return;
-    var open = body.style.display==='block';
-    body.style.display = open?'none':'block';
-    if(chev) chev.style.transform = open?'':'rotate(180deg)';
-    // Highlight card border
-    var card = body.parentElement;
-    if(card) card.style.borderColor = open?'#e5e7eb':'#2563eb';
-  };
-
-  // Inicializar ao abrir o modal (hook via MutationObserver)
-  var _peInited = false;
-  var _peTarget = document.getElementById('modal-porta-entrada');
-  if(_peTarget){
-    var _peObs = new MutationObserver(function(){
-      if(_peTarget.style.display==='flex'){
-        if(!_peInited){ _peInited=true; peRender(); }
+      // Body do card (expandido)
+      html+='<div class="pe2-card-bd" id="pe2b-'+idx+'">';
+      html+='<div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9ca3af;margin-bottom:.4rem;">Porta(s) de Entrada</div>';
+      html+='<div style="margin-bottom:.7rem;">'+portaTags+'</div>';
+      html+='<div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9ca3af;margin-bottom:.35rem;">Regimes Atendidos</div>';
+      html+='<div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.65rem;">'+chips+'</div>';
+      html+='<div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9ca3af;margin-bottom:.35rem;">Jurisdição</div>';
+      html+='<div style="font-size:.78rem;color:#374151;line-height:1.5;">';
+      html+='<strong style="color:#1a2a4a;">'+pe2Esc(m.vrg)+'</strong> <span style="color:#9ca3af;">—</span> Vara Regional de Garantias<br>';
+      html+='<strong style="color:#1a2a4a;">'+pe2Esc(m.comarca)+'</strong> <span style="color:#9ca3af;">—</span> Comarca';
+      html+='</div>';
+      if(m.obs){
+        html+='<div class="pe2-obs">⚠️ '+pe2Esc(m.obs)+'</div>';
       }
+      html+='</div>';
+      html+='</div>';
     });
-    _peObs.observe(_peTarget, {attributes:true, attributeFilter:['style']});
+
+    html+='</div></div>';
+  });
+
+  container.innerHTML=html;
+};
+
+// Abrir automaticamente ao clicar no botão da área restrita
+document.addEventListener('DOMContentLoaded',function(){
+  var btn=document.querySelector('[onclick*="modal-porta-entrada"]');
+  if(btn){
+    btn.addEventListener('click',function(){
+      setTimeout(function(){
+        if(window.pe2Render) window.pe2Render();
+      },50);
+    });
   }
+});
+
 })();
 </script>
 
