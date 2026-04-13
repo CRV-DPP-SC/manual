@@ -3083,6 +3083,9 @@ window.abrirAreaRestrita = function() {
 </script>
 <script>
 window.abrirIframeRestrito = function abrirIframeRestrito(url, icon, titulo){
+  // Fechar todos os outros modais primeiro
+  document.querySelectorAll('[id^="modal-"]').forEach(function(m){ m.style.display='none'; });
+  var pe3 = document.getElementById('pe3-modal'); if(pe3) pe3.style.display='none';
   document.getElementById('iframe-gen-icon').textContent = icon;
   document.getElementById('iframe-gen-titulo').textContent = titulo;
   document.getElementById('iframe-gen-link').href = url;
@@ -7770,10 +7773,13 @@ window.fecharIframeRestrito = function fecharIframeRestrito(){
 <script>
 // ── PE3: Regional > Unidade > Municípios ─────────────────────────────
 window.pe3Abrir = function pe3Abrir(){
+  // Fechar todos os outros modais primeiro
+  document.querySelectorAll('[id^="modal-"]').forEach(function(m){ m.style.display='none'; });
+  document.getElementById('modal-iframe-gen') && (document.getElementById('modal-iframe-gen').style.display='none');
   document.getElementById('pe3-modal').style.display='flex';
-  pe3Voltar();
-  document.getElementById('pe3-busca').value='';
-  document.getElementById('pe3-limpar').style.display='none';
+  if(window.pe3Voltar) pe3Voltar();
+  var b=document.getElementById('pe3-busca'); if(b) b.value='';
+  var l=document.getElementById('pe3-limpar'); if(l) l.style.display='none';
 }
 window.pe3Fechar = function pe3Fechar(){
   document.getElementById('pe3-modal').style.display='none';
