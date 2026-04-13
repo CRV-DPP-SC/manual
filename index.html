@@ -2491,13 +2491,13 @@
         <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">Calculadora de Gestão de Vagas</div>
         <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Déficit, excedente e taxa de ocupação</div>
       </div>
-      <!-- Porta de Entrada -->
+      <!-- Unidades Prisionais -->
       <div onclick="window.abrirModal('modal-porta-entrada')"
         style="background:#fff;border:2px solid #1a2a4a;border-radius:12px;padding:1.5rem;cursor:pointer;transition:.2s;text-align:center;"
         onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
-        <div style="font-size:2rem;margin-bottom:.6rem;">🚪</div>
-        <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">Porta de Entrada</div>
-        <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Consulta de unidades por regional</div>
+        <div style="font-size:2rem;margin-bottom:.6rem;">&#127963;</div>
+        <div style="font-weight:700;color:#1a2a4a;font-size:.95rem;">Unidades Prisionais</div>
+        <div style="font-size:.78rem;color:#6b7280;margin-top:.3rem;">Informações sobre as Unidades Prisionais, cidades abrangidas</div>
       </div>
 
       <!-- Gerador de Despachos -->
@@ -3786,465 +3786,681 @@ window.abrirAreaRestrita = function() {
 </div>
 
 <!-- ========== MODAL PORTA DE ENTRADA ========== -->
-<div id="modal-porta-entrada" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9990;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
-  <div style="background:#fff;border-radius:16px;width:100%;max-width:1000px;margin:2rem auto;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;">
-    <div style="background:#1a2a4a;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1;">
-      <h3 style="color:#fff;font-size:1rem;font-weight:700;margin:0;">🚪 Consulta Porta de Entrada — Unidades Prisionais por Regional</h3>
-      <button onclick="document.getElementById('modal-porta-entrada').style.display='none'" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;">×</button>
-    </div>
-    <div style="padding:1.5rem;">
-      
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 01 - Grande Florianópolis</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária de Florianópolis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Penitenciária de Florianópolis exceto presos com crimes contra liberdade sexual.</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisórios, Fechado, Semiaberto, Aberto e Prisão Civil</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Florianópolis, São José, Palhoça, Santo Amaro da Imperatriz, Águas Mornas, São Bonifácio, Rancho Queimado, Angelina, São Pedro de Alcântara, Biguaçu, Antônio Carlos e Governador Celso Ramos e Anitápolis</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Masculino Regional de Florianópolis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Porta de entrada para prisões de masculinos por crimes contra a liberdade sexual, sejam elas em decorrência de flagrante (provisórios) ou por mandado de prisão de qualquer natureza.</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisórios (preferencialmente) e condenados regime fechado. A permanência de presos em regime semiaberto é vedada por força de determinação judicial</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Florianópolis, São José, Palhoça, Santo Amaro da Imperatriz, Águas Mornas, São Bonifácio, Rancho Queimado, Angelina, São Pedro de Alcântara, Biguaçu, Antônio Carlos e Governador Celso Ramos</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Biguaçu</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Masculino Regional de Florianópolis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado / Crime Sexual</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Biguaçu, Governador Celso Ramos e Antônio Carlos</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Tijucas</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Tijucas</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisórios, Fechado, Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Tijucas e Canelinha; São João Batista, Nova Trento e Major Gercino; e Porto Belo/Bombinhas</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Colônia Agroindustrial de Palhoça</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Penitenciária de Florianópolis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Florianópolis, São José, Palhoça, Santo Amaro da Imperatriz, Águas Mornas, São Bonifácio, Rancho Queimado, Angelina, São Pedro de Alcântara, Biguaçu, Antônio Carlos e Governador Celso Ramos e Anitápolis</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Feminino Regional de Florianópolis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Feminino Regional de Florianópolis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório e fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Florianópolis, São José, Palhoça, Santo Amaro da Imperatriz, Águas Mornas, São Bonifácio, Rancho Queimado, Angelina, São Pedro de Alcântara, Biguaçu, Antônio Carlos, Anitápolis e Governador Celso Ramos</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Hospital de Custódia e Tratamento Psiquiátrico</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Hospital de Custódia e Tratamento Psiquiátrico</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Mandado de Internação</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Recebe reclusos oriundos de todos municípios do Estado de Santa Catarina</td>
-            </tr>
-          </tbody>
-        </table>
+<div id="modal-porta-entrada" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9990;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#f4f6fb;border-radius:14px;width:100%;max-width:700px;margin:1.5rem auto;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;font-family:'Inter',system-ui,sans-serif;">
+
+    <!-- Header -->
+    <div style="background:#1a2a4a;padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
+      <div>
+        <div style="color:#fff;font-size:.92rem;font-weight:700;">Unidades Prisionais — SC</div>
+        <div style="color:rgba(255,255,255,.5);font-size:.68rem;margin-top:1px;">Clique na SR para ver as unidades · Clique na unidade para ver as cidades</div>
       </div>
+      <button onclick="document.getElementById('modal-porta-entrada').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:1.1rem;">&#215;</button>
     </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 02 - Sul Catarinense</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Masculina de Tubarão</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Tubarão</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Armazém, Braço do Norte, Capivari de Baixo, Jaguaruna e Tubarão</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Criciúma</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e, excepcionalmente, do semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Criciúma, Içara, Forquilhinha, Nova Veneza, Siderópolis, Morro da Fumaça, Urussanga, Cocal do Sul, Treviso, Orleans e Balneário Rincão</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Araranguá</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Apenados do Estado do Rio Grande do Sul ou Presídio Regional de Criciúma</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório e semiaberto e, extraordinariamente, fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Araranguá, Balneário Arroio do Silva, Balneário Gaivota, Jacinto Machado, Passo de Torres, Praia Grande, Santa Rosa do Sul, Sombrio, São João do Sul, Timbé do Sul, Maracajá, Morro Grande, Meleiro, Turvo e Ermo</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Criciúma</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Criciúma</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisórios, semiaberto e fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Criciúma, Siderópolis, Treviso, Nova Veneza, Forquilhinha, Içara, Balneário Rincão, Urussanga, Cocal do Sul, Morro da Fumaça, Lauro Müller e Orleans</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Imbituba</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Imbituba</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Imbituba, Garopaba e Paulo Lopes</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Laguna</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Laguna</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Laguna, Pescaria Brava e Imaruí</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Tubarão</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Tubarão</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório e fechado, com alguns semiaberto remanescentes</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Jaguaruna, Treze de Maio, Sangão, Rio Fortuna, Pedras Grandes e São Martinho</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Feminina de Criciúma</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Penitenciária Feminina de Criciúma</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado, semiaberto e aberto, além de presas provisórias</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Araranguá, Armazém, Braço do Norte, Capivari de Baixo, Criciúma, Forquilhinha, Garopaba, Içara, Imaruí, Imbituba, Jaguaruna, Laguna, Lauro Müller, Meleiro, Orleans, Santa Rosa do Sul, Sombrio, Tubarão, Turvo e Urussanga</td>
-            </tr>
-          </tbody>
-        </table>
+
+    <!-- Conteúdo -->
+    <div style="padding:1rem 1.1rem;">
+
+      <!-- SR01 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr01')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#2f5ae818;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#2f5ae8;">SR01</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Grande Florianópolis</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">6 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr01" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr01" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr01-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2f5ae8;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Masculina de Itajaí</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">2 cidades</span>
+              <svg id="chev-sr01-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr01-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Camboriú</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Camboriú</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr01-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2f5ae8;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária de Florianópolis</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">13 cidades</span>
+              <svg id="chev-sr01-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr01-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Angelina</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Anitápolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Antônio Carlos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Biguaçu</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Florianópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Governador Celso Ramos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Palhoça</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rancho Queimado</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santo Amaro da Imperatriz</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Bonifácio</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São José</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Pedro de Alcântara</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Águas Mornas</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr01-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2f5ae8;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Masculino Regional de Florianópolis</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr01-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr01-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Antônio Carlos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Biguaçu</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Governador Celso Ramos</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr01-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2f5ae8;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Itajaí</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">2 cidades</span>
+              <svg id="chev-sr01-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr01-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Camboriú</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Camboriú</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr01-4')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2f5ae8;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Itapema</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">1 cidade</span>
+              <svg id="chev-sr01-4" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr01-4" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itapema</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr01-5')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2f5ae8;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Tijucas</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">7 cidades</span>
+              <svg id="chev-sr01-5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr01-5" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bombinhas</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Canelinha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Major Gercino</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Nova Trento</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Porto Belo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São João Batista</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #2f5ae820;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Tijucas</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 03 - Norte Catarinense</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Joinville</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Porta de entrada para presos condenados em regime fechado e provisórios</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presos provisórios</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Itapoá, Garuva e Joinville</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Industrial de Joinville</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presos condenados em regime semiaberto da VEP de Joinville podem ser apresentados diretamente na PIJ</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Joinville, Itapoá e Garuva</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Barra Velha</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Todos os regimes</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Barra Velha, São João do Itaperiu e Barra Velha</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de São Francisco do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Todos os regimes prisionais</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">São Francisco do Sul, Araquari e Balneário Barra do Sul</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Feminino Regional de Joinville</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório e Fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Joinville, Barra Velha, São Francisco do Sul, Araquari, Jaraguá do Sul, Corupá, Guaramirim, São Bento do Sul, Itapoá, Garuva, Schroeder, Campo Alegre, Rio Negrinho, Mafra, Porto União, Irineópolis, Bela Vista do Toldo, Três Barras</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SR02 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr02')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#0ea47218;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#0ea472;">SR02</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Norte / Joinville</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">7 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr02" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr02" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Industrial de Joinville</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr02-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Garuva</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itapoá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Joinville</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Masculina de Itajaí</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">1 cidade</span>
+              <svg id="chev-sr02-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Penha</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Barra Velha</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">2 cidades</span>
+              <svg id="chev-sr02-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Barra Velha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São João do Itaperiú</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Itajaí</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">2 cidades</span>
+              <svg id="chev-sr02-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Piçarras</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Penha</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-4')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Jaraguá do Sul</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">5 cidades</span>
+              <svg id="chev-sr02-4" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-4" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Corupá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Guaramirim</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Jaraguá do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Massaranduba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Schroeder</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-5')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Joinville</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr02-5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-5" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Garuva</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itapoá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Joinville</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr02-6')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0ea472;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de São Francisco do Sul</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr02-6" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr02-6" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Araquari</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Barra do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0ea47220;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Francisco do Sul</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 04 - Vale do Itajaí</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Masculina de Itajaí</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Itajaí</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado, semiaberto e provisórios LGBT</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Itajaí, Camboriú, Navegantes, Balneário Camboriú, Balneário Piçarras, Penha e Luiz Alves</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Brusque</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Brusque</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisórios, fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Brusque, Guabiruba e Botuverá</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Itajaí</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Itajaí</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado, semiaberto, aberto, provisórios e cíveis</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Itajaí, Navegantes, Luiz Alves, Penha, Balneário Piçarras, Camboriú e Balneário Camboriú</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Itapema</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Itapema</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Prisões em flagrante, mandados de prisão provisória, definitiva ou de alimentos</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Itapema</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Feminino Regional de Itajaí</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Feminino Regional de Itajaí</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presas provisórias, fechado e semiaberto, além da prisão civil</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Blumenau, Gaspar, Ilhota, Timbó, Indaial, Pomerode, Ascurra, Itajaí, Brusque, Botuverá, Guabiruba, Navegantes, Luís Alves, Penha e Balneário Piçarras, Balneário Camboriú, Camboriú, Itapema, São João Batista, Major Gercino, Nova Trento, Porto Belo, Bombinhas, Tijucas e Canelinha</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SR03 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr03')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#d9770618;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#d97706;">SR03</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Vale do Itajaí / Blumenau</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">6 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr03" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr03" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr03-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#d97706;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Industrial de Blumenau</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">8 cidades</span>
+              <svg id="chev-sr03-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr03-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Apiúna</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ascurra</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Blumenau</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Gaspar</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pomerode</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio dos Cedros</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rodeio</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Timbó</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr03-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#d97706;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Masculina de Itajaí</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr03-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr03-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itajaí</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Luís Alves</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Navegantes</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr03-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#d97706;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Blumenau</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">9 cidades</span>
+              <svg id="chev-sr03-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr03-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ascurra</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Benedito Novo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Blumenau</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Doutor Pedrinho</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Gaspar</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ilhota</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Indaial</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pomerode</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Timbó</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr03-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#d97706;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Brusque</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr03-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr03-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Botuverá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Brusque</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Guabiruba</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr03-4')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#d97706;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Indaial</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">1 cidade</span>
+              <svg id="chev-sr03-4" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr03-4" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Indaial</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr03-5')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#d97706;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Itajaí</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr03-5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr03-5" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itajaí</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Luís Alves</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #d9770620;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Navegantes</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 05 - Serrana e Meio Oeste</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Caçador</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Prisão provisória/cautelar, prisão civil e condenados em regime semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Caçador/SC e Lebon Régis/SC</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Campos Novos</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Campos Novos, Brunópolis, Vargem e Zortéa</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Industrial de São Cristóvão do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">—</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Masculino de Lages</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presos provisórios e condenados em regime fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Abdon Batista, Alfredo Wagner, Anita Garibaldi, Bocaina do Sul, Bom Jardim da Serra, Bom Retiro, Campo Belo do Sul, Capão Alto, Celso Ramos, Cerro Negro, Correia Pinto, Curitibanos, Frei Rogério, Lages, Otacílio Costa, Painel, Palmeira, Ponte Alta, Ponte Alta do Norte, Rio Rufino, Santa Cecília, São Cristóvão do Sul, São Joaquim, São José do Cerrito, Urubici e Urupema</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Regional de Curitibanos</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Curitibanos, São Cristóvão do Sul, Ponte Alta do Norte e Frei Rogério</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Lages</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Semiaberto e presos por alimentos</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Lages, Anita Garibaldi, Cerro Negro, Campo Belo do Sul, São José do Cerrito, Ponte Alta, Otacílio Costa, Palmeira, Correia Pinto, Capão Alto, Painel, Bocaina do Sul, Urupema, Rio Rufino, Urubici, Bom Retiro, São Joaquim e Bom Jardim da Serra</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Videira</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Videira, Arroio Trinta, Iomerê e Salto Veloso, Monte Carlo, Pinheiro Preto e Ibiam</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SR04 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr04')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#7c3aed18;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#7c3aed;">SR04</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Planalto Norte</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">4 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr04" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr04" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr04-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#7c3aed;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Industrial de São Bento do Sul</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">1 cidade</span>
+              <svg id="chev-sr04-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr04-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Bento do Sul</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr04-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#7c3aed;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Canoinhas</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">4 cidades</span>
+              <svg id="chev-sr04-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr04-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bela Vista do Toldo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Canoinhas</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Major Vieira</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Três Barras</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr04-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#7c3aed;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Mafra</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">6 cidades</span>
+              <svg id="chev-sr04-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr04-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Campo Alegre</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itaiópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Mafra</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Monte Castelo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Papanduva</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio Negrinho</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr04-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#7c3aed;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Porto União</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr04-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr04-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Irineópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Matos Costa</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #7c3aed20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Porto União</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 06 - Oeste Catarinense</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Agrícola de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Chapecó, Caxambu do Sul, Nova Itaberaba, Guatambú, Planalto Alegre, Cordilheira Alta, Paial, Coronel Freitas, União do Oeste, Águas Frias, Jardinópolis, Xaxim, Marema, Lajeado Grande, Palmitos, Caibi, São Carlos, Águas de Chapecó e Cunhataí</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Industrial de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Chapecó, Caxambu do Sul, Nova Itaberaba, Guatambú, Planalto Alegre, Cordilheira Alta, Paial, Coronel Freitas, União do Oeste, Águas Frias, Jardinópolis, Xaxim, Marema, Lajeado Grande, Palmitos, Caibi, São Carlos, Águas de Chapecó e Cunhataí</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório e Fechado</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Chapecó, Palmitos, São Carlos, Cordilheira Alta, Coronel Freitas, Xaxim e Quilombo</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Concórdia</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Concórdia, Itá, Seara, Ipumirim, Irani, Peritiba, Presidente Castello Branco, Alto Bela Vista, Lindóia do Sul, Arabutã, Xavantina e Arvoredo</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Joaçaba</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Joaçaba, Água Doce, Luzerna, Ibicaré, Treze Tílias, Herval d'Oeste, Erval Velho, Lacerdópolis, Ouro, Ipira, Piratuba, Capinzal, Jaborá, Vargem Bonita e Catanduvas</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Xanxerê</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Xanxerê, Bom Jesus, Faxinal dos Guedes; Ponte Serrada, Vargeão, Passos Maia; Abelardo Luz, Ouro Verde; São Domingos, Galvão, Coronel Martins, Ipuaçú, Entre Rios; São Lourenço do Oeste, Novo Horizonte e Jupiá</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Maravilha</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Maravilha, Iraceminha, São Miguel da Boa Vista, Santa Terezinha do Progresso, Flor do Sertão, Tigrinhos, Pinhalzinho, Nova Erechim, Saudades; Cunha Porã, Modelo, Serra Alta, Sul Brasil, Bom Jesus do Oeste</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de São José do Cedro</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">São José do Cedro, Princesa, Guarujá do Sul, Dionísio Cerqueira, Palma Sola, Romelândia, Anchieta, Campo Erê, Saltinho e São Bernardino</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de São Miguel do Oeste</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">São Miguel do Oeste, Guaraciaba, Paraíso, Bandeirante, Barra Bonita, Descanso, Belmonte, Santa Helena, Itapiranga, Tunápolis, São João do Oeste, Mondaí, Iporã do Oeste, Riqueza</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Feminino Regional de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Feminino Regional de Chapecó</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Abrange toda a Regional 06 e parte das regionais 05 e 07</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SR05 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr05')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#e05a2b18;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#e05a2b;">SR05</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Serrana / Meio-Oeste</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">8 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr05" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr05" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Industrial de São Cristóvão do Sul</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">1 cidade</span>
+              <svg id="chev-sr05-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Cristóvão do Sul</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Regional de Curitibanos</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">4 cidades</span>
+              <svg id="chev-sr05-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Curitibanos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Frei Rogério</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ponte Alta do Norte</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Cristóvão do Sul</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Masculino de Lages</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">15 cidades</span>
+              <svg id="chev-sr05-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Abdon Batista</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Alfredo Wagner</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Anita Garibaldi</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bocaína do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bom Retiro</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Campo Belo do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Capão Alto</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Celso Ramos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cerro Negro</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lages</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Painel</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santa Cecília</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Joaquim</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São José do Cerrito</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Timbó Grande</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Campos Novos</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">4 cidades</span>
+              <svg id="chev-sr05-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Brunópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Campos Novos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Vargem</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Zortéa</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-4')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Caçador</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">5 cidades</span>
+              <svg id="chev-sr05-4" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-4" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Calmon</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Caçador</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lebon Régis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Macieira</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio das Antas</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-5')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Joaçaba</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">15 cidades</span>
+              <svg id="chev-sr05-5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-5" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Capinzal</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Catanduvas</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Erval Velho</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Herval d&#39;Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ibicaré</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ipira</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Jaborá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Joaçaba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lacerdópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Luzerna</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ouro</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Piratuba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Treze Tílias</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Vargem Bonita</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Água Doce</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-6')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Lages</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">15 cidades</span>
+              <svg id="chev-sr05-6" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-6" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bocaína do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bom Jardim da Serra</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Campo Belo do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Capão Alto</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Correia Pinto</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lages</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Otacílio Costa</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Painel</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Palmeira</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ponte Alta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio Rufino</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Joaquim</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São José do Cerrito</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Urubici</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Urupema</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr05-7')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#e05a2b;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Videira</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">9 cidades</span>
+              <svg id="chev-sr05-7" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr05-7" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Arroio Trinta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Fraiburgo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ibiam</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Iomerê</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Monte Carlo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pinheiro Preto</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Salto Veloso</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Tangará</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #e05a2b20;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Videira</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 07 - Médio Vale do Itajaí</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Penitenciária Industrial de Blumenau</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Blumenau, Gaspar, Timbó, Pomerode, Rio dos Cedros, Rodeio, Ascurra, Apiúna e Indaial</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Blumenau</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Porta de entrada para as prisões em flagrante realizadas no município de Indaial</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Prisão em flagrante, mandado de prisão nos regimes fechado e semiaberto, bem como prisão civil</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Blumenau, Gaspar, Timbó, Pomerode, Rio dos Cedros, Rodeio, Apiúna e Ascurra</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Rio do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Rio do Sul, Agronômica, Aurora, Lontras e Presidente Nereu, cidades de Ibirama e José Boiteux, Ituporanga, Leoberto Leal, Atalanta, Imbuia, Petrolândia, Vidal Ramos e Chapadão do Lageado, Presidente Getúlio, Dona Emma, Vitor Meireles e Witmarsum, Rio do Campo e Santa Terezinha, Rio do Oeste e Laurentino, Taió, Salete e Mirim Doce, Trombudo Central, Agrolândia, Pouso Redondo e Braço do Trombudo</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Regional de Indaial</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">—</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado, semiaberto e prisão civil</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Indaial</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Presídio Feminino Regional de Ituporanga</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Feminino Regional de Ituporanga</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, fechado e semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Anita Garibaldi, Celso Ramos, Abdon Batista, Bom Retiro, Alfredo Wagner, Campo Belo do Sul, Cerro Negro, Capão Alto, Correia Pinto, Ponte Alta, Curitibanos, Ponte Alta do Norte, São Cristóvão do Sul, Frei Rogério, Ibirama, José Boiteux, Ituporanga, Leoberto Leal, Atalanta, Imbuia, Petrolândia, Vidal Ramos, Chapadão do Lageado, Lages, São José do Cerrito, Painel, Bocaína do Sul, Otacílio Costa, Palmeira, Rio do Sul, Rio do Oeste, Taió, Salete, Mirim Doce, Trombudo Central, Agrolândia, Pouso Redondo, Braço do Trombudo, Urubici e Rio Rufino</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SR06 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr06')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#db277718;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#db2777;">SR06</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Oeste Catarinense</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">8 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr06" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr06" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Agrícola de Chapecó</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">19 cidades</span>
+              <svg id="chev-sr06-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Caibí</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Caxambu do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Chapecó</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cordilheira Alta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Coronel Freitas</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cunhataí</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Guatambu</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Jardinópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lajeado Grande</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Marema</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Nova Itaberaba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Paial</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Palmitos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Planalto Alegre</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Carlos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; União do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Xaxim</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Águas Frias</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Águas de Chapecó</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Industrial de Chapecó</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">1 cidade</span>
+              <svg id="chev-sr06-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Chapecó</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Chapecó</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">11 cidades</span>
+              <svg id="chev-sr06-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Caxambu do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Chapecó</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cordilheira Alta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Coronel Freitas</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Formosa do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Irati</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Palmitos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Quilombo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santiago do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Carlos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Xaxim</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Concórdia</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">12 cidades</span>
+              <svg id="chev-sr06-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Alto Bela Vista</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Arabutã</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Arvoredo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Concórdia</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ipumirim</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Irani</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lindóia do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Peritiba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Presidente Castello Branco</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Seara</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Xavantina</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-4')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Maravilha</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">14 cidades</span>
+              <svg id="chev-sr06-4" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-4" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bom Jesus do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cunha Porã</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Flor do Sertão</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Iraceminha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Maravilha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Modelo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Nova Erechim</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pinhalzinho</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santa Terezinha do Progresso</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Saudades</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Serra Alta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Sul Brasil</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Miguel da Boa Vista</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Tigrinhos</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-5')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de São José do Cedro</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">10 cidades</span>
+              <svg id="chev-sr06-5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-5" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Anchieta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Campo Erê</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Dionísio Cerqueira</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Guarujá do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Palma Sola</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Princesa</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Romelândia</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Saltinho</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Bernardino</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São José do Cedro</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-6')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de São Miguel do Oeste</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">14 cidades</span>
+              <svg id="chev-sr06-6" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-6" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bandeirante</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Barra Bonita</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Belmonte</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Descanso</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Guaraciaba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Iporã do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Itapiranga</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Mondaí</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Paraíso</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Riqueza</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santa Helena</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São João do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Miguel do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Tunápolis</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr06-7')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#db2777;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Xanxerê</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">16 cidades</span>
+              <svg id="chev-sr06-7" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr06-7" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Abelardo Luz</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Bom Jesus</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Coronel Martins</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Entre Rios</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Faxinal dos Guedes</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Galvão</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ipuaçu</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Jupiá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Novo Horizonte</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ouro Verde</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Passos Maia</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ponte Serrada</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Domingos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Lourenço do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Vargeão</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #db277720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Xanxerê</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="background:#1a2a4a;color:#fff;padding:.5rem 1rem;border-radius:6px;font-size:.9rem;margin:0 0 .5rem;">📍 REG 08 - Planalto Norte</h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:.8rem;">
-          <thead>
-            <tr style="background:#e8edf5;">
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:180px;">Unidade</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:200px;">Porta de Entrada</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;min-width:150px;">Regimes</th>
-              <th style="padding:.4rem .6rem;text-align:left;border:1px solid #ddd;">Municípios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Mafra</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Mafra</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório e Prisão Civil</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Campo Alegre, Itaiópolis, Mafra, Monte Castelo, Papanduva, Rio Negrinho e São Bento do Sul</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Porto União</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Porto União</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, Prisão Civil, Fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Porto União, Matos Costa e Irineópolis</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">São Bento do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Penitenciária Industrial de São Bento do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Mafra, Canoinhas, São Bento do Sul, Jaraguá do Sul e Porto União</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Canoinhas</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Canoinhas</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, Prisão Civil, Fechado e Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Major Vieira, Três Barras, Bela Vista do Toldo e Canoinhas</td>
-            </tr>
-            <tr style="">
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-weight:600;">Jaraguá do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Presídio Regional de Jaraguá do Sul</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;">Provisório, Prisão Civil, Fechado, Semiaberto</td>
-              <td style="padding:.4rem .6rem;border:1px solid #ddd;font-size:.75rem;">Jaraguá do Sul, Guaramirim, Schroeder, Massaranduba, Corupá, Timbó, Pomerode, Araquari, Barra Velha, São Francisco do Sul</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SR07 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr07')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#05966918;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#059669;">SR07</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Alto Vale do Itajaí</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">1 unidade prisionais</div>
+          </div>
+          <svg id="chev-sr07" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr07" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr07-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#059669;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Rio do Sul</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">29 cidades</span>
+              <svg id="chev-sr07-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr07-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Agrolândia</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Agronômica</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Atalanta</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Aurora</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Braço do Trombudo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Chapadão do Lajeado</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Dona Emma</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ibirama</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Imbuia</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ituporanga</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; José Boiteux</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Laurentino</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Leoberto Leal</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lontras</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Mirim Doce</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Petrolândia</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pouso Redondo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Presidente Getúlio</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Presidente Nereu</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio do Campo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio do Oeste</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Salete</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santa Terezinha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Taió</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Trombudo Central</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Vidal Ramos</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Vitor Meireles</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #05966920;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Witmarsum</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <!-- SR08 -->
+      <div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:.5rem;">
+        <div onclick="upToggle('sr08')" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#fff;cursor:pointer;user-select:none;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:8px;background:#0284c718;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.72rem;font-weight:800;color:#0284c7;">SR08</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:#111827;font-size:.88rem;">Sul Catarinense</div>
+            <div style="font-size:.71rem;color:#6b7280;margin-top:.1rem;">7 unidades prisionais</div>
+          </div>
+          <svg id="chev-sr08" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="sr-sr08" style="display:none;border-top:1px solid #f3f4f6;padding:.5rem .75rem;background:#fafafa;">
+
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-0')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Masculina de Tubarão</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr08-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-0" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Armazém</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Braço do Norte</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Capivari de Baixo</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-1')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Penitenciária Sul</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">11 cidades</span>
+              <svg id="chev-sr08-1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-1" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Rincão</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cocal do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Criciúma</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Forquilhinha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Içara</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Morro da Fumaça</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Nova Veneza</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Orleans</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Siderópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Treviso</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Urussanga</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-2')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Araranguá</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">15 cidades</span>
+              <svg id="chev-sr08-2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-2" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Araranguá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Arroio do Silva</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Gaivota</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Ermo</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Jacinto Machado</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Maracajá</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Meleiro</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Morro Grande</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Passo de Torres</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Praia Grande</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santa Rosa do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Sombrio</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São João do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Timbé do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Turvo</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-3')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Criciúma</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">12 cidades</span>
+              <svg id="chev-sr08-3" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-3" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Balneário Rincão</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Cocal do Sul</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Criciúma</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Forquilhinha</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Içara</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Lauro Müller</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Morro da Fumaça</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Nova Veneza</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Orleans</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Siderópolis</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Treviso</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Urussanga</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-4')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Imbituba</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr08-4" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-4" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Garopaba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Imbituba</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Paulo Lopes</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-5')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Laguna</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">3 cidades</span>
+              <svg id="chev-sr08-5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-5" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Imaruí</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Laguna</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pescaria Brava</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:7px;overflow:hidden;margin-bottom:.35rem;">
+            <div onclick="upToggle('sr08-6')" style="display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:#fff;cursor:pointer;" onmouseover="this.style.background='#f8faff'" onmouseout="this.style.background='#fff'">
+              <div style="width:7px;height:7px;border-radius:50%;background:#0284c7;flex-shrink:0;"></div>
+              <div style="flex:1;font-size:.82rem;font-weight:600;color:#111827;">Presídio Regional de Tubarão</div>
+              <span style="font-size:.68rem;color:#9ca3af;background:#f3f4f6;border-radius:20px;padding:.08rem .4rem;flex-shrink:0;">11 cidades</span>
+              <svg id="chev-sr08-6" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="sr-sr08-6" style="display:none;border-top:1px solid #f3f4f6;padding:.4rem .5rem;background:#f9fafb;">
+              <div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Gravatal</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Grão Pará</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Jaguaruna</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Pedras Grandes</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Rio Fortuna</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Sangão</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Santa Rosa de Lima</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Ludgero</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; São Martinho</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Treze de Maio</div><div style="padding:.25rem .5rem .25rem 1rem;font-size:.78rem;color:#374151;border-left:2px solid #0284c720;margin-left:.25rem;margin-bottom:.2rem;">&#8226; Tubarão</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+function upToggle(id) {
+  var body = document.getElementById('sr-' + id);
+  var chev = document.getElementById('chev-' + id);
+  if (!body) return;
+  var open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  if (chev) chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+</script>
+
 
 <!-- ========== MODAL GERADOR DE OFÍCIO ========== -->
 <div id="modal-gerador-oficio" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9990;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem;" onclick="if(event.target===this)window.fecharModal('modal-gerador-oficio')">
