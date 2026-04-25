@@ -3862,12 +3862,15 @@ window.abrirEscalaPlantao = function() {
     'ricardobritomarques12@gmail.com',
     'abeljuliana2012@gmail.com',
     'jessicaveiga9@gmail.com',
-    'day.sestren88@gmail.com'
+    'day.sestren88@gmail.com',
+    'sepen@pp.sc.gov.br',
+    'leilakfarias@gmail.com'
   ];
 
   const SENHA_TEMPORARIA = 'CRV@2026temp';
 
   let usuarioAtual = null;
+  window._emailUsuarioAtual = null;
 
   // ── Expõe funções para o escopo global ──
   window.abrirAreaRestrita = function() {
@@ -3912,6 +3915,7 @@ window.abrirEscalaPlantao = function() {
     try {
       const cred = await signInWithEmailAndPassword(auth, email, senha);
       usuarioAtual = cred.user;
+      window._emailUsuarioAtual = cred.user.email;
 
       // Verifica no Firestore se já configurou senha própria
       let primeiroAcesso = false;
@@ -4479,12 +4483,15 @@ window.abrirEscalaPlantao = function() {
     'ricardobritomarques12@gmail.com',
     'abeljuliana2012@gmail.com',
     'jessicaveiga9@gmail.com',
-    'day.sestren88@gmail.com'
+    'day.sestren88@gmail.com',
+    'sepen@pp.sc.gov.br',
+    'leilakfarias@gmail.com'
   ];
 
   const SENHA_TEMPORARIA = 'CRV@2026temp';
 
   let usuarioAtual = null;
+  window._emailUsuarioAtual = null;
 
   // ── Expõe funções para o escopo global ──
   window.abrirAreaRestrita = function() {
@@ -5088,12 +5095,15 @@ window.abrirEscalaPlantao = function() {
     'ricardobritomarques12@gmail.com',
     'abeljuliana2012@gmail.com',
     'jessicaveiga9@gmail.com',
-    'day.sestren88@gmail.com'
+    'day.sestren88@gmail.com',
+    'sepen@pp.sc.gov.br',
+    'leilakfarias@gmail.com'
   ];
 
   const SENHA_TEMPORARIA = 'CRV@2026temp';
 
   let usuarioAtual = null;
+  window._emailUsuarioAtual = null;
 
   // ── Expõe funções para o escopo global ──
   window.abrirAreaRestrita = function() {
@@ -5664,12 +5674,17 @@ window.abrirEscalaPlantao = function() {
 function abrirUSMControle() {
   var modal = document.getElementById('modal-usm-controle');
   var iframe = document.getElementById('usm-iframe');
+  var email = window._emailUsuarioAtual || '';
   if (iframe && !iframe.src.includes('USM_controle')) {
     iframe.src = 'USM_controle.html';
-    // Tenta atualizar o badge de status via mensagens do iframe
     iframe.onload = function() {
       document.getElementById('usm-fb-badge').textContent = '🟢 Carregado';
+      // Envia o email do usuário logado para o iframe
+      iframe.contentWindow.postMessage({ tipo: 'usuarioEmail', email: email }, '*');
     };
+  } else if (iframe && iframe.contentWindow) {
+    // Iframe já carregado — envia direto
+    iframe.contentWindow.postMessage({ tipo: 'usuarioEmail', email: email }, '*');
   }
   if (modal) modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
