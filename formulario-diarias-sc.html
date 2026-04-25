@@ -273,6 +273,11 @@ table.desloc input,table.desloc select{padding:0.3rem 0.45rem;font-size:0.79rem;
     💡 Preencha os <strong>horários de saída e chegada</strong> de cada deslocamento — o sistema calcula as diárias automaticamente conforme o Decreto nº 1.662/2022.
   </div>
 
+  <div class="alerta" style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--raio);padding:0.7rem 1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+    <span style="font-size:0.82rem;color:#166534;">🔄 <strong>Sincronização automática:</strong> ao trocar para a aba <strong>MLR-42</strong>, os campos idênticos serão preenchidos automaticamente. Você também pode sincronizar manualmente.</span>
+    <button class="btn-sec" style="white-space:nowrap;font-size:0.8rem;padding:0.35rem 0.9rem;" onclick="sincronizarForms('r','rl');trocarAba('relatorio',document.querySelectorAll('.aba-btn')[1])">➜ Sincronizar com MLR-42</button>
+  </div>
+
   <!-- SERVIDOR -->
   <div class="secao">
     <div class="secao-titulo">Servidor</div>
@@ -390,6 +395,11 @@ table.desloc input,table.desloc select{padding:0.3rem 0.45rem;font-size:0.79rem;
 <!-- ════════ ABA 2 — RELATÓRIO MLR-42 ════════ -->
 <div id="painel-relatorio" class="painel">
   <div class="alerta alerta-info">💡 Preencha o relatório após a realização da viagem. Os horários aqui devem refletir o que realmente ocorreu.</div>
+
+  <div class="alerta" style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--raio);padding:0.7rem 1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+    <span style="font-size:0.82rem;color:#166534;">🔄 <strong>Sincronização automática:</strong> ao trocar para a aba <strong>MLR-41</strong>, os campos idênticos serão preenchidos automaticamente. Você também pode sincronizar manualmente.</span>
+    <button class="btn-sec" style="white-space:nowrap;font-size:0.8rem;padding:0.35rem 0.9rem;" onclick="sincronizarForms('rl','r');trocarAba('requerimento',document.querySelectorAll('.aba-btn')[0])">➜ Sincronizar com MLR-41</button>
+  </div>
 
   <div class="secao">
     <div class="secao-titulo">Servidor</div>
@@ -1095,11 +1105,92 @@ function inicializar() {
   }, 2000);
 }
 
+// ══════════════════════════════════════════════════
+// SINCRONIZAÇÃO BIDIRECIONAL MLR-41 ↔ MLR-42
+// Campos idênticos: servidor, orgao, sigla, nome-social,
+//                   municipio, email, celular, codigos-cargo, deslocamentos
+// ══════════════════════════════════════════════════
+function sincronizarForms(origem, destino) {
+  // 1. Servidor
+  const sidOrig = document.getElementById(origem + '-servidor').value;
+  const sidDest = document.getElementById(destino + '-servidor');
+  if (sidOrig && sidDest.value !== sidOrig) {
+    sidDest.value = sidOrig;
+    preencherServidor(destino);
+  }
+
+  // 2. Campos de texto simples (mapeamento origem → destino)
+  const mapa = {
+    'orgao': 'orgao',
+    'sigla': 'sigla',
+    'nome-social': 'nome-social',
+    'email': 'email',
+    'celular': 'celular',
+  };
+  Object.entries(mapa).forEach(([campoOrig, campoDest]) => {
+    const elOrig = document.getElementById(origem + '-' + campoOrig);
+    const elDest = document.getElementById(destino + '-' + campoDest);
+    if (elOrig && elDest && elOrig.value) elDest.value = elOrig.value;
+  });
+
+  // 3. Município (select)
+  const munOrig = document.getElementById(origem + '-municipio')?.value;
+  if (munOrig) popularSelectMunicipio(destino + '-municipio', munOrig);
+
+  // 4. Códigos de cargo (checkboxes)
+  const checkedOrig = Array.from(
+    document.querySelectorAll('#' + origem + '-codigos-cargo input:checked')
+  ).map(c => c.value);
+  document.querySelectorAll('#' + destino + '-codigos-cargo input').forEach(c => {
+    c.checked = checkedOrig.includes(c.value);
+  });
+
+  // 5. Deslocamentos — sincronizar linhas existentes da tabela
+  const tbodyOrig = document.getElementById(origem + '-linhas-desloc');
+  const tbodyDest = document.getElementById(destino + '-linhas-desloc');
+  const linhasOrig = Array.from(tbodyOrig.querySelectorAll('tr'));
+  const linhasDest = Array.from(tbodyDest.querySelectorAll('tr'));
+
+  // Garante que o destino tenha o mesmo número de linhas
+  while (tbodyDest.querySelectorAll('tr').length < linhasOrig.length) adicionarLinha(destino);
+  while (tbodyDest.querySelectorAll('tr').length > linhasOrig.length) {
+    const ultima = tbodyDest.querySelector('tr:last-child');
+    if (ultima) ultima.remove();
+  }
+
+  // Copia os valores célula a célula
+  Array.from(tbodyOrig.querySelectorAll('tr')).forEach((trOrig, i) => {
+    const trDest = tbodyDest.querySelectorAll('tr')[i];
+    if (!trDest) return;
+    const cellsOrig = trOrig.querySelectorAll('td');
+    const cellsDest = trDest.querySelectorAll('td');
+    [0,1,2,3,4,5].forEach(ci => {
+      const inputOrig  = cellsOrig[ci]?.querySelector('input,select');
+      const inputDest  = cellsDest[ci]?.querySelector('input,select');
+      if (inputOrig && inputDest) inputDest.value = inputOrig.value;
+    });
+  });
+  recalcular(destino);
+
+  toast('✔ Dados sincronizados com ' + (origem === 'r' ? 'MLR-41' : 'MLR-42'), 'ok');
+}
+
 function trocarAba(id, btn) {
+  // Detecta qual aba estava ativa antes de trocar
+  const abaAtiva = document.querySelector('.painel.ativo');
+  const idAtiva  = abaAtiva ? abaAtiva.id.replace('painel-', '') : null;
+
   document.querySelectorAll('.painel').forEach(p => p.classList.remove('ativo'));
   document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
   document.getElementById('painel-' + id).classList.add('ativo');
   btn.classList.add('ativa');
+
+  // Sincroniza automaticamente ao trocar entre requerimento e relatorio
+  if (idAtiva === 'requerimento' && id === 'relatorio') {
+    sincronizarForms('r', 'rl');
+  } else if (idAtiva === 'relatorio' && id === 'requerimento') {
+    sincronizarForms('rl', 'r');
+  }
 }
 
 function preencherServidor(p) {
