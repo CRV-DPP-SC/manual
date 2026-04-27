@@ -5800,14 +5800,10 @@ import { getAuth }          from "https://www.gstatic.com/firebasejs/10.11.0/fir
 import { getFirestore, doc, getDoc, setDoc, addDoc, collection,
          query, orderBy, onSnapshot, serverTimestamp }
          from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL }
-         from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-
 // Reutiliza a instância Firebase ja inicializada pelo site
-const app     = getApp();
-const auth    = getAuth(app);
-const db      = getFirestore(app);
-const storage = getStorage(app, 'gs://crv-dpp-sc.firebasestorage.app');
+const app  = getApp();
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
 // ── Estado global ──────────────────────────────────────────
 let cxkUser = null, cxkTabAtual = 'painel', cxkPendente = null;
@@ -5970,17 +5966,13 @@ function cxkHtmlDeposito() {
         <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Valor (R$) *</label>
         <input type="number" id="cxk-dep-valor" placeholder="0,00" step="0.01" min="0" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;" />
       </div>
-      <div style="margin-bottom:1rem;">
-        <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Observação</label>
-        <input type="text" id="cxk-dep-obs" placeholder="Ex: pagamento do mês de junho" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;" />
-      </div>
     </div>
     <div style="margin-bottom:1rem;">
       <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Comprovante (opcional)</label>
       <div id="cxk-dep-upload-area" style="border:2px dashed #d1d5db;border-radius:8px;padding:1.25rem;text-align:center;cursor:pointer;position:relative;" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='#d1d5db'">
         <input type="file" id="cxk-dep-anexo" accept="image/*,application/pdf" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;border:none;background:none;padding:0;" onchange="cxkHandleUpload(this,'dep')" />
         <div style="font-size:1.75rem;margin-bottom:.4rem;">📎</div>
-        <div style="font-size:.82rem;color:#6b7280;">Arraste ou <strong style="color:#2563eb;">clique para selecionar</strong><br><small>JPG, PNG ou PDF · máx. 5 MB</small></div>
+        <div style="font-size:.82rem;color:#6b7280;">Arraste ou <strong style="color:#2563eb;">clique para selecionar</strong><br><small>JPG, PNG ou PDF · máx. 700 KB</small></div>
       </div>
       <div id="cxk-dep-preview" style="display:none;align-items:center;gap:.75rem;background:#f3f4f6;padding:.6rem .9rem;border-radius:8px;margin-top:.75rem;font-size:.82rem;">
         <span>📄</span><span id="cxk-dep-preview-nome" style="flex:1;font-weight:500;color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
@@ -6027,7 +6019,7 @@ function cxkHtmlCompra() {
       <div id="cxk-cmp-upload-area" style="border:2px dashed #d1d5db;border-radius:8px;padding:1.25rem;text-align:center;cursor:pointer;position:relative;" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='#d1d5db'">
         <input type="file" id="cxk-cmp-anexo" accept="image/*,application/pdf" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;border:none;background:none;padding:0;" onchange="cxkHandleUpload(this,'cmp')" />
         <div style="font-size:1.75rem;margin-bottom:.4rem;">🧾</div>
-        <div style="font-size:.82rem;color:#6b7280;">Arraste ou <strong style="color:#2563eb;">clique para selecionar</strong><br><small>JPG, PNG ou PDF · máx. 5 MB</small></div>
+        <div style="font-size:.82rem;color:#6b7280;">Arraste ou <strong style="color:#2563eb;">clique para selecionar</strong><br><small>JPG, PNG ou PDF · máx. 700 KB</small></div>
       </div>
       <div id="cxk-cmp-preview" style="display:none;align-items:center;gap:.75rem;background:#f3f4f6;padding:.6rem .9rem;border-radius:8px;margin-top:.75rem;font-size:.82rem;">
         <span>📄</span><span id="cxk-cmp-preview-nome" style="flex:1;font-weight:500;color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
@@ -6060,6 +6052,7 @@ function cxkHtmlHistorico() {
         <tr>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Tipo</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Membro</th>
+          <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Mês Ref.</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Descrição</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Valor</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Anexo</th>
@@ -6074,22 +6067,62 @@ function cxkHtmlHistorico() {
 
 // ── HTML RELATÓRIO ─────────────────────────────────────────
 function cxkHtmlRelatorio() {
+  // Monta lista de meses disponíveis para o filtro
+  const mesesDisp = [...new Set(cxkLancamentos.filter(l=>l.status==='confirmado'&&l.mesRef).map(l=>l.mesRef))].sort();
+  const optMeses = mesesDisp.map(m=>{const[a,ms]=m.split('-');const n=new Date(a,ms-1).toLocaleString('pt-BR',{month:'long',year:'numeric'});return `<option value="${m}">${n}</option>`;}).join('');
+
   return `
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:.04em;color:#0d2040;display:flex;align-items:center;gap:.5rem;"><span style="display:inline-block;width:4px;height:1.2em;background:#d4a017;border-radius:2px;"></span>Relatório de Prestação de Contas</div>
-    <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
-      <input type="month" id="cxk-rel-mes" style="padding:.5rem .85rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;background:#fff;outline:none;" />
-      <button onclick="cxkGerarRelatorio()" style="padding:.5rem .9rem;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;border:2px solid #0d2040;background:transparent;color:#0d2040;letter-spacing:.04em;">🔄 Atualizar</button>
-      <button onclick="window.print()" style="padding:.5rem 1.2rem;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;border:none;background:#0d2040;color:#fff;letter-spacing:.04em;">🖨️ Imprimir</button>
+  <!-- Cabeçalho de filtros -->
+  <div style="background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 16px rgba(0,0,0,.08);margin-bottom:1.5rem;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:.04em;color:#0d2040;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;"><span style="display:inline-block;width:4px;height:1.2em;background:#d4a017;border-radius:2px;"></span>Relatório de Prestação de Contas</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.25rem;">
+      <div>
+        <label style="display:block;font-size:.75rem;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Tipo de lançamento</label>
+        <select id="cxk-rel-tipo" style="width:100%;padding:.55rem .85rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;background:#f9fafb;outline:none;" onchange="cxkGerarRelatorio()">
+          <option value="">Depósitos e Compras</option>
+          <option value="deposito">Somente Depósitos</option>
+          <option value="compra">Somente Compras</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:.75rem;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Período</label>
+        <select id="cxk-rel-periodo" style="width:100%;padding:.55rem .85rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;background:#f9fafb;outline:none;" onchange="cxkToggleMes()">
+          <option value="todos">Todos os meses</option>
+          <option value="especifico">Mês específico</option>
+        </select>
+      </div>
+      <div id="cxk-rel-mes-wrap" style="display:none;">
+        <label style="display:block;font-size:.75rem;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Mês de referência</label>
+        <select id="cxk-rel-mes-sel" style="width:100%;padding:.55rem .85rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;background:#f9fafb;outline:none;" onchange="cxkGerarRelatorio()">
+          <option value="">Selecione o mês</option>${optMeses}
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:.75rem;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Membro</label>
+        <select id="cxk-rel-membro" style="width:100%;padding:.55rem .85rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;background:#f9fafb;outline:none;" onchange="cxkGerarRelatorio()">
+          <option value="">Todos os membros</option>${MEMBROS.map(m=>`<option>${m}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+      <button onclick="cxkGerarRelatorio()" style="padding:.55rem 1.1rem;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;border:2px solid #0d2040;background:transparent;color:#0d2040;letter-spacing:.04em;">🔄 Atualizar</button>
+      <button onclick="cxkImprimir()" style="padding:.55rem 1.3rem;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;border:none;background:#0d2040;color:#fff;letter-spacing:.04em;">🖨️ Imprimir</button>
     </div>
   </div>
+
+  <!-- Cards resumo -->
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem;" id="cxk-rel-cards"></div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.04em;color:#0d2040;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;"><span style="display:inline-block;width:4px;height:1.1em;background:#d4a017;border-radius:2px;"></span>Movimentações</div>
+
+  <!-- Tabela -->
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.04em;color:#0d2040;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;" id="cxk-rel-titulo-lista"><span style="display:inline-block;width:4px;height:1.1em;background:#d4a017;border-radius:2px;"></span>Movimentações</div>
   <div style="background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08);overflow:auto;">
     <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
       <thead style="background:#0d2040;color:#fff;">
         <tr>
-          <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Data</th>
+          <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Data</th>
+          <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Mês Ref.</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Tipo</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Membro</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Descrição</th>
@@ -6125,7 +6158,7 @@ function cxkHtmlConfig() {
 window.cxkHandleUpload = function(input, p) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 5*1024*1024) { cxkToast('Arquivo muito grande. Máx. 5 MB.','aviso'); input.value=''; return; }
+  if (file.size > 700*1024) { cxkToast('Arquivo muito grande. Máx. 700 KB para comprovantes.','aviso'); input.value=''; return; }
   cxkAnexoFile[p] = file;
   const url = URL.createObjectURL(file);
   document.getElementById('cxk-'+p+'-preview-nome').textContent = file.name;
@@ -6148,11 +6181,12 @@ window.cxkSalvarLancamento = function(tipo) {
     const membro = document.getElementById('cxk-dep-membro').value;
     const mesRef = document.getElementById('cxk-dep-mes').value;
     const valor  = parseFloat(document.getElementById('cxk-dep-valor').value);
-    const obs    = document.getElementById('cxk-dep-obs').value.trim();
     if (!membro) { cxkToast('Selecione o membro.','aviso'); return; }
     if (!mesRef) { cxkToast('Selecione o mês de referência.','aviso'); return; }
     if (!valor||valor<=0) { cxkToast('Informe um valor válido.','aviso'); return; }
-    dados = { tipo, membro, mesRef, valor, descricao: obs||'Depósito mensal' };
+    const [ano,mes2] = mesRef.split('-');
+    const mesNomeRef = new Date(ano,mes2-1).toLocaleString('pt-BR',{month:'long',year:'numeric'});
+    dados = { tipo, membro, mesRef, valor, descricao: 'Depósito — ' + mesNomeRef };
   }
   if (tipo==='compra') {
     const membro = document.getElementById('cxk-cmp-membro').value;
@@ -6198,14 +6232,14 @@ function cxkAbrirModalConfirm(d) {
   document.getElementById('cxk-modal-confirm').style.display = 'flex';
 }
 
-// Helper: promise com timeout
-function cxkComTimeout(promise, ms, msgTimeout) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error(msgTimeout || 'Tempo esgotado')), ms)
-    )
-  ]);
+// Converte arquivo para Base64 (salva no Firestore, sem Storage)
+function cxkArquivoParaBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => resolve(reader.result); // "data:image/png;base64,..."
+    reader.onerror = () => reject(new Error('Falha ao ler o arquivo.'));
+    reader.readAsDataURL(file);
+  });
 }
 
 window.cxkConfirmar = async function() {
@@ -6215,35 +6249,36 @@ window.cxkConfirmar = async function() {
   const ld = document.getElementById('cxk-loading');
   ld.style.display = 'flex';
 
-  let urlAnexo = null;
+  let anexoBase64  = null;
+  let anexoNome    = null;
+  let anexoTipo    = null;
 
-  // Upload do anexo — tenta com timeout de 20s
-  // Se falhar, avisa mas continua salvando o lançamento
+  // Converte o anexo para Base64 se houver
   if (cxkAnexoFile[p]) {
     try {
-      const storRef = ref(storage, `caixinha_anexos/${Date.now()}_${cxkAnexoFile[p].name}`);
-      await cxkComTimeout(
-        uploadBytes(storRef, cxkAnexoFile[p]),
-        20000,
-        'Upload do anexo expirou. Verifique se o Firebase Storage está habilitado no projeto.'
-      );
-      urlAnexo = await getDownloadURL(storRef);
-    } catch(eUpload) {
-      // Avisa mas não bloqueia — salva sem o anexo
-      cxkToast('⚠️ Anexo não enviado: ' + eUpload.message, 'aviso');
-      urlAnexo = null;
-      cxkAnexoFile[p] = null;
+      if (cxkAnexoFile[p].size > 700 * 1024) {
+        cxkToast('⚠️ Anexo muito grande para salvar (máx. 700 KB). Lançamento salvo sem anexo.', 'aviso');
+      } else {
+        anexoBase64 = await cxkArquivoParaBase64(cxkAnexoFile[p]);
+        anexoNome   = cxkAnexoFile[p].name;
+        anexoTipo   = cxkAnexoFile[p].type;
+      }
+    } catch(eB64) {
+      cxkToast('⚠️ Não foi possível ler o anexo. Lançamento salvo sem anexo.', 'aviso');
     }
+    cxkAnexoFile[p] = null;
   }
 
   // Salva o lançamento no Firestore
   try {
     await addDoc(collection(db,'caixinha_lancamentos'), {
-      ...cxkPendente, urlAnexo, status:'confirmado',
-      registradoPor: cxkUser.email, criadoEm: serverTimestamp()
+      ...cxkPendente,
+      anexoBase64, anexoNome, anexoTipo,
+      status: 'confirmado',
+      registradoPor: cxkUser.email,
+      criadoEm: serverTimestamp()
     });
-    cxkToast(urlAnexo ? '✅ Lançamento confirmado com anexo!' : '✅ Lançamento confirmado!', 'sucesso');
-    cxkAnexoFile[p] = null;
+    cxkToast(anexoBase64 ? '✅ Lançamento confirmado com anexo!' : '✅ Lançamento confirmado!', 'sucesso');
     cxkPendente = null;
     cxkTab('painel');
   } catch(e) {
@@ -6294,31 +6329,51 @@ function cxkRenderHistorico(lista, tbId) {
   tb.innerHTML = lista.map(l => {
     const isE = l.tipo==='deposito';
     const dt  = l.criadoEm?.toDate ? l.criadoEm.toDate().toLocaleString('pt-BR') : '—';
+    const mesRefFmt = l.mesRef ? (()=>{const[a,m]=l.mesRef.split('-');return new Date(a,m-1).toLocaleString('pt-BR',{month:'short',year:'numeric'});})() : '—';
     return `<tr style="border-bottom:1px solid #e5e7eb;">
       <td style="padding:.8rem 1rem;"><span style="font-size:.78rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;${isE?'background:#dcfce7;color:#166534;':'background:#fee2e2;color:#991b1b;'}">${isE?'💰 Depósito':'🛒 Compra'}</span></td>
       <td style="padding:.8rem 1rem;font-weight:600;color:#374151;">${l.membro||'—'}</td>
+      <td style="padding:.8rem 1rem;font-size:.82rem;color:#374151;white-space:nowrap;">${mesRefFmt}</td>
       <td style="padding:.8rem 1rem;color:#374151;max-width:200px;word-break:break-word;">${l.descricao||'—'}</td>
       <td style="padding:.8rem 1rem;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:${isE?'#16a34a':'#dc2626'};">${isE?'+':'−'}${fmt(l.valor)}</span></td>
-      <td style="padding:.8rem 1rem;">${l.urlAnexo?`<a href="${l.urlAnexo}" target="_blank" style="padding:.3rem .7rem;background:#0d2040;color:#fff;border-radius:6px;font-size:.75rem;font-weight:600;text-decoration:none;">Ver 📎</a>`:'<span style="color:#9ca3af;font-size:.8rem;">—</span>'}</td>
+      <td style="padding:.8rem 1rem;">${l.anexoBase64?`<a href="${l.anexoBase64}" download="${l.anexoNome||'anexo'}" target="_blank" style="padding:.3rem .7rem;background:#0d2040;color:#fff;border-radius:6px;font-size:.75rem;font-weight:600;text-decoration:none;">Ver 📎</a>`:'<span style="color:#9ca3af;font-size:.8rem;">—</span>'}</td>
       <td style="padding:.8rem 1rem;font-size:.75rem;color:#9ca3af;white-space:nowrap;">${l.registradoPor||'—'}</td>
       <td style="padding:.8rem 1rem;font-size:.75rem;color:#9ca3af;white-space:nowrap;">${dt}</td>
     </tr>`;
   }).join('');
 }
 
+// ── Toggle campo mês específico ───────────────────────────
+window.cxkToggleMes = function() {
+  const periodo = document.getElementById('cxk-rel-periodo')?.value;
+  const wrap    = document.getElementById('cxk-rel-mes-wrap');
+  if (wrap) wrap.style.display = periodo === 'especifico' ? 'block' : 'none';
+  cxkGerarRelatorio();
+};
+
 // ── Relatório ──────────────────────────────────────────────
 window.cxkGerarRelatorio = function() {
-  const mes = document.getElementById('cxk-rel-mes')?.value;
+  const tipo    = document.getElementById('cxk-rel-tipo')?.value || '';
+  const periodo = document.getElementById('cxk-rel-periodo')?.value || 'todos';
+  const mesSel  = document.getElementById('cxk-rel-mes-sel')?.value || '';
+  const membro  = document.getElementById('cxk-rel-membro')?.value || '';
+
   let lista = cxkLancamentos.filter(l=>l.status==='confirmado');
-  if (mes) lista = lista.filter(l=>l.mesRef&&l.mesRef.startsWith(mes));
+  if (tipo)   lista = lista.filter(l=>l.tipo===tipo);
+  if (periodo==='especifico'&&mesSel) lista = lista.filter(l=>l.mesRef===mesSel);
+  if (membro) lista = lista.filter(l=>l.membro===membro);
+
   const ent = lista.filter(l=>l.tipo==='deposito').reduce((a,l)=>a+l.valor,0);
   const sai = lista.filter(l=>l.tipo==='compra').reduce((a,l)=>a+l.valor,0);
 
   const rc = document.getElementById('cxk-rel-cards');
-  if (rc) rc.innerHTML =
-    cxkCard('💰 Saldo',fmt(ent-sai),'#16a34a')+
-    cxkCard('📥 Entradas',fmt(ent),'#2563eb')+
-    cxkCard('📤 Saídas',fmt(sai),'#dc2626');
+  if (rc) {
+    const mostrarSaldo = !tipo || tipo==='';
+    rc.innerHTML =
+      (mostrarSaldo ? cxkCard('💰 Saldo',fmt(ent-sai),'#16a34a') : '') +
+      (!tipo||tipo==='deposito' ? cxkCard('📥 Entradas',fmt(ent),'#2563eb') : '') +
+      (!tipo||tipo==='compra'   ? cxkCard('📤 Saídas',fmt(sai),'#dc2626') : '');
+  }
 
   const sorted = [...lista].sort((a,b)=>{
     const da=a.criadoEm?.toDate?a.criadoEm.toDate():new Date(0);
@@ -6328,21 +6383,37 @@ window.cxkGerarRelatorio = function() {
   const tb = document.getElementById('cxk-rel-tbody');
   if (!tb) return;
   if (!sorted.length) {
-    tb.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:3rem;color:#9ca3af;"><div style="font-size:2.5rem;margin-bottom:.75rem;">📂</div><div style="font-size:.9rem;">Sem movimentações no período.</div></td></tr>`;
+    tb.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:3rem;color:#9ca3af;"><div style="font-size:2.5rem;margin-bottom:.75rem;">📂</div><div style="font-size:.9rem;">Sem movimentações para os filtros selecionados.</div></td></tr>`;
     return;
   }
   tb.innerHTML = sorted.map(l => {
     const isE = l.tipo==='deposito';
     const dt  = l.criadoEm?.toDate ? l.criadoEm.toDate().toLocaleDateString('pt-BR') : '—';
+    const mesRefFmt = l.mesRef ? (()=>{const[a,m]=l.mesRef.split('-');return new Date(a,m-1).toLocaleString('pt-BR',{month:'short',year:'numeric'});})() : '—';
     return `<tr style="border-bottom:1px solid #e5e7eb;">
-      <td style="padding:.8rem 1rem;color:#374151;">${dt}</td>
+      <td style="padding:.8rem 1rem;color:#374151;white-space:nowrap;">${dt}</td>
+      <td style="padding:.8rem 1rem;font-size:.82rem;color:#374151;white-space:nowrap;">${mesRefFmt}</td>
       <td style="padding:.8rem 1rem;"><span style="font-size:.78rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;${isE?'background:#dcfce7;color:#166534;':'background:#fee2e2;color:#991b1b;'}">${isE?'💰 Dep.':'🛒 Compra'}</span></td>
       <td style="padding:.8rem 1rem;font-weight:600;color:#374151;">${l.membro||'—'}</td>
-      <td style="padding:.8rem 1rem;color:#374151;max-width:200px;word-break:break-word;">${l.descricao||'—'}</td>
+      <td style="padding:.8rem 1rem;color:#374151;max-width:180px;word-break:break-word;">${l.descricao||'—'}</td>
       <td style="padding:.8rem 1rem;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:${isE?'#16a34a':'#dc2626'};">${isE?'+':'−'}${fmt(l.valor)}</span></td>
       <td style="padding:.8rem 1rem;font-size:.75rem;color:#9ca3af;">${l.registradoPor||'—'}</td>
     </tr>`;
   }).join('');
+};
+
+// ── Imprimir com layout paisagem ──────────────────────────
+window.cxkImprimir = function() {
+  // Injeta CSS de impressão paisagem temporariamente
+  const styleId = 'cxk-print-style';
+  let s = document.getElementById(styleId);
+  if (!s) {
+    s = document.createElement('style');
+    s.id = styleId;
+    s.innerHTML = `@media print { @page { size: A4 landscape; margin: 1cm; } }`;
+    document.head.appendChild(s);
+  }
+  window.print();
 };
 
 // ── Datas padrão ───────────────────────────────────────────
