@@ -4767,25 +4767,26 @@ function cxkPopularPainel() {
     cxkCard('📤 Total Gasto',fmt(sai),'#dc2626')+
     cxkCard('👥 Valor Mensal',cxkConfig.valorMensal?fmt(cxkConfig.valorMensal):'R$ —','#b8860b');
 
-  const agora = new Date();
-  const mesAtual = agora.getFullYear()+'-'+String(agora.getMonth()+1).padStart(2,'0');
+  const MESES_SEQ   = ['2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+  const MESES_LABEL = ['Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const meta = cxkConfig.valorMensal||0;
   const mg = document.getElementById('cxk-membros-grid');
   if (!mg) return;
   mg.innerHTML = MEMBROS.map((nome,i) => {
-    const deps = conf.filter(l=>l.tipo==='deposito'&&l.membro===nome&&l.mesRef===mesAtual);
-    const pago = deps.reduce((a,l)=>a+l.valor,0);
-    const meta = cxkConfig.valorMensal||0;
-    let st,cls;
-    if (!meta)        { st='Sem meta ⚪'; cls='background:#f3f4f6;color:#6b7280;'; }
-    else if(pago>=meta){ st='Em dia ✓';   cls='background:#dcfce7;color:#166534;'; }
-    else if(pago>0)   { st='Parcial ⚠';  cls='background:#fef3c7;color:#92400e;'; }
-    else              { st='Pendente ✗'; cls='background:#fee2e2;color:#991b1b;'; }
-    return `<div style="background:#fff;border-radius:12px;padding:1rem;box-shadow:0 4px 16px rgba(0,0,0,.08);text-align:center;">
-      <div style="width:48px;height:48px;border-radius:50%;background:${CORES[i]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:#fff;margin:0 auto .6rem;">${nome.charAt(0)}</div>
-      <div style="font-size:.82rem;font-weight:600;color:#111827;margin-bottom:.3rem;">${nome}</div>
-      <span style="font-size:.7rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;display:inline-block;${cls}">${st}</span>
-      ${meta?`<div style="font-size:.72rem;color:#9ca3af;margin-top:.25rem;">${fmt(pago)} / ${fmt(meta)}</div>`:''}
-    </div>`;
+    const totalDep = conf.filter(l=>l.tipo==='deposito'&&l.membro===nome).reduce((a,l)=>a+l.valor,0);
+    const mesesPagos = meta > 0 ? Math.min(Math.floor(totalDep/meta), MESES_SEQ.length) : 0;
+    const badgesMeses = MESES_LABEL.map((label,idx) => {
+      const pago = idx < mesesPagos;
+      return pago
+        ? '<span style="display:inline-flex;align-items:center;gap:2px;font-size:.62rem;font-weight:700;padding:.15rem .35rem;border-radius:5px;background:#dcfce7;color:#166534;white-space:nowrap;">✔ '+label+'</span>'
+        : '<span style="display:inline-flex;align-items:center;gap:2px;font-size:.62rem;font-weight:700;padding:.15rem .35rem;border-radius:5px;background:#fee2e2;color:#991b1b;white-space:nowrap;">✕ '+label+'</span>';
+    }).join('');
+    return '<div style="background:#fff;border-radius:12px;padding:.9rem .75rem;box-shadow:0 4px 16px rgba(0,0,0,.08);text-align:center;">'
+      +'<div style="width:44px;height:44px;border-radius:50%;background:'+CORES[i]+';display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;margin:0 auto .5rem;">'+nome.charAt(0)+'</div>'
+      +'<div style="font-size:.82rem;font-weight:700;color:#111827;margin-bottom:.2rem;">'+nome+'</div>'
+      +'<div style="font-size:.72rem;color:#6b7280;margin-bottom:.5rem;">'+fmt(totalDep)+' depositado</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;">'+badgesMeses+'</div>'
+      +'</div>';
   }).join('');
 }
 
@@ -4803,15 +4804,15 @@ function cxkHtmlDeposito() {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
       <div style="margin-bottom:1rem;">
         <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Membro *</label>
-        <select id="cxk-dep-membro" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;">${MEMBROS.map(m=>`<option>${m}</option>`).join('')}</select>
+        <select id="cxk-dep-membro" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;" onchange="cxkAtualizarPreviewMeses()">${MEMBROS.map(m=>`<option>${m}</option>`).join('')}</select>
       </div>
       <div style="margin-bottom:1rem;">
-        <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Mês de Referência *</label>
-        <input type="month" id="cxk-dep-mes" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;" />
+        <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Meses cobertos</label>
+        <div id="cxk-dep-meses-preview" style="padding:.65rem .9rem;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;font-size:.85rem;color:#6b7280;min-height:2.5rem;">Informe o valor para calcular automaticamente</div>
       </div>
       <div style="margin-bottom:1rem;">
         <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;">Valor (R$) *</label>
-        <input type="number" id="cxk-dep-valor" placeholder="0,00" step="0.01" min="0" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;" />
+        <input type="number" id="cxk-dep-valor" placeholder="0,00" step="0.01" min="0" style="width:100%;padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#111827;background:#f9fafb;outline:none;" oninput="cxkAtualizarPreviewMeses()" onchange="cxkAtualizarPreviewMeses()" />
       </div>
     </div>
     <div style="margin-bottom:1rem;">
@@ -4903,7 +4904,7 @@ function cxkHtmlHistorico() {
         <tr>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Tipo</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Membro</th>
-          <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Mês Ref.</th>
+          <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;">Meses Cobertos</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Descrição</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Valor</th>
           <th style="padding:.85rem 1rem;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;">Anexo</th>
@@ -5018,14 +5019,22 @@ window.cxkSalvarLancamento = function(tipo) {
   let dados = {};
   if (tipo==='deposito') {
     const membro = document.getElementById('cxk-dep-membro').value;
-    const mesRef = document.getElementById('cxk-dep-mes').value;
     const valor  = parseFloat(document.getElementById('cxk-dep-valor').value);
     if (!membro) { cxkToast('Selecione o membro.','aviso'); return; }
-    if (!mesRef) { cxkToast('Selecione o mês de referência.','aviso'); return; }
     if (!valor||valor<=0) { cxkToast('Informe um valor válido.','aviso'); return; }
-    const [ano,mes2] = mesRef.split('-');
+    const MESES_SEQ = ['2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+    const meta = cxkConfig.valorMensal||0;
+    const conf2 = cxkLancamentos.filter(l=>l.status==='confirmado');
+    const totalAnterior = conf2.filter(l=>l.tipo==='deposito'&&l.membro===membro).reduce((a,l)=>a+l.valor,0);
+    const mesesJaPagos = meta > 0 ? Math.min(Math.floor(totalAnterior/meta), MESES_SEQ.length) : 0;
+    const novosMeses = meta > 0 ? Math.min(Math.floor((totalAnterior+valor)/meta), MESES_SEQ.length) - mesesJaPagos : 0;
+    const proxMes = MESES_SEQ[mesesJaPagos] || MESES_SEQ[MESES_SEQ.length-1];
+    const [ano,mes2] = proxMes.split('-');
     const mesNomeRef = new Date(ano,mes2-1).toLocaleString('pt-BR',{month:'long',year:'numeric'});
-    dados = { tipo, membro, mesRef, valor, descricao: 'Depósito — ' + mesNomeRef };
+    const descricao = novosMeses > 1
+      ? 'Depósito — ' + novosMeses + ' meses (' + mesNomeRef + ' e seguintes)'
+      : 'Depósito — ' + mesNomeRef;
+    dados = { tipo, membro, mesRef: proxMes, valor, descricao };
   }
   if (tipo==='compra') {
     const membro = document.getElementById('cxk-cmp-membro').value;
@@ -5158,6 +5167,39 @@ window.cxkLimparFiltros = function() {
   cxkRenderHistorico(cxkLancamentos,'cxk-hist-tbody');
 };
 
+function cxkMesesCobertosHtml(membro, valorDep, criadoEm) {
+  // Descobre quais meses este depósito cobriu, baseado na ordem cronológica
+  const MESES_SEQ   = ['2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+  const MESES_LABEL = ['Mai/26','Jun/26','Jul/26','Ago/26','Set/26','Out/26','Nov/26','Dez/26'];
+  const meta = cxkConfig.valorMensal||0;
+  if (!meta) return '—';
+  // Ordena todos os depósitos deste membro por data
+  const deps = cxkLancamentos
+    .filter(l=>l.status==='confirmado'&&l.tipo==='deposito'&&l.membro===membro)
+    .sort((a,b)=>{
+      const da=a.criadoEm?.toDate?a.criadoEm.toDate():new Date(0);
+      const db2=b.criadoEm?.toDate?b.criadoEm.toDate():new Date(0);
+      return da-db2;
+    });
+  // Calcula acumulado antes deste depósito
+  let acum = 0;
+  for (const d of deps) {
+    const isThis = d.criadoEm === criadoEm || (d.criadoEm?.toDate && criadoEm?.toDate && d.criadoEm.toDate().getTime() === criadoEm.toDate().getTime());
+    if (isThis) break;
+    acum += d.valor;
+  }
+  const mesesAntes = Math.min(Math.floor(acum/meta), MESES_SEQ.length);
+  const mesesDepois = Math.min(Math.floor((acum+valorDep)/meta), MESES_SEQ.length);
+  const novos = mesesDepois - mesesAntes;
+  if (novos <= 0) return '<span style="color:#92400e;font-size:.75rem;">Sem mês completo</span>';
+  let out = '';
+  for (let k=0; k<novos; k++) {
+    const idx = mesesAntes+k;
+    if (idx < MESES_SEQ.length) out += '<span style="display:inline-block;padding:.1rem .35rem;border-radius:4px;background:#dcfce7;color:#166534;font-size:.72rem;font-weight:700;margin:1px;">'+MESES_LABEL[idx]+'</span>';
+  }
+  return out || '—';
+}
+
 function cxkRenderHistorico(lista, tbId) {
   const tb = document.getElementById(tbId);
   if (!tb) return;
@@ -5172,7 +5214,7 @@ function cxkRenderHistorico(lista, tbId) {
     return `<tr style="border-bottom:1px solid #e5e7eb;">
       <td style="padding:.8rem 1rem;"><span style="font-size:.78rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;${isE?'background:#dcfce7;color:#166534;':'background:#fee2e2;color:#991b1b;'}">${isE?'💰 Depósito':'🛒 Compra'}</span></td>
       <td style="padding:.8rem 1rem;font-weight:600;color:#374151;">${l.membro||'—'}</td>
-      <td style="padding:.8rem 1rem;font-size:.82rem;color:#374151;white-space:nowrap;">${mesRefFmt}</td>
+      <td style="padding:.8rem 1rem;font-size:.82rem;color:#374151;">${isE ? cxkMesesCobertosHtml(l.membro, l.valor, l.criadoEm) : mesRefFmt}</td>
       <td style="padding:.8rem 1rem;color:#374151;max-width:200px;word-break:break-word;">${l.descricao||'—'}</td>
       <td style="padding:.8rem 1rem;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:${isE?'#16a34a':'#dc2626'};">${isE?'+':'−'}${fmt(l.valor)}</span></td>
       <td style="padding:.8rem 1rem;">${(l.anexoBase64||l.urlAnexo)?('<button onclick="cxkVerAnexo(\'' + (l.anexoBase64||l.urlAnexo).replace(/'/g,"\\'") + '\',\'' + (l.anexoNome||'anexo').replace(/'/g,"\\'") + '\',\'' + (l.anexoTipo||'') + '\')" style="display:inline-block;padding:.3rem .8rem;background:#0d2040;color:#fff;border-radius:6px;font-size:.75rem;font-weight:600;text-decoration:none;white-space:nowrap;border:none;cursor:pointer;font-family:Inter,sans-serif;">👁 Ver</button>'):'<span style="color:#9ca3af;font-size:.8rem;">—</span>'}</td>
@@ -5357,6 +5399,39 @@ window.cxkImprimir = function() {
   w.document.close();
   w.focus();
   setTimeout(() => { w.print(); }, 400);
+};
+
+// ── Preview de meses no depósito ──────────────────────────
+window.cxkAtualizarPreviewMeses = function() {
+  const preview = document.getElementById('cxk-dep-meses-preview');
+  if (!preview) return;
+  const membro = document.getElementById('cxk-dep-membro')?.value;
+  const valor  = parseFloat(document.getElementById('cxk-dep-valor')?.value||'0');
+  const MESES_SEQ   = ['2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+  const MESES_LABEL = ['Mai/26','Jun/26','Jul/26','Ago/26','Set/26','Out/26','Nov/26','Dez/26'];
+  const meta = cxkConfig.valorMensal||0;
+  if (!meta || !valor || valor <= 0) {
+    preview.innerHTML = '<span style="color:#9ca3af;">Informe o valor para calcular automaticamente</span>';
+    return;
+  }
+  const conf2 = cxkLancamentos.filter(l=>l.status==='confirmado');
+  const totalAnterior = membro ? conf2.filter(l=>l.tipo==='deposito'&&l.membro===membro).reduce((a,l)=>a+l.valor,0) : 0;
+  const mesesJaPagos  = Math.min(Math.floor(totalAnterior/meta), MESES_SEQ.length);
+  const mesesNovos    = Math.min(Math.floor((totalAnterior+valor)/meta), MESES_SEQ.length) - mesesJaPagos;
+  const resto = (totalAnterior + valor) % meta;
+  if (mesesNovos <= 0) {
+    preview.innerHTML = '<span style="color:#92400e;">⚠ Valor insuficiente para cobrir 1 mês (faltam '+fmt(meta-((totalAnterior%meta)+valor))+')</span>';
+    return;
+  }
+  let badges = '';
+  for (let k = 0; k < mesesNovos; k++) {
+    const idx = mesesJaPagos + k;
+    if (idx < MESES_SEQ.length) {
+      badges += '<span style="display:inline-block;padding:.15rem .45rem;border-radius:5px;background:#dbeafe;color:#1d4ed8;font-size:.75rem;font-weight:700;margin:2px;">'+MESES_LABEL[idx]+'</span>';
+    }
+  }
+  const sobra = resto > 0 ? ' <span style="font-size:.72rem;color:#6b7280;">(sobram '+fmt(resto)+')</span>' : '';
+  preview.innerHTML = badges + sobra;
 };
 
 // ── Datas padrão ───────────────────────────────────────────
