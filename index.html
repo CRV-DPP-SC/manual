@@ -5853,11 +5853,9 @@ window.abrirCaixinha = async function() {
       resolve();
     });
   });
-
   const m = document.getElementById('modal-caixinha');
   m.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-
   if (cxkUser) {
     document.getElementById('cxk-nome-usuario').textContent = '👤 ' + cxkUser.email.split('@')[0];
     await cxkCarregarConfig();
