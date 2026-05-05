@@ -169,6 +169,17 @@ html,body{height:100%;font-family:"Segoe UI",Calibri,sans-serif;background:var(-
 .mcj-nav-btn.prev{background:#fff;border:2px solid #c8d6ec!important;color:#0d2b55}.mcj-nav-btn.prev:hover{background:#f0f0f0}
 .mcj-nav-btn.next{background:#0d2b55;color:#fff}.mcj-nav-btn.next:hover{background:#2563b0}
 .mcj-alert{background:#fff8e1;border:1.5px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.82rem;color:#7a5800;display:flex;align-items:flex-start;gap:8px}
+
+/* ══ MODAL AVISO EDIÇÃO ══ */
+.modal-aviso-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:center;justify-content:center}
+.modal-aviso-bg.open{display:flex}
+.modal-aviso{background:#fff;border-radius:16px;width:min(92vw,420px);box-shadow:0 10px 40px rgba(0,0,0,.28);overflow:hidden;animation:popIn .25s ease}
+.modal-aviso-head{background:linear-gradient(135deg,var(--azul),var(--azul2));padding:18px 22px;color:#fff}
+.modal-aviso-head h3{font-size:1rem;font-weight:700;margin:0}
+.modal-aviso-body{padding:20px 22px;font-size:.92rem;line-height:1.65;color:var(--texto)}
+.modal-aviso-foot{padding:12px 22px 18px;display:flex;justify-content:flex-end}
+.modal-aviso-foot button{padding:10px 28px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.modal-aviso-foot button:hover{background:var(--azul3)}
 </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
@@ -236,6 +247,22 @@ html,body{height:100%;font-family:"Segoe UI",Calibri,sans-serif;background:var(-
   </div>
 </div>
 <div class="toast" id="toast"></div>
+
+<!-- Modal Aviso de Edição -->
+<div class="modal-aviso-bg" id="modalAvisoBg">
+  <div class="modal-aviso">
+    <div class="modal-aviso-head">
+      <h3>✏️ Ofício gerado com sucesso!</h3>
+    </div>
+    <div class="modal-aviso-body">
+      Se quiser editar o conteúdo antes de imprimir, basta clicar no botão condizente disponível acima do documento.
+    </div>
+    <div class="modal-aviso-foot">
+      <button onclick="fecharModalAviso()">Entendido!</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const UNS=[
   {n:'Penitenciária de Florianópolis',c:'Florianópolis',sr:'SR01',dir:'Max Cleber Orth',cg:'Diretor',em:'pe01@pp.sc.gov.br',tel:'(48) 3665-9123',e:'Rua Delminda da Silveira, 960 – Agronômica – Florianópolis/SC – CEP 88025-500'},
@@ -406,7 +433,7 @@ async function flPernoite(){
 async function flPedido(){
   await mBot('O pedido foi formulado por:');
   await new Promise(r=>cps([{l:'&#128100; Pelo próprio reeducando',v:'preso'},{l:'&#128106; Por familiar',v:'familiar'},{l:'&#9878;&#65039; Por advogado',v:'advogado'}],v=>{E.sub=v;r();}));
-  await pReed();await pSaude();await pOri();await pDes();
+  await pReed();await pFormSaude();await pOri();await pDes();
   if(E.sub==='preso'){
     await mBot('Data do <strong>memorando</strong>?');await new Promise(r=>inp('Ex.: 10/05/2025',v=>{E.dataMem=v;r();}));
     await mBot('<strong>Motivo alegado</strong>?');await new Promise(r=>inp('Ex.: Necessidade de aproximação da família',v=>{E.motPreso=v;r();},true));
@@ -427,11 +454,11 @@ async function flPedido(){
   await pSau();await pDesp();await pNumOficio();await pAss();await pBPI();gerar();
 }
 async function flPrisaoCivil(){
-  await pReed();await pSaude();await pOri();await pDes();
+  await pReed();await pFormSaude();await pOri();await pDes();
   await pSau();await pDesp();await pNumOficio();await pAss();await pBPI();gerar();}
 
 async function flPermuta(){
-  await pReed();await pSaude();await pOri();await pDes();
+  await pReed();await pFormSaude();await pOri();await pDes();
   await mBot('Qual o <strong>motivo da transferência</strong> (permuta)?<span class="sub">Ex.: Necessidade de ajuste em relação às características das Unidades Prisionais — ajuste/equalização de vagas</span>');
   await new Promise(r=>inp('Ex.: Necessidade de ajuste/equalização de vagas entre unidades',v=>{E.motTransfPermuta=v;r();},true));
   await mBot('Qual foi o <strong>critério utilizado para a escolha/indicação</strong> deste reeducando?<span class="sub">Ex.: Pena mais alta, crime cometido, idade avançada, perfil de risco</span>');
@@ -610,7 +637,8 @@ function rE(){Object.assign(E,{
   nomejuiz:'',vara:'',cidJuizo:'',
   regime:'',alocacao:'',bpi:'',bpiMotivo:'',
   dd:false,sro:false,srd:false,_mcb:null,_srf:'TODOS',
-  comorbidades:[],medicamentos:[]
+  comorbidades:[],medicamentos:[],
+  saudeOpcao:null  /* 'formulario' | 'sem_profissional' | 'individual' */
 });}
 rE();
 
@@ -738,14 +766,15 @@ async function coletarLista(tipo,pergInicio,pergAdicionar,ph){
 /* ══════════════ COLETA REEDUCANDOS (LARGA ESCALA) ══════════════ */
 async function coletarReeducandos(){
   var lista=[];
+  var coletaSaude=(E.saudeOpcao==='individual');
   /* primeiro */
   await mBot('Informe o <strong>nome completo</strong> do 1º reeducando:');
   var n1=await new Promise(r=>inp('Ex.: João da Silva Santos',v=>r(v)));
   await mBot('Informe o <strong>IPEN</strong> do 1º reeducando:');
   var i1=await new Promise(r=>inp('Ex.: 123456',v=>r(v)));
   var sit1=await pSitPenal(1);
-  var com1=await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong>','mais alguma comorbidade','Ex.: Hipertensão arterial');
-  var med1=await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg');
+  var com1=coletaSaude?await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong>','mais alguma comorbidade','Ex.: Hipertensão arterial'):[];
+  var med1=coletaSaude?await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg'):[];
   lista.push({nome:n1,ipen:i1,regime:sit1.regime,alocacao:sit1.alocacao,comorbidades:com1,medicamentos:med1});
   /* segundo */
   await mBot('Informe o <strong>nome completo</strong> do 2º reeducando:');
@@ -753,8 +782,8 @@ async function coletarReeducandos(){
   await mBot('Informe o <strong>IPEN</strong> do 2º reeducando:');
   var i2=await new Promise(r=>inp('Ex.: 654321',v=>r(v)));
   var sit2=await pSitPenal(2);
-  var com2=await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong>','mais alguma comorbidade','Ex.: Hipertensão arterial');
-  var med2=await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg');
+  var com2=coletaSaude?await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong>','mais alguma comorbidade','Ex.: Hipertensão arterial'):[];
+  var med2=coletaSaude?await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg'):[];
   lista.push({nome:n2,ipen:i2,regime:sit2.regime,alocacao:sit2.alocacao,comorbidades:com2,medicamentos:med2});
   /* mais? */
   var cont=true;var idx=3;
@@ -768,8 +797,8 @@ async function coletarReeducandos(){
       await mBot('Informe o <strong>IPEN</strong>:');
       var iX=await new Promise(r=>inp('IPEN',v=>r(v)));
       var sitX=await pSitPenal(idx);
-      var comX=await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong>','mais alguma comorbidade','Ex.: Hipertensão arterial');
-      var medX=await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg');
+      var comX=coletaSaude?await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong>','mais alguma comorbidade','Ex.: Hipertensão arterial'):[];
+      var medX=coletaSaude?await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg'):[];
       lista.push({nome:nX,ipen:iX,regime:sitX.regime,alocacao:sitX.alocacao,comorbidades:comX,medicamentos:medX});
       idx++;
     }
@@ -778,6 +807,21 @@ async function coletarReeducandos(){
 }
 
 /* ══════════════ PARÁGRAFOS DE SAÚDE ══════════════ */
+/* Retorna parágrafos de saúde conforme a opção escolhida em pFormSaude */
+function textoSaudeOficio(isPlural){
+  if(E.saudeOpcao==='formulario'){
+    return ['Formulário de Saúde em anexo.'];
+  }
+  if(E.saudeOpcao==='sem_profissional'){
+    var p=isPlural
+      ? 'Esta Unidade Prisional não dispõe, em sua estrutura funcional administrativa, de profissional apto a realizar avaliação de saúde, razão pela qual deixa-se de atestar a (in)salubridade das pessoas em questão.'
+      : 'Esta Unidade Prisional não dispõe, em sua estrutura funcional administrativa, de profissional apto a realizar avaliação de saúde, razão pela qual deixa-se de atestar a (in)salubridade da pessoa em questão.';
+    return [p];
+  }
+  /* individual: usa os dados coletados */
+  return pSaudeTexto();
+}
+
 function pSaudeTexto(){
   var parags=[];
   if(Array.isArray(E.comorbidades)&&E.comorbidades.length>0){
@@ -829,6 +873,28 @@ async function pReed(){
 async function pSaude(){
   E.comorbidades=await coletarLista('comorbidade','possui alguma <strong>comorbidade</strong> (doença ou condição de saúde)','mais alguma comorbidade','Ex.: Hipertensão arterial');
   E.medicamentos=await coletarLista('medicamento','faz uso de algum <strong>medicamento contínuo</strong>','mais algum medicamento','Ex.: Losartana 50mg');
+}
+
+/* ══ NOVA ETAPA: Formulário de Saúde ══ */
+async function pFormSaude(){
+  await mBot('Será juntado <strong>Formulário de Saúde</strong> assinado por profissional técnico (médico, enfermeiro, técnico em enfermagem, etc.)?');
+  var resp=await new Promise(r=>cps([{l:'✅ Sim',v:'sim'},{l:'❌ Não',v:'nao'}],v=>r(v)));
+  if(resp==='sim'){
+    E.saudeOpcao='formulario';
+    return; /* segue sem perguntas de saúde */
+  }
+  /* NÃO: apresentar duas opções */
+  await mBot('Selecione a justificativa:');
+  var opt=await new Promise(r=>cps([
+    {l:'🏥 Esta Unidade Prisional não dispõe de profissional apto a realizar avaliação de saúde',v:'sem_profissional'},
+    {l:'📋 Será informado individualmente (para cada reeducando)',v:'individual'},
+  ],v=>r(v)));
+  E.saudeOpcao=opt;
+  if(opt==='individual'){
+    /* mantém fluxo antigo */
+    await pSaude();
+  }
+  /* sem_profissional: segue sem perguntas, texto automático no ofício */
 }
 async function pOri(){await mBot('Selecione a <strong>unidade prisional de origem</strong>:');return new Promise(r=>btnUn('Escolher Unidade de Origem',u=>{E.ori=u;r();}));}
 async function pDes(){await mBot('Selecione a <strong>unidade prisional de destino</strong>:');return new Promise(r=>btnUn('Escolher Unidade de Destino',u=>{E.des=u;r();}));}
@@ -894,7 +960,7 @@ async function flEmerg(){
   await new Promise(r=>cps([{l:'&#128203; Com PAD — falta grave (art. 50/52 LEP)',v:'com_pad'},{l:'&#9888;&#65039; Sem PAD — risco à integridade / segurança',v:'sem_pad'}],v=>{E.sub=v;r();}));
   await pReed();
   var sit=await pSitPenal(0);E.regime=sit.regime;E.alocacao=sit.alocacao;
-  await pSaude();await pOri();await pDes();
+  await pFormSaude();await pOri();await pDes();
   await mBot('Descreva <strong>detalhadamente</strong> a situação concreta:');
   await new Promise(r=>inp('Ex.: O reeducando ameaçou agentes...',v=>{E.sit=v;r();},true));
   if(E.sub==='com_pad'){
@@ -907,7 +973,7 @@ async function flEmerg(){
 async function flMandado(){
   await pReed();
   var sit=await pSitPenal(0);E.regime=sit.regime;E.alocacao=sit.alocacao;
-  await pSaude();await pOri();await pDes();
+  await pFormSaude();await pOri();await pDes();
   await mBot('Qual é o <strong>Juízo expedidor</strong> do Mandado de Prisão?');
   await new Promise(r=>inp('Ex.: 2ª Vara Criminal da Comarca de Blumenau',v=>{E.juizo=v;r();}));
   await pSau();await pDesp();await pNumOficio();await pAss();await pBPI();gerar();}
@@ -915,7 +981,7 @@ async function flMandado(){
 async function flPernoite(){
   await pReed();
   var sit=await pSitPenal(0);E.regime=sit.regime;E.alocacao=sit.alocacao;
-  await pSaude();await pOri();await pDes();
+  await pFormSaude();await pOri();await pDes();
   await mBot('Qual é a <strong>razão do pernoite</strong>?');
   await new Promise(r=>inp('Ex.: Audiência judicial na comarca de destino',v=>{E.razPernoite=v;r();},true));
   await pSau();await pDesp();await pNumOficio();await pAss();await pBPI();gerar();}
@@ -928,6 +994,7 @@ async function flAdequacao(){
     {l:'&#128260; Alteração de Regime',v:'regime'},
     ],v=>{E.sub=v;r();}));
   if(E.sub==='coletiva'){
+    await pFormSaude();
     E.reed=await coletarReeducandos();
     E.nome=E.reed[0].nome;E.ipen=E.reed[0].ipen;
     await pOri();await pDes();
@@ -938,13 +1005,13 @@ async function flAdequacao(){
   }else if(E.sub==='permuta'){
     await pReed();
     var sit=await pSitPenal(0);E.regime=sit.regime;E.alocacao=sit.alocacao;
-    await pSaude();await pOri();await pDes();
+    await pFormSaude();await pOri();await pDes();
     await mBot('Qual é o <strong>motivo</strong> da permuta?');
     await new Promise(r=>inp('Ex.: Superlotação da unidade de origem',v=>{E.motPreso=v;r();},true));
   }else{
     await pReed();
     var sit=await pSitPenal(0);E.regime=sit.regime;E.alocacao=sit.alocacao;
-    await pSaude();await pOri();await pDes();
+    await pFormSaude();await pOri();await pDes();
     await mBot('Qual o <strong>motivo da transferência</strong>?<span class="sub">Ex.: Necessidade de ajuste em relação às características das Unidades Prisionais — ajuste/equalização de vagas</span>');
     await new Promise(r=>inp('Ex.: Necessidade de ajuste/equalização de vagas entre unidades',v=>{E.motTransf=v;r();},true));
     await mBot('Qual foi o <strong>critério utilizado para a escolha/indicação</strong> '+(E.numero==='P'?'destes reeducandos':'deste reeducando')+'?<span class="sub">Ex.: Pena mais alta, crime cometido, idade avançada, perfil de risco</span>');
@@ -954,13 +1021,13 @@ async function flAdequacao(){
 
 
 async function flPrisaoCivil(){
-  await pReed();await pSaude();await pOri();await pDes();
+  await pReed();await pFormSaude();await pOri();await pDes();
   await pSau();await pDesp();await pNumOficio();await pAss();await pBPI();gerar();}
 
 async function flPermuta(){
   await pReed();
   var sit=await pSitPenal(0);E.regime=sit.regime;E.alocacao=sit.alocacao;
-  await pSaude();await pOri();await pDes();
+  await pFormSaude();await pOri();await pDes();
   await mBot('Qual o <strong>motivo da transferência</strong> (permuta)?<span class="sub">Ex.: Necessidade de ajuste em relação às características das Unidades Prisionais — ajuste/equalização de vagas</span>');
   await new Promise(r=>inp('Ex.: Necessidade de ajuste/equalização de vagas entre unidades',v=>{E.motTransfPermuta=v;r();},true));
   await mBot('Qual foi o <strong>critério utilizado para a escolha/indicação</strong> deste reeducando?<span class="sub">Ex.: Pena mais alta, crime cometido, idade avançada, perfil de risco</span>');
@@ -1034,7 +1101,11 @@ async function gerar(){
         'A transferência justifica-se pela '+fld(E.motTransf||'necessidade de ajuste/equalização de vagas entre as unidades prisionais')+'.',
         'O critério utilizado para a escolha dos(as) reeducandos(as) para a presente transferência foi: '+fld(E.motIndicacao)+'.',
         textoBPI(' de cada reeducando'),
-        'As informações de saúde de cada reeducando(a), incluindo comorbidades e medicamentos de uso contínuo, constam do Anexo I deste ofício.',
+        (E.saudeOpcao==='formulario'
+          ? 'Formulário de Saúde em anexo.'
+          : E.saudeOpcao==='sem_profissional'
+            ? 'Esta Unidade Prisional não dispõe, em sua estrutura funcional administrativa, de profissional apto a realizar avaliação de saúde, razão pela qual deixa-se de atestar a (in)salubridade das pessoas em questão.'
+            : 'As informações de saúde de cada reeducando(a), incluindo comorbidades e medicamentos de uso contínuo, constam do Anexo I deste ofício.'),
         'Efetivada a remoção, o Juízo competente será comunicado no prazo legal de até 24 horas.',
         'Foram realizados contatos prévios com o(a) Diretor(a) da unidade de destino e o(s) respectivo(s) Superintendente(s) Regional(is), que anuem ao presente expediente.',
         'Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da transferência.',
@@ -1083,7 +1154,7 @@ async function gerar(){
   ];
   /* injeta saúde para permuta */
   var _isPermutaBlock=(E.mod==='permuta'||(E.mod==='adequacao'&&E.sub==='permuta'));
-  if(_isPermutaBlock){var psSp=pSaudeTexto();if(psSp.length>0)ps.push(...psSp);}
+  if(_isPermutaBlock){var psSp=textoSaudeOficio(E.numero==='P');if(psSp.length>0)ps.push(...psSp);}
   if(_isPermutaBlock)ps.push('Diante do exposto, solicita-se a análise e deliberação da Central de Regulação de Vagas quanto à viabilidade da permuta.');
   }
   else if(E.mod==='prisaocivil'){ps=[
@@ -1105,11 +1176,12 @@ async function gerar(){
     'Ficamos à disposição de Vossa Excelência para quaisquer esclarecimentos.',
   ];}
 
-  /* Injetar saúde individual (não larga escala) */
+  /* Injetar saúde (não larga escala, não comunicação) */
   var isLarga2=(E.mod==='adequacao'&&E.sub==='coletiva'&&E.reed&&E.reed.length>0);
   var isPermuta=(E.mod==='permuta'||(E.mod==='adequacao'&&E.sub==='permuta'));
   if(!isLarga2&&!ec&&!isPermuta){
-    var psSaude=pSaudeTexto();
+    var isPlural=(E.numero==='P');
+    var psSaude=textoSaudeOficio(isPlural);
     if(psSaude.length>0){
       var idx=ps.length-1; /* antes do "Diante do exposto" */
       ps.splice(idx,0,...psSaude);
@@ -1134,25 +1206,30 @@ async function gerar(){
     });
     var tdBase='padding:5pt 7pt;border:0.5pt solid #aab;font-size:9.5pt;font-family:Arial,sans-serif;';
     var thBase='padding:6pt 7pt;border:0.5pt solid #aab;font-size:9.5pt;font-family:Arial,sans-serif;';
+    var mostrarSaude=(E.saudeOpcao==='individual');
     var linhas=reedOrdenado.map(function(r,i){
-      var com=r.comorbidades&&r.comorbidades.length>0?r.comorbidades.join(', '):'Não';
-      var med=r.medicamentos&&r.medicamentos.length>0?r.medicamentos.join(', '):'Não';
       var regVal=r.regime||'—';
       var alocVal=r.alocacao||'—';
-      /* SEGURO e Seguro aparecem como estão — distinção pelo nome */
       var alocDisplay=alocVal;
       var bg=i%2===0?'#f5f8ff':'#ffffff';
+      var colsSaude='';
+      if(mostrarSaude){
+        var com=r.comorbidades&&r.comorbidades.length>0?r.comorbidades.join(', '):'Não';
+        var med=r.medicamentos&&r.medicamentos.length>0?r.medicamentos.join(', '):'Não';
+        colsSaude='<td style="'+tdBase+'">'+com+'</td>'+'<td style="'+tdBase+'">'+med+'</td>';
+      }
       return '<tr style="background:'+bg+'">'+
         '<td style="'+tdBase+'text-align:center;">'+(i+1)+'</td>'+
         '<td style="'+tdBase+'font-weight:bold;">'+r.nome.toUpperCase()+'</td>'+
         '<td style="'+tdBase+'text-align:center;">'+r.ipen+'</td>'+
         '<td style="'+tdBase+'text-align:center;">'+regVal+'</td>'+
         '<td style="'+tdBase+'text-align:center;">'+alocDisplay+'</td>'+
-        '<td style="'+tdBase+'">'+com+'</td>'+
-        '<td style="'+tdBase+'">'+med+'</td>'+
+        colsSaude+
         '</tr>';
     }).join('');
-    /* Cabeçalho e rodapé recebidos como parâmetro — repetem em cada página do anexo */
+    var thColsSaude=mostrarSaude
+      ? '<th style="'+thBase+'text-align:left;">Comorbidades</th>'+'<th style="'+thBase+'text-align:left;">Medicamentos Contínuos</th>'
+      : '';
     var thCols=
       '<tr style="background:#0d2b55;color:#fff;">'+
         '<th style="'+thBase+'white-space:nowrap;text-align:center;">#</th>'+
@@ -1160,13 +1237,15 @@ async function gerar(){
         '<th style="'+thBase+'white-space:nowrap;text-align:center;">IPEN</th>'+
         '<th style="'+thBase+'white-space:nowrap;text-align:center;">Regime</th>'+
         '<th style="'+thBase+'white-space:nowrap;text-align:center;">Alocação</th>'+
-        '<th style="'+thBase+'text-align:left;">Comorbidades</th>'+
-        '<th style="'+thBase+'text-align:left;">Medicamentos Contínuos</th>'+
+        thColsSaude+
       '</tr>';
+    var subtitulo=mostrarSaude
+      ? 'Relação de Reeducandos — Situação Penal e Informações de Saúde'
+      : 'Relação de Reeducandos — Situação Penal';
     return '<div class="anexo-wrapper" style="font-family:Arial,sans-serif;">'+
       '<div style="padding:8pt 0 10pt 0;text-align:center;">'+
         '<div style="font-size:12pt;font-weight:bold;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:1pt;">ANEXO I</div>'+
-        '<div style="font-size:10pt;font-family:Arial,sans-serif;margin-top:4pt;">Relação de Reeducandos — Situação Penal e Informações de Saúde</div>'+
+        '<div style="font-size:10pt;font-family:Arial,sans-serif;margin-top:4pt;">'+subtitulo+'</div>'+
       '</div>'+
       '<table class="anexo-tabela">'+
         '<thead>'+thCols+'</thead>'+
@@ -1195,6 +1274,7 @@ async function gerar(){
   G('chatArea').style.display='none';G('ow').style.display='none';G('iw').style.display='none';
   document.querySelector('.layout').classList.add('collapsed');
   G('ofw').classList.add('vis');window.scrollTo({top:0,behavior:'smooth'});
+  abrirModalAviso();
   atualizarBotaoCJ();
 }
 
@@ -2026,6 +2106,9 @@ function modoEditar(){
 function reiniciar(){rE();G('ci').innerHTML='';G('ofw').classList.remove('vis');document.querySelector('.layout').classList.remove('collapsed');G('chatArea').style.display='';lp();iniciar();}
 function voltarChat(){G('ofw').classList.remove('vis');document.querySelector('.layout').classList.remove('collapsed');G('chatArea').style.display='';G('ow').style.display='none';G('iw').style.display='none';window.scrollTo({top:9e6,behavior:'smooth'});}
 function toast(m){var t=G('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2600);}
+function fecharModalAviso(){G('modalAvisoBg').classList.remove('open');}
+function abrirModalAviso(){G('modalAvisoBg').classList.add('open');}
+G('modalAvisoBg') && G('modalAvisoBg').addEventListener('click',function(e){if(e.target===G('modalAvisoBg'))fecharModalAviso();});
 document.addEventListener('DOMContentLoaded',function(){iniciar();});
 </script>
 </body>
