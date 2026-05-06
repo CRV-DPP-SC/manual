@@ -444,10 +444,13 @@ async function passo1(){
     {l:'<strong>Art. 21, III</strong><br><small style="font-weight:400;font-size:.75rem">Adequação da capacidade de ocupação</small>', v:'III', lg:true},
     {l:'<strong>🔄 Permuta</strong><br><small style="font-weight:400;font-size:.75rem">Transferência em permuta entre unidades</small>', v:'PERMUTA', lg:true},
     {l:'<strong>🌙 Pernoite</strong><br><small style="font-weight:400;font-size:.75rem">Medida excepcional administrativa</small>', v:'PERNOITE', lg:true},
+    {l:'<strong>⚠️ Indeferimento — Procedimentos</strong><br><small style="font-weight:400;font-size:.75rem">Inobservância das regras convencionadas em reunião</small>', v:'PROC', lg:true, cl:'vm'},
   ], function(v){
     S.inciso = v;
     if(v === 'PERMUTA'){
       setTimeout(passoPermutaInciso, 200);
+    } else if(v === 'PROC'){
+      setTimeout(gerarDespachoProc, 200);
     } else {
       setTimeout(passo2, 200);
     }
@@ -554,6 +557,21 @@ async function passo3IndDev(){
   var label = S.resultado === 'ind' ? 'indeferimento' : 'devolução para retificação';
   await mBot('Selecione o(s) <strong>motivo(s) do '+label+'</strong>:');
   buildPainelMotivos(S.resultado);
+}
+
+// ════════════════════════════════════════════════════════════
+// INDEFERIMENTO — PROCEDIMENTOS (reunião 05/05/2025)
+// ════════════════════════════════════════════════════════════
+function gerarDespachoProc(){
+  var texto =
+    'Indefere-se o pedido por inobservância das regras estabelecidas e convencionadas em reunião realizada em 05 de maio de 2025, notadamente a obrigatoriedade de elaboração do ofício por meio do Gerador disponível no site desta CRV (https://crv-dpp-sc.github.io/manual/) e do preenchimento do campo "Observação" com o texto do Resumo Sintético gerado ao final do ofício — o qual reúne todas as informações da transferência. Novo pedido poderá ser formulado com a observância dos referidos procedimentos.';
+
+  exibirDespacho(
+    '❌ INDEFERIDO',
+    'badge-ind',
+    'Inobservância de Procedimentos — Reunião de 05/05/2025',
+    texto
+  );
 }
 
 // ════════════════════════════════════════════════════════════
