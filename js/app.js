@@ -29,7 +29,7 @@ const UNIDADES = [
   // SR03 \u2014 Norte Catarinense
   { nome: 'Penitenci\u00e1ria Industrial de Joinville',       cidade: 'Joinville',            sr: 'SR03', diretor: 'M\u00e1rcio Simbalista',                   email: 'pe06@pp.sc.gov.br', tel: '(47) 3481\u20113948', end: 'Servid\u00e3o Ant\u00f4nio Deglmann J\u00fanior, 245 \u2013 Parque Guarani \u2013 Joinville/SC \u2013 CEP 89209\u2011240' },
   { nome: 'Pres\u00eddio Feminino Regional de Joinville',     cidade: 'Joinville',            sr: 'SR03', diretor: 'Eliana Eloi',                         email: 'pr12@pp.sc.gov.br', tel: '(47) 3481\u20112369', end: 'Servid\u00e3o Ant\u00f4nio Deglmann J\u00fanior, 245 \u2013 Parque Guarani \u2013 Joinville/SC \u2013 CEP 89209\u2011240' },
-  { nome: 'Pres\u00eddio Regional de Joinville',              cidade: 'Joinville',            sr: 'SR03', diretor: 'Andr\u00e9 Felippe Dias',                  email: 'pr11@pp.sc.gov.br', tel: '(47) 3481\u20113900', end: 'Servid\u00e3o Ant\u00f4nio Deglmann J\u00fanior, 245 \u2013 Parque Guarani \u2013 Joinville/SC \u2013 CEP 89209\u2011240' },
+  { nome: 'Pres\u00eddio Regional de Joinville',              cidade: 'Joinville',            sr: 'SR03', diretor: 'Odirlei de Col',                  email: 'pr11@pp.sc.gov.br', tel: '(47) 3481\u20113900', end: 'Servid\u00e3o Ant\u00f4nio Deglmann J\u00fanior, 245 \u2013 Parque Guarani \u2013 Joinville/SC \u2013 CEP 89209\u2011240' },
   { nome: 'Pres\u00eddio Regional de Barra Velha',            cidade: 'Barra Velha',          sr: 'SR03', diretor: 'L\u00e9ia Cristina Steffen Fuck',          email: 'pr14@pp.sc.gov.br', tel: '(47) 3481\u20112885', end: 'Rua Jo\u00e3o Anselmo Breniensen, s/n \u2013 Vila Nova \u2013 Barra Velha/SC \u2013 CEP 88390\u2011000' },
   { nome: 'Pres\u00eddio Regional de S\u00e3o Francisco do Sul',   cidade: 'S\u00e3o Francisco do Sul', sr: 'SR03', diretor: 'Lamartine Ximenes Fernandes',         email: 'pr13@pp.sc.gov.br', tel: '(47) 3481\u20113932', end: 'Estrada Geral da Pedreira \u2013 Bairro Miranda \u2013 S\u00e3o Francisco do Sul/SC \u2013 CEP 89240\u2011000' },
   // SR04 \u2014 Vale do Itaja\u00ed
@@ -77,7 +77,7 @@ const UNIDADES = [
 const SR_INFO = {
   SR01: { nome: 'Superintend\u00eancia Regional da Grande Florian\u00f3polis', superintendente: 'Kelvyn Diehl',                           email: 'sr01@pp.sc.gov.br', tel: '(48) 3665\u20119131' },
   SR02: { nome: 'Superintend\u00eancia Regional Sul',                      superintendente: 'Marcos Aur\u00e9lio Spinardi',               email: 'sr02@pp.sc.gov.br', tel: '(48) 3403\u20111501' },
-  SR03: { nome: 'Superintend\u00eancia Regional do Norte Catarinense',     superintendente: 'Efraym Ben Jos\u00e9 Falc\u00e3o',                email: 'sr03@pp.sc.gov.br', tel: '(47) 3481\u20113993' },
+  SR03: { nome: 'Superintend\u00eancia Regional do Norte Catarinense',     superintendente: 'Andr\u00e9 Felippe Dias',                email: 'sr03@pp.sc.gov.br', tel: '(47) 3481\u20113993' },
   SR04: { nome: 'Superintend\u00eancia Regional do Vale do Itaja\u00ed',        superintendente: 'Anderson Luiz Teodoro',                 email: 'sr04@pp.sc.gov.br', tel: '(47) 3398\u20116704' },
   SR05: { nome: 'Superintend\u00eancia Regional Serrana',                   superintendente: 'Fabiano Deitos Rech',                  email: 'sr05@pp.sc.gov.br', tel: '(49) 3412\u20113300' },
   SR06: { nome: 'Superintend\u00eancia Regional Oeste',                     superintendente: 'Guimorvan Boita',                      email: 'sr06@pp.sc.gov.br', tel: '(49) 2049\u20119768' },
